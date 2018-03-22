@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#723989</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#870f81</color>
+
+
+
+
+    <!--Custome Colors-->
+    <color name="colorGray">#7f060058</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorSlateGrey">#708090</color>
+    <color name="colorLightGrey">#D3D3D3</color>
+    <color name="color_gray">#dfdede</color>
+    <color name="colorGreen">#3d846c</color>
+    <color name="colorButtonBlue">#6c98e0</color>
+    <color name="colorCustomYellow">#e8eb44</color>
+    <color name="colorCustomRed">#ff4a4a</color>
+    <color name="colorCustomIcon">#cc621b</color>
+    <color name="colorPink">#ec1dbf</color>
+    <color name="colorPink_number">#f889d9</color>
+    <color name="red_ptr">#FFC93437</color>
+    <color name="blue">#35404e</color>
+    <color name="colorYellowDarker">#f0c562</color>
+    <color name="colorYellowLight">#a29127</color>
+    <color name="color_viole">#871dbc</color>
+    <color name="color_blue">#104ad1</color>
+    <color name="transparant">#00112233</color>
+    <color name="swipebg">#cc3333</color>
+    <color name="colordarkbutton">#870f81</color>
+</resources>

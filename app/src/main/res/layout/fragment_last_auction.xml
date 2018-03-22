@@ -1,0 +1,49 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10sp"
+    tools:context="chitfund.wayzontech.chitfund.chitfund.fragment.LastAuctionFragment">
+
+    <RelativeLayout
+        android:id="@+id/relative_search_agent"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:drawableLeft="@drawable/search"
+            android:padding="05dp"
+            android:gravity="center|left"
+            android:id="@+id/text_getLastAuctionDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/edittextborder"
+            android:hint="Select Month"/>
+
+        <Button
+            android:id="@+id/button_getLastAuction"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="end"
+            android:background="@drawable/button_border1"
+            android:text="submit"
+            android:textColor="@color/colorWhite"
+            android:textSize="17dp" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/relative_search_agent"
+        android:layout_marginTop="10sp"
+        android:id="@+id/recyclerViewLastAuctionAdapter"/>
+
+</RelativeLayout>

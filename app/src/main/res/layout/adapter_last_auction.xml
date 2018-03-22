@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10sp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="15sp"
+        android:layout_below="@id/relative_search_agent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_marginTop="15sp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Date:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/textLastAuctDate"
+                android:text="Date"
+                android:textSize="20sp"
+                android:layout_width="0sp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="15sp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Amount:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/textLastAuctAmount"
+                android:text="Amount"
+                android:textSize="20sp"
+                android:layout_width="0sp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="15sp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Lock Amount:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/textLastLockAmount"
+                android:text="Lock Amount"
+                android:textSize="20sp"
+                android:layout_width="0sp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="15sp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Group Name:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/textLastGroupName"
+                android:text="Group Name"
+                android:textSize="20sp"
+                android:layout_width="0sp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="15sp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Received By:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/textLastReceivedBy"
+                android:text="Received By"
+                android:textSize="20sp"
+                android:layout_width="0sp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
