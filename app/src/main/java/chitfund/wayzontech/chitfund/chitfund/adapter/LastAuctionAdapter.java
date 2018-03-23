@@ -28,7 +28,7 @@ public class LastAuctionAdapter extends RecyclerView.Adapter<LastAuctionAdapter.
     }
 
     public class LastAuctionViewHolder extends RecyclerView.ViewHolder {
-        private TextView date,amount,lockAmount,groupName,receivedBy;
+        private TextView date,amount,lockAmount,groupName,receivedBy,closed_on;
         public LastAuctionViewHolder(View itemView) {
             super(itemView);
 
@@ -37,6 +37,7 @@ public class LastAuctionAdapter extends RecyclerView.Adapter<LastAuctionAdapter.
             lockAmount = itemView.findViewById(R.id.textLastLockAmount);
             groupName = itemView.findViewById(R.id.textLastGroupName);
             receivedBy = itemView.findViewById(R.id.textLastReceivedBy);
+            closed_on = itemView.findViewById(R.id.textLastClosedOn);
         }
     }
     @Override
@@ -56,6 +57,7 @@ public class LastAuctionAdapter extends RecyclerView.Adapter<LastAuctionAdapter.
         holder.lockAmount.setText(lastAuction.getLock_amount());
         holder.groupName.setText(lastAuction.getGroup_name());
         holder.receivedBy.setText(lastAuction.getReceived_by());
+        holder.closed_on.setText(lastAuction.getClosed_on());
 
     }
 

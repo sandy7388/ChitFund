@@ -6,19 +6,28 @@ package chitfund.wayzontech.chitfund.chitfund.model;
 
 public class LastAuction
 {
-    private String date,amount,lock_amount,group_name,received_by;
+    private String date,amount,lock_amount,group_name,received_by,closed_on;
 
     public LastAuction() {
     }
 
-    public LastAuction(String date, String amount,
-                       String lock_amount, String group_name,
-                       String received_by) {
+    public LastAuction(String date, String amount, String lock_amount,
+                       String group_name, String received_by,
+                       String closed_on) {
         this.date = date;
         this.amount = amount;
         this.lock_amount = lock_amount;
         this.group_name = group_name;
         this.received_by = received_by;
+        this.closed_on = closed_on;
+    }
+
+    public String getClosed_on() {
+        return closed_on;
+    }
+
+    public void setClosed_on(String closed_on) {
+        this.closed_on = closed_on;
     }
 
     public String getDate() {
