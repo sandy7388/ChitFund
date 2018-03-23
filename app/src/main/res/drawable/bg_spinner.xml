@@ -6,7 +6,7 @@
                 <shape>
                     <gradient android:angle="90" android:endColor="#ffffff" android:startColor="#ffffff" android:type="linear" />
 
-                    <stroke android:width="0.33dp" android:color="#723989" />
+                    <stroke android:width="0.33dp" android:color="#000000" />
 
                     <corners android:radius="05dp" />
 
@@ -14,7 +14,7 @@
                 </shape>
             </item>
             <item android:right="5dp">
-                <bitmap android:gravity="center_vertical|right" android:src="@drawable/down_arrow" />
+                <bitmap android:gravity="center_vertical|right" android:src="@drawable/down_arrow2" />
             </item>
 
         </layer-list>

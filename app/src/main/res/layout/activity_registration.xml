@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:background="@color/colorWhite"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,20 +8,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="chitfund.wayzontech.chitfund.chitfund.activity.RegistrationActivity">
-
-    <!--<android.support.design.widget.AppBarLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
-
-        <!--<android.support.v7.widget.Toolbar-->
-            <!--android:id="@+id/toolbar"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="?attr/actionBarSize"-->
-            <!--android:background="?attr/colorPrimary"-->
-            <!--app:popupTheme="@style/AppTheme.PopupOverlay" />-->
-
-    <!--</android.support.design.widget.AppBarLayout>-->
 
     <ScrollView
         android:scrollbars="vertical"
@@ -89,6 +76,7 @@
                 android:layout_height="wrap_content" />
 
             <EditText
+                android:textColor="@color/colorBlack"
                 android:layout_marginTop="15dp"
                 android:id="@+id/editText_mobile_reg"
                 android:layout_width="match_parent"
@@ -108,6 +96,7 @@
                 android:layout_height="wrap_content" />
 
             <EditText
+                android:textColor="@color/colorBlack"
                 android:layout_marginTop="15dp"
                 android:id="@+id/editText_email"
                 android:layout_width="match_parent"
@@ -134,6 +123,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="35dp">
                 <RadioButton
+
                     android:id="@+id/radioMale"
                     android:textColor="@color/colorBlack"
                     android:background="@drawable/button_border"
@@ -162,6 +152,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <TextView
+                android:textColor="@color/colorBlack"
                 android:id="@+id/txt_dob_date"
                 android:padding="5dp"
                 android:hint="Date Of Birth"
@@ -179,6 +170,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <EditText
+                android:textColor="@color/colorBlack"
                 android:hint="Address"
                 android:layout_marginTop="15dp"
                 android:id="@+id/editText_address_reg"
@@ -186,7 +178,6 @@
                 android:layout_height="35dp"
                 android:padding="5dp"
                 android:lines="3"
-                android:textColorHint="#999"
                 android:background="@drawable/button_border"
                 android:ems="10"
                 android:inputType="textCapWords" />
@@ -241,6 +232,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <TextView
+                android:textColor="@color/colorBlack"
                 android:id="@+id/txt_reg_date"
                 android:padding="5dp"
                 android:hint=""
@@ -273,6 +265,7 @@
                 android:layout_height="wrap_content" />
 
             <EditText
+                android:textColor="@color/colorBlack"
                 android:hint="Nominee Name"
                 android:layout_marginTop="15dp"
                 android:id="@+id/editText_nominee_name"
@@ -292,6 +285,7 @@
                 android:layout_height="wrap_content" />
 
             <EditText
+                android:textColor="@color/colorBlack"
                 android:layout_marginTop="15dp"
                 android:id="@+id/editText_nominee_mobile"
                 android:layout_width="match_parent"
@@ -310,6 +304,7 @@
                 android:layout_height="wrap_content" />
 
             <EditText
+                android:textColor="@color/colorBlack"
                 android:layout_marginTop="15dp"
                 android:id="@+id/editText_nominee_relation"
                 android:layout_width="match_parent"
@@ -329,6 +324,7 @@
                 android:layout_height="wrap_content" />
 
             <EditText
+                android:textColor="@color/colorBlack"
                 android:layout_marginTop="15dp"
                 android:id="@+id/editText_nominee_age"
                 android:layout_width="match_parent"
@@ -348,6 +344,7 @@
                 android:layout_height="wrap_content" />
 
             <EditText
+                android:textColor="@color/colorBlack"
                 android:layout_marginTop="15dp"
                 android:id="@+id/editText_nominee_address"
                 android:layout_width="match_parent"
@@ -360,7 +357,7 @@
             <Button
                 android:id="@+id/btn_registration"
                 android:text="Register"
-                android:textColor="#dec5c5"
+                android:textColor="#ffffff"
                 android:textSize="18sp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/button_border1"

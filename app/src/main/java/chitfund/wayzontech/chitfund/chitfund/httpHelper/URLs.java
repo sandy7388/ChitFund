@@ -22,7 +22,7 @@ public class URLs
 
     public static final String GROUP_DETAILS = REGISTRATION_URL + "/getgrouplist";
 
-    public static final String LAST_AUCTION = "";
+    public static final String LAST_AUCTION = BASE_URL + "realtimeauction/getfinalauctions" ;
 
     public static final String JOIN_GROUP = "";
 }

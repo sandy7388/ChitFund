@@ -320,7 +320,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
                         try {
                             jsonObjectGroupList = new JSONObject(response);
-                            jsonArrayGroupList = jsonObjectGroupList.getJSONArray("grouplist");
+                            jsonArrayGroupList = jsonObjectGroupList.getJSONArray("group_info");
                             for (int i=0;i<jsonArrayGroupList.length();i++)
                             {
                                 jsonObject = jsonArrayGroupList.getJSONObject(i);
