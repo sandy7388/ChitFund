@@ -33,7 +33,10 @@
         <activity
             android:name=".activity.GroupInfoActivity"
             android:parentActivityName=".activity.MainActivity" />
-        <activity android:name=".activity.ChangePasswordActivity"></activity>
+        <activity android:name=".activity.ChangePasswordActivity"
+            android:label="@string/title_activity_changePassword">
+
+        </activity>
     </application>
 
 </manifest>
