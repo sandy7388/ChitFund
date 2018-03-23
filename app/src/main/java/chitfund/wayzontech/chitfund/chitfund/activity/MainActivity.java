@@ -80,11 +80,11 @@ public class MainActivity extends AppCompatActivity
         fab = findViewById(R.id.fab);
         navHeader = navigationView.getHeaderView(0);
         fab.setOnClickListener(this);
-//        if(!SessionManager.getInstance(this).isLoggedIn())
-//        {
-//            startActivity(new Intent(this, LoginActivity.class));
-//            finish();
-//        }
+        if(!SessionManager.getInstance(this).isLoggedIn())
+        {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
         setUpNavigationView();
         navigationView.getMenu().getItem(4).setActionView(R.layout.menu_dot);
     }

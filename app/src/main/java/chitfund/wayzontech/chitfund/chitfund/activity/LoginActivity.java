@@ -96,29 +96,30 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-//                            if (jsonObject.getString("success").equals("1"))
-//                            {
-//                            }
-                            if (jsonObject.getString("password_change_status").equals("1"))
+                            if (jsonObject.getString("success").equals("1"))
                             {
-                                progressDialog.dismiss();
-                                //Toast.makeText(LoginActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                                userid = jsonObject.getString("user_id");
-                                UserLogin userLogin = new UserLogin(userid, strUsername, strPassword);
-                                sessionManager.userLogin(userLogin);
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                //finish();
+                                if (jsonObject.getString("password_change_status").equals("1"))
+                                {
+                                    progressDialog.dismiss();
+                                    //Toast.makeText(LoginActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                                    userid = jsonObject.getString("user_id");
+                                    UserLogin userLogin = new UserLogin(userid, strUsername, strPassword);
+                                    sessionManager.userLogin(userLogin);
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    //finish();
+                                }
+                                if (jsonObject.getString("password_change_status").equals("0"))
+                                {
+                                    progressDialog.dismiss();
+                                    //Toast.makeText(LoginActivity.this, jsonObject.getString("message1"), Toast.LENGTH_SHORT).show();
+                                    userid = jsonObject.getString("user_id");
+                                    UserLogin userLogin = new UserLogin(userid);
+                                    sessionManager.setUserId(userLogin);
+                                    startActivity(new Intent(LoginActivity.this, ChangePasswordActivity.class));
+                                    //finish();
+                                }
                             }
-                            if (jsonObject.getString("password_change_status").equals("0"))
-                            {
-                                progressDialog.dismiss();
-                                //Toast.makeText(LoginActivity.this, jsonObject.getString("message1"), Toast.LENGTH_SHORT).show();
-                                userid = jsonObject.getString("user_id");
-                                UserLogin userLogin = new UserLogin(userid);
-                                sessionManager.setUserId(userLogin);
-                                startActivity(new Intent(LoginActivity.this, ChangePasswordActivity.class));
-                                //finish();
-                            }
+
                             if (jsonObject.getString("success").equals("0"))
                             {
                                 progressDialog.dismiss();
