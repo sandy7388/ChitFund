@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
+                android:textColor="@color/colorBlack"
                 android:text="Date:"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -41,6 +42,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:textColor="@color/colorBlack"
                 android:text="Amount:"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -48,6 +50,7 @@
                 android:layout_width="0sp"
                 android:layout_height="wrap_content" />
             <TextView
+                android:drawableLeft="@drawable/rupee_indian"
                 android:id="@+id/textLastAuctAmount"
                 android:text="Amount"
                 android:textSize="20sp"
@@ -64,6 +67,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:textColor="@color/colorBlack"
                 android:text="Lock Amount:"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -71,6 +75,7 @@
                 android:layout_width="0sp"
                 android:layout_height="wrap_content" />
             <TextView
+                android:drawableLeft="@drawable/rupee_indian"
                 android:id="@+id/textLastLockAmount"
                 android:text="Lock Amount"
                 android:textSize="20sp"
@@ -87,6 +92,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:textColor="@color/colorBlack"
                 android:text="Group Name:"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -110,6 +116,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:textColor="@color/colorBlack"
                 android:text="Received By:"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -133,6 +140,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:textColor="@color/colorBlack"
                 android:text="Closed On:"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -140,6 +148,7 @@
                 android:layout_width="0sp"
                 android:layout_height="wrap_content" />
             <TextView
+                android:drawableLeft="@drawable/rupee_indian"
                 android:id="@+id/textLastClosedOn"
                 android:text="Closed On"
                 android:textSize="20sp"
