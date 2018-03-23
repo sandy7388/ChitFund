@@ -46,6 +46,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.Grou
 
         MemberName memberName = memberNameArrayList.get(position);
         holder.memberName.setText(memberName.getName());
+        holder.memberId.setText(memberName.getId());
     }
 
     @Override
@@ -54,11 +55,12 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.Grou
     }
 
     public class GroupListViewHolder extends RecyclerView.ViewHolder{
-        private TextView memberName;
+        private TextView memberName,memberId;
         public GroupListViewHolder(View itemView) {
             super(itemView);
 
             memberName = itemView.findViewById(R.id.member_name);
+            memberId = itemView.findViewById(R.id.memberid);
         }
     }
 

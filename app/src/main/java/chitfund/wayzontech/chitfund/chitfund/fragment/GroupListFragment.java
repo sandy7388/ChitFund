@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
@@ -21,26 +23,31 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.adapter.GroupListAdapter;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.model.MemberName;
+import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 
-public class GroupListFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class GroupListFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private Spinner spinnerGrpName;
     private TextView textViewAmount;
+    private Button button;
     private ArrayList<String> grpName;
     private RecyclerView recyclerView;
     private JSONArray groupInfo;
-    private String member_Name;
+    private String member_Name,memberId,groupName,groupId;
     private JSONObject serverResponse,object;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<MemberName> memberNameArrayList;
     private GroupListAdapter groupListAdapter;
+    SessionManager sessionManager;
     public GroupListFragment() {
         // Required empty public constructor
     }
@@ -52,27 +59,76 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_group_list, container, false);
         initRecyclerView(view);
+        recyclerView();
         return view;
     }
 
     public void initRecyclerView(View view)
     {
-        recyclerView =  view.findViewById(R.id.recyclerview_grpListFrag);
+        grpName = new ArrayList<String>();
+        sessionManager = new SessionManager(getActivity());
+        button = view.findViewById(R.id.btn_joinGrpFrag);
+        //recyclerView =  view.findViewById(R.id.recyclerview_grpListFrag);
         textViewAmount = view.findViewById(R.id.text_amtGrpFrg);
         spinnerGrpName = view.findViewById(R.id.spinner_groupName);
+
+
+        recyclerView =  view.findViewById(R.id.recyclerview_grpListFrag);
+        spinnerGrpName.setOnItemSelectedListener(this);
+        button.setOnClickListener(this);
+        getList();
+
+    }
+
+    private void recyclerView()
+    {
+
         memberNameArrayList = new ArrayList<>();
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         groupListAdapter = new GroupListAdapter(memberNameArrayList,getContext());
         recyclerView.setAdapter(groupListAdapter);
-        grpName = new ArrayList<String>();
-        spinnerGrpName.setOnItemSelectedListener(this);
-        getList();
+    }
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.btn_joinGrpFrag:
+                joinGroup();
+                break;
+        }
 
     }
 
-    void getList()
+    private void joinGroup()
+    {
+        StringRequest stringRequest = new StringRequest(URLs.JOIN_GROUP,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("userid",sessionManager.getUserID());
+                params.put("group_id",groupId);
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+    }
+
+    private void getList()
     {
 
         StringRequest stringRequest = new StringRequest(URLs.GROUP_DETAILS,
@@ -83,34 +139,36 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
                         try {
                             serverResponse = new JSONObject(response);
 
-                            groupInfo = serverResponse.getJSONArray("");
+                            groupInfo = serverResponse.getJSONArray("group_info");
 
                             for (int i=0;i<groupInfo.length();i++)
                             {
                                 object = groupInfo.getJSONObject(i);
-                                grpName.add(object.getString(""));
+                                grpName.add(object.getString("group_name"));
 
-                                String amount = object.getString("");
+                                String amount = object.getString("amount");
                                 textViewAmount.setText(amount);
 
-                                JSONArray jsonArray = object.getJSONArray("");
+                                JSONArray jsonArray = object.getJSONArray("group_member");
 
                                 for (int j=0;j<jsonArray.length();j++)
                                 {
                                     JSONObject jsonObject = jsonArray.getJSONObject(j);
 
-                                    member_Name = jsonObject.getString("");
+                                    member_Name = jsonObject.getString("member_name");
+
+                                    memberId = jsonObject.getString("member_id");
 
                                     MemberName member = new MemberName();
                                     member.setName(member_Name);
+                                    member.setId(memberId);
 
                                     memberNameArrayList.add(member);
+                                    groupListAdapter.notifyDataSetChanged();
                                 }
 
                             }
-
                             spinnerGrpName.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, grpName));
-                            groupListAdapter.notifyDataSetChanged();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -130,7 +188,46 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        //textViewAmount.setText(getAmount(position));
+        Spinner spinner = (Spinner) parent;
+        groupName = spinner.getAdapter().getItem(position).toString();
+        if (spinner.getId()==R.id.spinner_groupName)
+        {
+            for (int i=0;i<groupInfo.length();i++)
+            {
+                try {
+                    if (groupInfo.getJSONObject(i).getString("group_name").equals(groupName))
+                    {
+                        memberNameArrayList=new ArrayList<MemberName>();
+                        groupId = groupInfo.getJSONObject(i).getString("group_id");
+                        textViewAmount.setText(groupInfo.getJSONObject(i).getString("amount"));
+                        System.out.println("group_id" +groupId);
+                        JSONArray jsonArray = groupInfo.getJSONObject(i).getJSONArray("group_member");
+
+                        for (int j=0;j<jsonArray.length();j++)
+                        {
+                            JSONObject jsonObject = jsonArray.getJSONObject(j);
+
+                            member_Name = jsonObject.getString("member_name");
+
+                            memberId = jsonObject.getString("member_id");
+
+                            MemberName member = new MemberName();
+                            member.setName(member_Name);
+                            member.setId(memberId);
+
+                            memberNameArrayList.add(member);
+                        }
+                        groupListAdapter = new GroupListAdapter(memberNameArrayList,getContext());
+                        recyclerView.setAdapter(groupListAdapter);
+                        groupListAdapter.notifyDataSetChanged();
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
 
     }
 
@@ -138,4 +235,6 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
     public void onNothingSelected(AdapterView<?> parent) {
         textViewAmount.setText("");
     }
+
+
 }
