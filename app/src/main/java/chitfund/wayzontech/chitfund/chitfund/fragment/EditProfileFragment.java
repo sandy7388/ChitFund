@@ -30,6 +30,7 @@ public class EditProfileFragment extends Fragment {
         return view;
     }
 
+
     public void setFragments(Fragment targetFragment) {
         try {
             Fragment fragment = targetFragment;
