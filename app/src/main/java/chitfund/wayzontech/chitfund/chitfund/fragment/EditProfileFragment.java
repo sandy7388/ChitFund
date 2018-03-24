@@ -18,7 +18,9 @@ import static android.content.ContentValues.TAG;
 
 public class EditProfileFragment extends Fragment {
 
-    public EditProfileFragment() {
+    public EditProfileFragment()
+    {
+
     }
 
     @Override
