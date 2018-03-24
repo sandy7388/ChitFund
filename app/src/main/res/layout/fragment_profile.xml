@@ -2,34 +2,173 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10sp"
+    android:padding="5sp"
     android:background="@color/colorWhite"
     android:orientation="vertical"
     tools:context="chitfund.wayzontech.chitfund.chitfund.fragment.ProfileFragment">
-    <RelativeLayout
-        android:layout_marginTop="10sp"
+    <ScrollView
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_marginTop="5sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:background="@drawable/bg_circle" />
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_circle" />
 
-        <ImageView
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/imageView2"
+                    android:layout_alignEnd="@+id/imageView2"
+                    android:layout_alignRight="@+id/imageView2"
+                    android:src="@drawable/pencil" />
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/imageView2"
-            android:layout_alignEnd="@+id/imageView2"
-            android:layout_alignRight="@+id/imageView2"
-            android:src="@drawable/pencil" />
+            </RelativeLayout>
 
-    </RelativeLayout>
+            <View
+                android:layout_marginTop="3sp"
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="@color/colorBlack"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:layout_marginTop="07dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="05dp"
+                    android:text="Profile"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold"
+                    android:textSize="18dp" />
+
+                <ImageView
+                    android:id="@+id/imageEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/pencil" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_marginTop="7dp"
+                android:text="Name:"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:enabled="false"
+                android:inputType="textCapWords"
+                android:background="@drawable/button_border"
+                android:ems="10"
+                android:padding="5sp"
+                android:layout_marginTop="15dp"
+                android:text=""
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="30sp" />
+            <TextView
+                android:layout_marginTop="7dp"
+                android:text="Mobile:"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:ems="10"
+                android:padding="5sp"
+                android:layout_marginTop="15dp"
+                android:inputType="phone"
+                android:background="@drawable/button_border"
+                android:enabled="false"
+                android:text=""
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="30sp" />
+
+            <TextView
+                android:layout_marginTop="7dp"
+                android:text="Email:"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:inputType="textEmailAddress"
+                android:background="@drawable/button_border"
+                android:ems="10"
+                android:padding="5sp"
+                android:layout_marginTop="15dp"
+                android:text=""
+                android:enabled="false"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="30sp" />
+
+            <TextView
+                android:layout_marginTop="7dp"
+                android:text="Gender:"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:inputType="textEmailAddress"
+                android:background="@drawable/button_border"
+                android:ems="10"
+                android:padding="5sp"
+                android:layout_marginTop="15dp"
+                android:text=""
+                android:enabled="false"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="30sp" />
+
+            <Button
+
+                android:text="Delete Account"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_border1"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
 
 
 </LinearLayout>

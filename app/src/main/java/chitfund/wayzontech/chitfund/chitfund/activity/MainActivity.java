@@ -1,5 +1,6 @@
 package chitfund.wayzontech.chitfund.chitfund.activity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
@@ -245,6 +247,7 @@ public class MainActivity extends AppCompatActivity
         //calling sync state is necessary or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
     }
+    @SuppressLint("ResourceType")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -252,7 +255,11 @@ public class MainActivity extends AppCompatActivity
 
         if (navItemIndex == 4)
         {
-            navigationView.getMenu().getItem(4).setActionView(R.layout.menu_dot_1);
+            navigationView.getMenu().getItem(6).setActionView(R.layout.menu_dot_1);
+        }
+        if (navItemIndex == 1)
+        {
+            getMenuInflater().inflate(R.menu.edit_profile,menu);
         }
         return true;
     }
@@ -265,6 +272,8 @@ public class MainActivity extends AppCompatActivity
         {
             case R.id.action_logout:
                 alertForLogout();
+                break;
+            case R.id.action_edit:
                 break;
         }
 

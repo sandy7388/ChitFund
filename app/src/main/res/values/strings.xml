@@ -8,6 +8,7 @@
     <string name="closeDrawer">close_drawer</string>
 
     <string name="action_settings">Logout</string>
+    <string name="action_edit">Edit</string>
     <string name="title_activity_registration">RegistrationActivity</string>
 
     <string name="title_activity_login">Login</string>
