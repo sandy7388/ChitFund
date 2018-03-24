@@ -151,16 +151,16 @@ public class MainActivity extends AppCompatActivity
                 // Auction
                 return new AuctionFragment();
             case 3:
-                // Last Auction
+                // Joined Group
                 return new JoinedGroupFragment();
             case 4:
-                // Notification
+                // Last Auction
                 return new LastAuctionFragment();
             case 5:
                 // Group List
                 return new GroupListFragment();
             case 6:
-                // Joined Group
+                // Notification
                 return new NotificationsFragment();
             default:
                 // Home

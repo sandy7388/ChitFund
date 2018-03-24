@@ -68,11 +68,8 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
         grpName = new ArrayList<String>();
         sessionManager = new SessionManager(getActivity());
         button = view.findViewById(R.id.btn_joinGrpFrag);
-        //recyclerView =  view.findViewById(R.id.recyclerview_grpListFrag);
         textViewAmount = view.findViewById(R.id.text_amtGrpFrg);
         spinnerGrpName = view.findViewById(R.id.spinner_groupName);
-
-
         recyclerView =  view.findViewById(R.id.recyclerview_grpListFrag);
         spinnerGrpName.setOnItemSelectedListener(this);
         button.setOnClickListener(this);
