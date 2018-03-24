@@ -24,5 +24,7 @@ public class URLs
 
     public static final String LAST_AUCTION = BASE_URL + "realtimeauction/getfinalauctions" ;
 
-    public static final String JOIN_GROUP = "";
+    public static final String JOIN_GROUP = BASE_URL + "groupinfo/joingroup";
+
+    public static final String JOINED_GROUP = BASE_URL + "groupinfo/userwisegroupList";
 }

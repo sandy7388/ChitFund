@@ -148,8 +148,8 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                params.put("userid",sessionManager.getUserID());
-                params.put("group_id",groupId);
+                params.put("memberid",memberId);
+                params.put("groupid",groupId);
                 return params;
             }
         };

@@ -3,31 +3,91 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10sp">
+    android:padding="10sp"
+    android:background="@color/colorWhite">
 
-    <TextView
-        android:layout_marginTop="02dp"
-        android:text="Group Id"
-        android:id="@+id/groupId"
+    <LinearLayout
+        android:weightSum="2"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:layout_marginTop="02dp"
-        android:text="Group Name"
-        android:id="@+id/groupName"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:layout_marginTop="02dp"
+            android:text="Group Id:"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:layout_marginTop="02dp"
+            android:text="Group Id"
+            android:id="@+id/groupId"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:weightSum="2"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:layout_marginTop="02dp"
-        android:text="Joining Date"
-        android:id="@+id/joiningDate"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:layout_marginTop="02dp"
+            android:text="Group Name:"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:layout_marginTop="02dp"
+            android:text="Group Name"
+            android:id="@+id/groupName"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:weightSum="2"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:layout_marginTop="02dp"
-        android:text="Amount"
-        android:id="@+id/amount"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:layout_marginTop="02dp"
+            android:text="Amount:"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:layout_marginTop="02dp"
+            android:text="Amount"
+            android:id="@+id/amount"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="01sp"
+        android:background="@color/colorBlack"/>
 
 </LinearLayout>

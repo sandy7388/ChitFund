@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -54,6 +55,7 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
                 container, false);
         initialization(view);
         getJoinedGroup();
+        recyclerViewInit();
         return view;
     }
 
@@ -62,12 +64,7 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
         swipeRefreshLayout = view.findViewById(R.id.swipeToRefreshJoinedGroup);
         recyclerView = view.findViewById(R.id.recyclerViewJoinedGroup);
         sessionManager = new SessionManager(getActivity());
-        joinedGroupArrayList = new ArrayList<>();
-        joinedGroupAdapter = new JoinedGroupAdapter(getContext(),joinedGroupArrayList);
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(joinedGroupAdapter);
+
         swipeRefreshLayout.setOnRefreshListener(this);
 
         swipeRefreshLayout.post(new Runnable() {
@@ -80,6 +77,16 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
         });
     }
 
+    void recyclerViewInit()
+    {
+        joinedGroupArrayList = new ArrayList<>();
+        joinedGroupAdapter = new JoinedGroupAdapter(getContext(),joinedGroupArrayList);
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(joinedGroupAdapter);
+    }
+
 
     @Override
     public void onRefresh() {
@@ -89,7 +96,9 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
 
     private void getJoinedGroup()
     {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.JOIN_GROUP,
+
+        //swipeRefreshLayout.setRefreshing(true);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.JOINED_GROUP,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response)
@@ -97,38 +106,46 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
                         try {
                             JSONObject jsonObject = new JSONObject(response);
 
-                            JSONArray jsonArray = jsonObject.getJSONArray("joined_group");
-                            for (int i=0;i<jsonArray.length();i++)
-                            {
-                                JSONObject object = jsonArray.getJSONObject(i);
-                                grpId = object.getString("group_id");
-                                grpName = object.getString("group_name");
-                                grpJoiningDate = object.getString("joining_date");
-                                grpAmount = object.getString("amount");
+                            if (jsonObject.getString("success").equals("1")) {
+                                JSONArray jsonArray = jsonObject.getJSONArray("groupinfo");
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+                                    grpId = object.getString("group_id");
+                                    grpName = object.getString("group_name");
+                                    //grpJoiningDate = object.getString("joining_date");
+                                    grpAmount = object.getString("amount");
 
-                                JoinedGroup joinedGroup = new JoinedGroup();
+                                    JoinedGroup joinedGroup = new JoinedGroup();
 
-                                joinedGroup.setGroup_id(grpId);
-                                joinedGroup.setGroup_name(grpName);
-                                joinedGroup.setJoining_date(grpJoiningDate);
-                                joinedGroup.setAmount(grpAmount);
+                                    joinedGroup.setGroup_id(grpId);
+                                    joinedGroup.setGroup_name(grpName);
+                                    //joinedGroup.setJoining_date(grpJoiningDate);
+                                    joinedGroup.setAmount(grpAmount);
 
-                                joinedGroupArrayList.add(joinedGroup);
+                                    joinedGroupArrayList.add(joinedGroup);
+                                    swipeRefreshLayout.setRefreshing(false);
 
+                                    joinedGroupAdapter.notifyDataSetChanged();
+
+                                }
                             }
+                            else
+                                swipeRefreshLayout.setRefreshing(false);
+                                Toast.makeText(getContext(),"No groups available",Toast.LENGTH_SHORT).show();
+
                         } catch (JSONException e) {
+                            swipeRefreshLayout.setRefreshing(false);
                             e.printStackTrace();
                         }
-                        swipeRefreshLayout.setRefreshing(false);
+
 
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error)
             {
-                error.printStackTrace();
                 swipeRefreshLayout.setRefreshing(false);
-
+                error.printStackTrace();
             }
         })
         {
@@ -140,5 +157,6 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
             }
         };
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+        recyclerViewInit();
     }
 }
