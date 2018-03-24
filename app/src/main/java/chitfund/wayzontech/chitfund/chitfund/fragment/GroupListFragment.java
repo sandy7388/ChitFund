@@ -1,5 +1,7 @@
 package chitfund.wayzontech.chitfund.chitfund.fragment;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
@@ -27,6 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
+import chitfund.wayzontech.chitfund.chitfund.activity.MainActivity;
 import chitfund.wayzontech.chitfund.chitfund.adapter.GroupListAdapter;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.model.MemberName;
@@ -39,6 +43,7 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
     private Spinner spinnerGrpName;
     private TextView textViewAmount;
     private Button button;
+    private ProgressDialog progressDialog;
     private ArrayList<String> grpName;
     private RecyclerView recyclerView;
     private JSONArray groupInfo;
@@ -66,6 +71,7 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
     public void initRecyclerView(View view)
     {
         grpName = new ArrayList<String>();
+        progressDialog = new ProgressDialog(getContext());
         sessionManager = new SessionManager(getActivity());
         button = view.findViewById(R.id.btn_joinGrpFrag);
         textViewAmount = view.findViewById(R.id.text_amtGrpFrg);
@@ -101,15 +107,40 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
 
     private void joinGroup()
     {
+        progressDialog.show();
+        progressDialog.setMessage("Please wait....!");
+        progressDialog.setCancelable(true);
         StringRequest stringRequest = new StringRequest(URLs.JOIN_GROUP,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        try
+                        {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject.getString("success").equals("1"))
+                            {
+                                progressDialog.dismiss();
+                                Toast.makeText(getContext(),jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getActivity(), MainActivity.class));
+                            }
+
+                            else
+                                progressDialog.dismiss();
+                                Toast.makeText(getContext(),jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+
+                        }
+                        catch (JSONException e)
+                        {
+                            progressDialog.dismiss();
+                            e.printStackTrace();
+                        }
 
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                error.printStackTrace();
 
             }
         })
