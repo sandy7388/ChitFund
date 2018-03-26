@@ -1,6 +1,7 @@
 package chitfund.wayzontech.chitfund.chitfund.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.content.Context;
 import android.os.Bundle;
@@ -22,7 +23,7 @@ import chitfund.wayzontech.chitfund.chitfund.R;
 
 public class AuctionFragment extends Fragment {
 
-    String strDate1,strDate2;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,4 +31,5 @@ public class AuctionFragment extends Fragment {
 
         return view;
     }
+
 }
