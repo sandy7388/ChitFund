@@ -39,7 +39,7 @@ public class JoinedGroupAdapter extends RecyclerView.Adapter<JoinedGroupAdapter.
         JoinedGroup joinedGroup = joinedGroupArrayList.get(position);
         holder.textViewId.setText(joinedGroup.getGroup_id());
         holder.textViewName.setText(joinedGroup.getGroup_name());
-        //holder.textViewJoiningDate.setText(joinedGroup.getJoining_date());
+        holder.textViewNextDate.setText(joinedGroup.getNext_date());
         holder.textViewAmount.setText(joinedGroup.getAmount());
     }
 
@@ -50,13 +50,13 @@ public class JoinedGroupAdapter extends RecyclerView.Adapter<JoinedGroupAdapter.
 
     public class JoinedGroupHolder extends RecyclerView.ViewHolder {
 
-        private TextView textViewId,textViewName,textViewJoiningDate,textViewAmount;
+        private TextView textViewId,textViewName,textViewNextDate,textViewAmount;
         public JoinedGroupHolder(View itemView) {
             super(itemView);
 
             textViewId = itemView.findViewById(R.id.groupId);
             textViewName = itemView.findViewById(R.id.groupName);
-            //textViewJoiningDate = itemView.findViewById(R.id.joiningDate);
+            textViewNextDate = itemView.findViewById(R.id.nxt_auction);
             textViewAmount = itemView.findViewById(R.id.amount);
         }
     }

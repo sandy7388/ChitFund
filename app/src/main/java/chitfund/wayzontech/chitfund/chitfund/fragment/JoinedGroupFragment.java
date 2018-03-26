@@ -51,7 +51,7 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_joined_group,
+    View view = inflater.inflate(R.layout.fragment_joined_group,
                 container, false);
         initialization(view);
         getJoinedGroup();
