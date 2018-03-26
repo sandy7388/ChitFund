@@ -373,9 +373,9 @@ public class MainActivity extends AppCompatActivity
 
     // show or hide the fab
     private void toggleFab() {
-        if (navItemIndex == 0)
-            fab.show();
-        else
+//        if (navItemIndex == 0)
+//            fab.show();
+//        else
             fab.hide();
     }
 

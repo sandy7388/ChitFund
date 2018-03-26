@@ -1,5 +1,6 @@
 package chitfund.wayzontech.chitfund.chitfund.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -21,7 +22,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Method;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +40,7 @@ import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView recyclerView;
+    private String strRemainingDays,inputDateString;
     private SessionManager sessionManager;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ArrayList<JoinedGroup> joinedGroupArrayList;
@@ -47,6 +52,7 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
     }
 
 
+    @SuppressLint("SimpleDateFormat")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,6 +62,7 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
         initialization(view);
         getJoinedGroup();
         recyclerViewInit();
+
         return view;
     }
 

@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:textSize="18sp"
             android:layout_weight="1"
             android:text="Wel-come:"
             android:layout_width="0sp"
@@ -33,6 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:textSize="18sp"
             android:layout_weight="1"
             android:layout_width="0sp"
             android:layout_height="wrap_content"
@@ -54,6 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:textSize="18sp"
             android:layout_weight="1"
             android:layout_width="0sp"
             android:layout_height="wrap_content"
@@ -68,11 +71,20 @@
 
     </LinearLayout>
 
+    <View
+        android:visibility="gone"
+        android:layout_marginTop="05dp"
+        android:layout_width="match_parent"
+        android:layout_height="01sp"
+        android:background="@color/colorPrimary"/>
+
     <ScrollView
+        android:layout_marginTop="05dp"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
+            android:background="@drawable/button_border"
             android:orientation="vertical"
             android:paddingTop="5dp"
             android:layout_width="match_parent"
