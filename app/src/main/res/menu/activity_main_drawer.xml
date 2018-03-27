@@ -32,6 +32,10 @@
             android:id="@+id/nav_notifications"
             android:icon="@drawable/ic_turn_notifications_on_button"
             android:title="Notifications" />
+        <item
+            android:id="@+id/nav_reports"
+            android:title="Reports"
+            android:icon="@drawable/ic_menu_slideshow"/>
 
 
     </group>

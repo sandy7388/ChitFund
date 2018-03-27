@@ -40,6 +40,7 @@ import chitfund.wayzontech.chitfund.chitfund.fragment.JoinedGroupFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.LastAuctionFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.NotificationsFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.ProfileFragment;
+import chitfund.wayzontech.chitfund.chitfund.fragment.ReportFragment;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.Config;
 import chitfund.wayzontech.chitfund.chitfund.receiverNservices.NotificationUtils;
 import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG_NOTIFICATIONS = "notifications";
     private static final String TAG_GRPLIST = "group_list";
     private static final String TAG_JOINEDGRP = "joined_grplist";
+    private static final String TAG_REPORTS = "reports";
 
     public static String CURRENT_TAG = TAG_HOME;
 
@@ -236,6 +238,9 @@ public class MainActivity extends AppCompatActivity
             case 6:
                 // Notification
                 return new NotificationsFragment();
+            case 7:
+                // Reports
+                return new ReportFragment();
             default:
                 // Home
                 return new HomeFragment();
@@ -281,6 +286,10 @@ public class MainActivity extends AppCompatActivity
                     case R.id.nav_notifications:
                         navItemIndex = 6;
                         CURRENT_TAG = TAG_NOTIFICATIONS;
+                        break;
+                    case R.id.nav_reports:
+                        navItemIndex = 7;
+                        CURRENT_TAG = TAG_REPORTS;
                         break;
                     default:
                         navItemIndex = 0;
