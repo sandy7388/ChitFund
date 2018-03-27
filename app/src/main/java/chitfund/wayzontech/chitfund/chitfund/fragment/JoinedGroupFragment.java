@@ -60,7 +60,7 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
     View view = inflater.inflate(R.layout.fragment_joined_group,
                 container, false);
         initialization(view);
-        getJoinedGroup();
+        //getJoinedGroup();
         recyclerViewInit();
 
         return view;
@@ -103,7 +103,7 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
 
     private void getJoinedGroup()
     {
-
+        joinedGroupArrayList=new ArrayList<JoinedGroup>();
         //swipeRefreshLayout.setRefreshing(true);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.JOINED_GROUP,
                 new Response.Listener<String>() {
