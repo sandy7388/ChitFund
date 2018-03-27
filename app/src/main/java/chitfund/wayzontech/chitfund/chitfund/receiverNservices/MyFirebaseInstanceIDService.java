@@ -14,8 +14,8 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.Config;
 
 /**
- * Created by Ravi Tamada on 08/08/16.
- * www.androidhive.info
+ * Created by Sandy on 27/03/18.
+ *
  */
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     private static final String TAG = MyFirebaseInstanceIDService.class.getSimpleName();
