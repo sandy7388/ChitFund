@@ -28,6 +28,7 @@ public class SessionManager
     private static final String KEY_USER_PASSWORD = "password";
     private static final String KEY_USER_ID = "user_id";
     private static final String KEY_NAME = "name";
+    private static final String KEY_MEMBER_ID = "member_id";
 
 //    private static final String KEY_LOCATION_NAME = "location";
 //    private static final String KEY_WORKING_STATUS = "working_status";
@@ -53,7 +54,7 @@ public class SessionManager
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(KEY_USERNAME, userLogin.getUsername());
         editor.putString(KEY_USER_PASSWORD,userLogin.getPassword());
-        //editor.putString(KEY_NAME,userLogin.getName());
+        editor.putString(KEY_MEMBER_ID,userLogin.getMember_id());
         editor.putString(KEY_USER_ID,userLogin.getId());
 
         editor.apply();
@@ -66,6 +67,16 @@ public class SessionManager
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(KEY_USER_ID,userLogin.getUsername());
+        editor.apply();
+        editor.commit();
+        return true;
+    }
+
+    public boolean setMemberId(UserLogin userLogin)
+    {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(KEY_MEMBER_ID,userLogin.getUsername());
         editor.apply();
         editor.commit();
         return true;
@@ -93,6 +104,13 @@ public class SessionManager
     {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_USER_ID, null) ;
+    }
+
+    // Get User id
+    public String getMemberID()
+    {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_MEMBER_ID, null) ;
     }
 
     // Get Users Name

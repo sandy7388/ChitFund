@@ -6,24 +6,34 @@ package chitfund.wayzontech.chitfund.chitfund.model;
 
 public class UserLogin
 {
-    private String id,username,password;
+    private String id,username,password,member_id;
 
     public UserLogin() {
     }
 
-    public UserLogin(String id, String username, String password) {
+    public UserLogin(String id, String username, String password, String member_id) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.member_id = member_id;
     }
 
     public UserLogin(String username) {
         this.username = username;
     }
 
+
     public UserLogin(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public String getMember_id() {
+        return member_id;
+    }
+
+    public void setMember_id(String member_id) {
+        this.member_id = member_id;
     }
 
     public String getId() {

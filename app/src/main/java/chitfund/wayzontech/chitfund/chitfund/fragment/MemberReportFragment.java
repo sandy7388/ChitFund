@@ -9,15 +9,15 @@ import android.view.ViewGroup;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
 
-public class ReportFragment extends Fragment
+public class MemberReportFragment extends Fragment
 {
-    public ReportFragment() {
+    public MemberReportFragment() {
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_report,
+        View view = inflater.inflate(R.layout.fragment_member_report,
                 container,false);
         return view;
     }

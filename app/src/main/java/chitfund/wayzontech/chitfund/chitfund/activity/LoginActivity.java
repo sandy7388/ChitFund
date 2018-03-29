@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private Button button_register,button_login;
     private EditText editText_username,editText_password;
-    private String userid,strUsername,strPassword;
+    private String userid,strUsername,strPassword,member_id;
     private ProgressDialog progressDialog;
     private SessionManager sessionManager;
     @Override
@@ -103,7 +103,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     progressDialog.dismiss();
                                     //Toast.makeText(LoginActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                                     userid = jsonObject.getString("user_id");
-                                    UserLogin userLogin = new UserLogin(userid, strUsername, strPassword);
+                                    member_id = jsonObject.getString("member_id");
+                                    UserLogin userLogin = new UserLogin(userid, strUsername, strPassword,member_id);
                                     sessionManager.userLogin(userLogin);
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                     //finish();

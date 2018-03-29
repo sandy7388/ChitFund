@@ -22,10 +22,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Method;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,13 +48,13 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
     private ArrayList<JoinedGroup> joinedGroupArrayList;
     private RecyclerView.LayoutManager layoutManager;
     private JoinedGroupAdapter joinedGroupAdapter;
-    String grpId,grpName,grpJoiningDate,grpAmount;
+    private String grpId,grpName,auctionDate,auctionTime,grpAmount;
+    private DateFormat date,time;
+    private Date d;
     public JoinedGroupFragment() {
         // Required empty public constructor
     }
 
-
-    @SuppressLint("SimpleDateFormat")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -84,6 +86,8 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
         });
     }
 
+
+
     void recyclerViewInit()
     {
         joinedGroupArrayList = new ArrayList<>();
@@ -107,6 +111,7 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
         //swipeRefreshLayout.setRefreshing(true);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.JOINED_GROUP,
                 new Response.Listener<String>() {
+                    @SuppressLint("SimpleDateFormat")
                     @Override
                     public void onResponse(String response)
                     {
@@ -119,16 +124,29 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
                                     JSONObject object = jsonArray.getJSONObject(i);
                                     grpId = object.getString("group_id");
                                     grpName = object.getString("group_name");
-                                    //grpJoiningDate = object.getString("joining_date");
+                                    auctionDate = object.getString("auction_date");
                                     grpAmount = object.getString("amount");
+                                    //auctionTime = object.getString("auction_time");
 
                                     JoinedGroup joinedGroup = new JoinedGroup();
 
                                     joinedGroup.setGroup_id(grpId);
                                     joinedGroup.setGroup_name(grpName);
-                                    //joinedGroup.setJoining_date(grpJoiningDate);
-                                    joinedGroup.setAmount(grpAmount);
 
+                                    joinedGroup.setAmount(grpAmount);
+                                    joinedGroup.setTime(auctionDate);
+
+                                    try {
+                                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                                        d = dateFormat.parse(auctionDate);
+                                        date = new SimpleDateFormat("dd-MM-yyyy");
+                                        time = new SimpleDateFormat("hh:mm:ss");
+                                        System.out.println("Date: " + date.format(d));
+                                        System.out.println("Time: " + time.format(d));
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    joinedGroup.setNext_date(date.format(d));
                                     joinedGroupArrayList.add(joinedGroup);
                                     swipeRefreshLayout.setRefreshing(false);
 

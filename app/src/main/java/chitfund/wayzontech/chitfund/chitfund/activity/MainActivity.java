@@ -27,7 +27,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -38,9 +37,10 @@ import chitfund.wayzontech.chitfund.chitfund.fragment.GroupListFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.HomeFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.JoinedGroupFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.LastAuctionFragment;
+import chitfund.wayzontech.chitfund.chitfund.fragment.MemberReportFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.NotificationsFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.ProfileFragment;
-import chitfund.wayzontech.chitfund.chitfund.fragment.ReportFragment;
+import chitfund.wayzontech.chitfund.chitfund.fragment.CollectionReportFragment;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.Config;
 import chitfund.wayzontech.chitfund.chitfund.receiverNservices.NotificationUtils;
 import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
@@ -66,7 +66,8 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG_NOTIFICATIONS = "notifications";
     private static final String TAG_GRPLIST = "group_list";
     private static final String TAG_JOINEDGRP = "joined_grplist";
-    private static final String TAG_REPORTS = "reports";
+    private static final String TAG_COLLECTION_REPORTS = "collection_reports";
+    private static final String TAG_MEMBER_REPORTS = "member_reports";
 
     public static String CURRENT_TAG = TAG_HOME;
 
@@ -114,13 +115,9 @@ public class MainActivity extends AppCompatActivity
         String regId = pref.getString("regId", null);
 
         Log.e(TAG, "Firebase reg id: " + regId);
-        Toast.makeText(getApplicationContext(), "Firebase reg id: " + regId
-                , Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), "Firebase reg id: " + regId
+//                , Toast.LENGTH_LONG).show();
 
-//        if (!TextUtils.isEmpty(regId))
-//            txtRegId.setText("Firebase Reg Id: " + regId);
-//        else
-//            txtRegId.setText("Firebase Reg Id is not received yet!");
     }
 
     @Override
@@ -239,8 +236,11 @@ public class MainActivity extends AppCompatActivity
                 // Notification
                 return new NotificationsFragment();
             case 7:
-                // Reports
-                return new ReportFragment();
+                // Collection Reports
+                return new CollectionReportFragment();
+            case 8:
+                // Member Reports
+                return new MemberReportFragment();
             default:
                 // Home
                 return new HomeFragment();
@@ -287,9 +287,13 @@ public class MainActivity extends AppCompatActivity
                         navItemIndex = 6;
                         CURRENT_TAG = TAG_NOTIFICATIONS;
                         break;
-                    case R.id.nav_reports:
+                    case R.id.nav_collection_report:
                         navItemIndex = 7;
-                        CURRENT_TAG = TAG_REPORTS;
+                        CURRENT_TAG = TAG_COLLECTION_REPORTS;
+                        break;
+                    case R.id.nav_member_report:
+                        navItemIndex = 7;
+                        CURRENT_TAG = TAG_MEMBER_REPORTS;
                         break;
                     default:
                         navItemIndex = 0;

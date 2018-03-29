@@ -27,4 +27,6 @@ public class URLs
     public static final String JOIN_GROUP = BASE_URL + "groupinfo/joingroup";
 
     public static final String JOINED_GROUP = BASE_URL + "groupinfo/userwisegroupList";
+
+    public static final String COLLECTION_REPORT = BASE_URL + " ";
 }

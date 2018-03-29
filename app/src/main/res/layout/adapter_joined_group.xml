@@ -1,140 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5sp"
     android:background="@color/colorWhite">
-    <LinearLayout
-        android:padding="5dp"
-        android:background="@drawable/button_border"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_marginTop="05sp"
-            android:weightSum="2"
+            android:layout_marginTop="05dp"
+            android:background="@drawable/button_border"
+            android:weightSum="3"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
 
-                android:textColor="@color/colorBlack"
-                android:textSize="18sp"
-                android:layout_weight="1"
-                android:layout_marginTop="02dp"
-                android:text="Group Id:"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content" />
             <TextView
-                android:textColor="@color/colorBlack"
-                android:textSize="18sp"
-                android:layout_weight="1"
-                android:layout_marginTop="02dp"
-                android:text="Group Id"
                 android:id="@+id/groupId"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
                 android:textColor="@color/colorBlack"
                 android:textSize="18sp"
+                android:gravity="center"
+                android:text="Group ID"
                 android:layout_weight="1"
-                android:layout_marginTop="02dp"
-                android:text="Group Name:"
-                android:layout_width="0sp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content" />
+            <View
+                android:background="@color/colorPrimary"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"/>
             <TextView
-                android:textColor="@color/colorBlack"
-                android:textSize="18sp"
-                android:layout_weight="1"
-                android:layout_marginTop="02dp"
-                android:text="Group Name"
                 android:id="@+id/groupName"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
                 android:textColor="@color/colorBlack"
                 android:textSize="18sp"
+                android:gravity="center"
+                android:text="Group Name"
                 android:layout_weight="1"
-                android:layout_marginTop="02dp"
-                android:text="Amount:"
-                android:layout_width="0sp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content" />
+            <View
+                android:background="@color/colorPrimary"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"/>
             <TextView
-                android:textColor="@color/colorBlack"
-                android:textSize="18sp"
-                android:layout_weight="1"
-                android:layout_marginTop="02dp"
-                android:text="Amount"
                 android:id="@+id/amount"
-                android:layout_width="0sp"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:text="Amount"
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <TextView
-                android:textColor="@color/colorBlack"
-                android:textSize="18sp"
-                android:layout_weight="1"
-                android:layout_marginTop="02dp"
-                android:text="Next Auction On:"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:textColor="@color/colorBlack"
-                android:textSize="18sp"
-                android:layout_weight="1"
-                android:layout_marginTop="02dp"
-                android:text="Next Auction On"
-                android:id="@+id/nxt_auction"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content" />
         </LinearLayout>
-        <LinearLayout
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <LinearLayout
+        android:weightSum="3"
 
-            <TextView
-                android:textColor="@color/colorBlack"
-                android:textSize="18sp"
-                android:layout_weight="1"
-                android:layout_marginTop="02dp"
-                android:text="Remaining Days:"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:textColor="@color/colorBlack"
-                android:textSize="18sp"
-                android:layout_weight="1"
-                android:layout_marginTop="02dp"
-                android:text="Remaining Days"
-                android:id="@+id/remainingDays"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <TextView
+            android:background="@drawable/button_border"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:paddingLeft="05dp"
+            android:text="Next Auction Date:"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <View
+            android:background="@color/colorPrimary"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:background="@drawable/button_border"
+            android:id="@+id/nxt_auction"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:text=""
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:weightSum="3"
+        android:background="@drawable/button_border"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textColor="@color/colorBlack"
+            android:background="@drawable/button_border"
+            android:textSize="18sp"
+            android:paddingLeft="05dp"
+            android:text="Remaining Days:"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <View
+            android:background="@color/colorPrimary"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/remainingDays"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:background="@drawable/button_border"
+            android:text=""
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
-</ScrollView>
+</LinearLayout>
