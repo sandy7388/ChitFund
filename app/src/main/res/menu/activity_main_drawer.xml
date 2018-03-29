@@ -10,36 +10,39 @@
             android:title="Home" />
         <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_user3"
+            android:icon="@drawable/user_2"
             android:title="Profile" />
         <item
             android:id="@+id/nav_auction"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/auction"
             android:title="Auction" />
         <item
             android:id="@+id/nav_joinedGroup"
-            android:icon="@drawable/ic_turn_notifications_on_button"
+            android:icon="@drawable/networking"
             android:title="Joined Group" />
         <item
             android:id="@+id/nav_last_auction"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/reply1"
             android:title="Last Auction" />
         <item
             android:id="@+id/nav_grpList"
-            android:icon="@drawable/ic_turn_notifications_on_button"
+            android:icon="@drawable/group_list"
             android:title="Group List" />
+        <!--<item-->
+            <!--android:id="@+id/nav_notifications"-->
+            <!--android:icon="@drawable/ic_turn_notifications_on_button"-->
+            <!--android:title="Notifications" />-->
+
+
         <item
-            android:id="@+id/nav_notifications"
-            android:icon="@drawable/ic_turn_notifications_on_button"
-            android:title="Notifications" />
-
-
-        <item android:title="Reports">
+            android:title="Reports">
             <menu>
                 <item
+                    android:icon="@drawable/report1"
                     android:id="@+id/nav_collection_report"
                     android:title="Collection Report"/>
                 <item
+                    android:icon="@drawable/member_report"
                     android:id="@+id/nav_member_report"
                     android:title="Member Report"/>
 

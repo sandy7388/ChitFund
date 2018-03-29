@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG_PROFILE = "profile";
     private static final String TAG_AUCTION = "auction";
     private static final String TAG_LAST_AUCTION = "last_auction";
-    private static final String TAG_NOTIFICATIONS = "notifications";
+    //private static final String TAG_NOTIFICATIONS = "notifications";
     private static final String TAG_GRPLIST = "group_list";
     private static final String TAG_JOINEDGRP = "joined_grplist";
     private static final String TAG_COLLECTION_REPORTS = "collection_reports";
@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity
             finish();
         }
         setUpNavigationView();
-        navigationView.getMenu().getItem(4).setActionView(R.layout.menu_dot);
+        //navigationView.getMenu().getItem(4).setActionView(R.layout.menu_dot);
     }
 
     private void loadHomeFragment() {
@@ -232,13 +232,13 @@ public class MainActivity extends AppCompatActivity
             case 5:
                 // Group List
                 return new GroupListFragment();
+//            case 6:
+//                // Notification
+//                return new NotificationsFragment();
             case 6:
-                // Notification
-                return new NotificationsFragment();
-            case 7:
                 // Collection Reports
                 return new CollectionReportFragment();
-            case 8:
+            case 7:
                 // Member Reports
                 return new MemberReportFragment();
             default:
@@ -283,12 +283,12 @@ public class MainActivity extends AppCompatActivity
                         navItemIndex = 5;
                         CURRENT_TAG = TAG_GRPLIST;
                         break;
-                    case R.id.nav_notifications:
-                        navItemIndex = 6;
-                        CURRENT_TAG = TAG_NOTIFICATIONS;
-                        break;
+//                    case R.id.nav_notifications:
+//                        navItemIndex = 6;
+//                        CURRENT_TAG = TAG_NOTIFICATIONS;
+//                        break;
                     case R.id.nav_collection_report:
-                        navItemIndex = 7;
+                        navItemIndex = 6;
                         CURRENT_TAG = TAG_COLLECTION_REPORTS;
                         break;
                     case R.id.nav_member_report:

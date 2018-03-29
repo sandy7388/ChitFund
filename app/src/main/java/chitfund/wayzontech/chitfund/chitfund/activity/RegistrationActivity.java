@@ -39,7 +39,8 @@ import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
-public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener , DatePickerDialog.OnDateSetListener, AdapterView.OnItemSelectedListener, RadioGroup.OnCheckedChangeListener {
+public class RegistrationActivity extends AppCompatActivity
+        implements View.OnClickListener , DatePickerDialog.OnDateSetListener, AdapterView.OnItemSelectedListener, RadioGroup.OnCheckedChangeListener {
 
     private TextView textView_dob,textView_reg;
     private Button register;

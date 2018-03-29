@@ -3,148 +3,175 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:padding="02dp">
+
     <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
         <LinearLayout
-            android:background="@drawable/button_border"
-            android:weightSum="10"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_border"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:weightSum="10">
 
-            <TextView
-                android:textSize="18dp"
-                android:padding="03sp"
-                android:gravity="center"
-                android:text="Ticket No"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/button_border"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                android:weightSum="10">
 
-            <View
-                android:layout_width="1dp"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"/>
-            <TextView
-                android:textSize="18dp"
-                android:padding="03sp"
-                android:gravity="center"
-                android:text="Auction No"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-            <View
-                android:layout_width="1dp"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"/>
-            <TextView
-                android:textSize="18dp"
-                android:padding="03sp"
-                android:gravity="center"
-                android:text="Member Name"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-            <View
-                android:layout_width="1dp"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"/>
-            <TextView
-                android:textSize="18dp"
-                android:padding="03sp"
-                android:gravity="center"
-                android:text="Collection Type"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-            <View
-                android:layout_width="1dp"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"/>
-            <TextView
-                android:textSize="18dp"
-                android:padding="03sp"
-                android:gravity="center"
-                android:text="Amount"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-            <View
-                android:layout_width="1dp"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"/>
-            <TextView
-                android:textSize="18dp"
-                android:padding="03sp"
-                android:gravity="center"
-                android:text="Cheque No"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-            <View
-                android:layout_width="1dp"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"/>
-            <TextView
-                android:textSize="18dp"
-                android:padding="03sp"
-                android:gravity="center"
-                android:text="Cheque Date"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-            <View
-                android:layout_width="1dp"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"/>
-            <TextView
-                android:textSize="18dp"
-                android:padding="03sp"
-                android:gravity="center"
-                android:text="Bank Name"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-            <View
-                android:layout_width="1dp"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"/>
-            <TextView
-                android:textSize="18dp"
-                android:padding="03sp"
-                android:gravity="center"
-                android:text="Receipt No"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-            <View
-                android:layout_width="1dp"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"/>
-            <TextView
-                android:textSize="18dp"
-                android:padding="03sp"
-                android:gravity="center"
-                android:text="Receipt Date"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="03sp"
+                    android:text="Ticket No"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="03sp"
+                    android:text="Auction No"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="03sp"
+                    android:text="Member Name"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="03sp"
+                    android:text="Collection Type"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="03sp"
+                    android:text="Amount"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="03sp"
+                    android:text="Cheque No"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="03sp"
+                    android:text="Cheque Date"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="03sp"
+                    android:text="Bank Name"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="03sp"
+                    android:text="Receipt No"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="03sp"
+                    android:text="Receipt Date"
+                    android:textSize="18dp" />
 
 
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewCollectionReport"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
         </LinearLayout>
-
     </HorizontalScrollView>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewCollectionReport"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </android.support.v7.widget.RecyclerView>
-
-
 
 </LinearLayout>

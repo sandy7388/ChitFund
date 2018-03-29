@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <LinearLayout
+            android:visibility="gone"
             android:background="@drawable/button_border"
             android:weightSum="3"
             android:orientation="horizontal"
@@ -60,11 +61,12 @@
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
+
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewJoinedGroup"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/recyclerViewJoinedGroup">
-        </android.support.v7.widget.RecyclerView>
+            android:background="@android:color/darker_gray"></android.support.v7.widget.RecyclerView>
     </LinearLayout>
 
 </android.support.v4.widget.SwipeRefreshLayout>

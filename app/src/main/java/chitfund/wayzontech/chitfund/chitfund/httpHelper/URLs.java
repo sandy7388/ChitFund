@@ -28,5 +28,11 @@ public class URLs
 
     public static final String JOINED_GROUP = BASE_URL + "groupinfo/userwisegroupList";
 
-    public static final String COLLECTION_REPORT = BASE_URL + " ";
+    public static final String COLLECTION_REPORT = BASE_URL + "groupinfo/collectionreport";
+
+    public static final String DELETE_URL = BASE_URL + "";
+
+    public static final String UPDATE_URL = BASE_URL + "";
+
+    public static final String PROFILE_URL = BASE_URL + "";
 }

@@ -56,6 +56,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         linearLayout_notification.setOnClickListener(this);
         linearLayout_profile.setOnClickListener(this);
 
+        // Calender instance
+        calendar = Calendar.getInstance();
+        date_Year = calendar.get(Calendar.YEAR);
+        date_Month = calendar.get(Calendar.MONTH);
+        date_Day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E dd/MM/yyyy");
+        date.setText(simpleDateFormat.format(calendar.getTime()));
+
         return view;
     }
 
@@ -94,7 +103,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 setFragments(new LastAuctionFragment());
                 break;
             case R.id.lnr_notificaion:
-                setFragments(new NotificationsFragment());
+                setFragments(new CollectionReportFragment());
                 break;
             case R.id.lnr_profile:
                 setFragments(new ProfileFragment());

@@ -37,7 +37,7 @@ public class JoinedGroupAdapter extends RecyclerView.Adapter<JoinedGroupAdapter.
     @Override
     public JoinedGroupHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.adapter_joined_group,parent,false);
+                .inflate(R.layout.adapter_new_joined_group,parent,false);
 
 //        inputDateString = "29/03/2018";
 //        Calendar calCurr = Calendar.getInstance();

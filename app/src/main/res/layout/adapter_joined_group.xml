@@ -5,115 +5,191 @@
     android:layout_height="wrap_content"
     android:background="@color/colorWhite">
 
+
+    <android.support.v7.widget.CardView
+        android:elevation="05dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <LinearLayout
-            android:layout_marginTop="05dp"
             android:background="@drawable/button_border"
-            android:weightSum="3"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/groupId"
-                android:textColor="@color/colorBlack"
-                android:textSize="18sp"
-                android:gravity="center"
-                android:text="Group ID"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                <TextView
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
+                    android:gravity="left"
+                    android:text="Group ID"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+                <View
+                    android:background="@color/colorPrimary"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:id="@+id/groupId"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
+                    android:gravity="left"
+                    android:text=""
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
             <View
                 android:background="@color/colorPrimary"
-                android:layout_width="1dp"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:id="@+id/groupName"
-                android:textColor="@color/colorBlack"
-                android:textSize="18sp"
-                android:gravity="center"
-                android:text="Group Name"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="01dp"/>
+
+            <LinearLayout
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
+                    android:gravity="left"
+                    android:text="Group Name"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+                <View
+                    android:background="@color/colorPrimary"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:id="@+id/groupName"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
+                    android:gravity="left"
+                    android:text=""
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
             <View
                 android:background="@color/colorPrimary"
-                android:layout_width="1dp"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:id="@+id/amount"
-                android:textColor="@color/colorBlack"
-                android:textSize="18sp"
-                android:gravity="center"
-                android:text="Amount"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="01dp"/>
+            <LinearLayout
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <TextView
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
+                    android:gravity="left"
+                    android:text="Amount"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+                <View
+                    android:background="@color/colorPrimary"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:id="@+id/amount"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
+                    android:gravity="left"
+                    android:text=""
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <View
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="01dp"/>
+
+            <LinearLayout
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
+                    android:paddingLeft="05dp"
+                    android:text="Next Auction Date:"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+                <View
+                    android:background="@color/colorPrimary"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:id="@+id/nxt_auction"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
+                    android:gravity="left"
+                    android:text=""
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <View
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="01dp"/>
+            <LinearLayout
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
+                    android:paddingLeft="05dp"
+                    android:text="Remaining Days:"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+                <View
+                    android:background="@color/colorPrimary"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:id="@+id/remainingDays"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
+                    android:gravity="left"
+                    android:text=""
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <View
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="01dp"/>
         </LinearLayout>
-    <LinearLayout
-        android:weightSum="3"
 
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    </android.support.v7.widget.CardView>
 
-        <TextView
-            android:background="@drawable/button_border"
-            android:textColor="@color/colorBlack"
-            android:textSize="18sp"
-            android:paddingLeft="05dp"
-            android:text="Next Auction Date:"
-            android:layout_weight="2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-        <View
-            android:background="@color/colorPrimary"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"/>
-        <TextView
-            android:background="@drawable/button_border"
-            android:id="@+id/nxt_auction"
-            android:textColor="@color/colorBlack"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:text=""
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
 
-    </LinearLayout>
-    <LinearLayout
-        android:weightSum="3"
-        android:background="@drawable/button_border"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:textColor="@color/colorBlack"
-            android:background="@drawable/button_border"
-            android:textSize="18sp"
-            android:paddingLeft="05dp"
-            android:text="Remaining Days:"
-            android:layout_weight="2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-        <View
-            android:background="@color/colorPrimary"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"/>
-
-        <TextView
-            android:id="@+id/remainingDays"
-            android:textColor="@color/colorBlack"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:background="@drawable/button_border"
-            android:text=""
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
 
 </LinearLayout>

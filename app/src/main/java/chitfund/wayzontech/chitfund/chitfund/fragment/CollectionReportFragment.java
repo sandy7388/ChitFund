@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -82,28 +83,34 @@ public class CollectionReportFragment extends Fragment
                        try {
                            JSONObject jsonObject = new JSONObject(response);
 
-                           if (jsonObject.getString("success").equals("1"))
-                           {
-                               strTicketNo = jsonObject.getString("");
-                               strAuctionNo = jsonObject.getString("");
-                               strMemberName = jsonObject.getString("");
-                               strCollectionType = jsonObject.getString("");
-                               strAmount = jsonObject.getString("");
-                               strChequeNo = jsonObject.getString("");
-                               strChequeDate = jsonObject.getString("");
-                               strBankName = jsonObject.getString("");
-                               strReceiptNo = jsonObject.getString("");
-                               strReceiptDate = jsonObject.getString("");
+                           JSONArray jsonArray = jsonObject.getJSONArray("colreport");
 
-                               CollectionReport collectionReport = new CollectionReport(strTicketNo,strAuctionNo,
-                                       strMemberName,strCollectionType,strAmount,strChequeNo,strChequeDate,
-                                       strBankName,strReceiptNo,strReceiptDate);
+                           for (int i = 0; i<jsonArray.length();i++) {
 
-                               collectionReportArrayList.add(collectionReport);
+                               JSONObject object = jsonArray.getJSONObject(i);
 
-                               collectionReportAdapter.notifyDataSetChanged();
+                               if (jsonObject.getString("success").equals("1")) {
+                                   strTicketNo = object.getString("ticket_no");
+                                   strAuctionNo = object.getString("auction_id");
+                                   strMemberName = object.getString("member_name");
+                                   strCollectionType = object.getString("collection_type");
+                                   strAmount = object.getString("amount");
+                                   strChequeNo = object.getString("cheque_no");
+                                   strChequeDate = object.getString("date1");
+                                   strBankName = object.getString("bank_name");
+                                   strReceiptNo = object.getString("entry_no");
+                                   strReceiptDate = object.getString("date1");
 
-                               progressDialog.dismiss();
+                                   CollectionReport collectionReport = new CollectionReport(strTicketNo, strAuctionNo,
+                                           strMemberName, strCollectionType, strAmount, strChequeNo, strChequeDate,
+                                           strBankName, strReceiptNo, strReceiptDate);
+
+                                   collectionReportArrayList.add(collectionReport);
+
+                                   collectionReportAdapter.notifyDataSetChanged();
+
+                                   progressDialog.dismiss();
+                               }
                            }
 
                        } catch (JSONException e) {
@@ -123,7 +130,7 @@ public class CollectionReportFragment extends Fragment
            @Override
            protected Map<String, String> getParams() throws AuthFailureError {
                Map<String, String> params = new HashMap<>();
-               params.put("member_id",session.getMemberID());
+               params.put("memberid",session.getMemberID());
                return params;
            }
        };

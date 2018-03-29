@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
@@ -105,56 +106,6 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
 
     }
 
-    private void joinGroup()
-    {
-        progressDialog.show();
-        progressDialog.setMessage("Please wait....!");
-        progressDialog.setCancelable(true);
-        StringRequest stringRequest = new StringRequest(URLs.JOIN_GROUP,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try
-                        {
-                            JSONObject jsonObject = new JSONObject(response);
-                            if (jsonObject.getString("success").equals("1"))
-                            {
-                                progressDialog.dismiss();
-                                Toast.makeText(getContext(),jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getActivity(), MainActivity.class));
-                            }
-
-                            else
-                                progressDialog.dismiss();
-                                Toast.makeText(getContext(),jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
-
-                        }
-                        catch (JSONException e)
-                        {
-                            progressDialog.dismiss();
-                            e.printStackTrace();
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                progressDialog.dismiss();
-                error.printStackTrace();
-
-            }
-        })
-        {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
-                params.put("memberid",memberId);
-                params.put("groupid",groupId);
-                return params;
-            }
-        };
-        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
-    }
 
     private void getList()
     {
@@ -264,5 +215,56 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
         textViewAmount.setText("");
     }
 
+
+    private void joinGroup()
+    {
+        progressDialog.show();
+        progressDialog.setMessage("Please wait....!");
+        progressDialog.setCancelable(true);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,URLs.JOIN_GROUP,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try
+                        {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject.getString("success").equals("1"))
+                            {
+                                progressDialog.dismiss();
+                                Toast.makeText(getContext(),jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getActivity(), MainActivity.class));
+                            }
+
+                            else
+                                progressDialog.dismiss();
+                                Toast.makeText(getContext(),jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+
+                        }
+                        catch (JSONException e)
+                        {
+                            progressDialog.dismiss();
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                error.printStackTrace();
+
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("memberid",sessionManager.getMemberID());
+                params.put("groupid",groupId);
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+    }
 
 }
