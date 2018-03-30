@@ -1,6 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="05dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/textMsg"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"
+                android:layout_marginTop="7dp"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:text="Group Member Report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-</android.support.constraint.ConstraintLayout>
+            <Spinner
+                android:layout_below="@+id/textMsg"
+                android:id="@+id/spinnerMemberReport"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/bg_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="30sp"/>
+            <View
+                android:id="@+id/view1"
+                android:layout_below="@id/members"
+                android:background="@color/colorPrimary"
+                android:layout_marginTop="13sp"
+                android:layout_width="match_parent"
+                android:layout_height="1sp"/>
+            <LinearLayout
+                android:layout_marginTop="0dp"
+                android:id="@+id/lnrName"
+                android:layout_below="@id/view1"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <View
+                    android:layout_width="1sp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary"/>
+
+                <TextView
+                    android:gravity="center"
+                    android:text="ID"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content" />
+                <View
+                    android:layout_width="1sp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary"/>
+
+                <TextView
+                    android:gravity="center"
+                    android:text="Name"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"/>
+                <View
+                    android:layout_width="1sp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary"/>
+                <TextView
+                    android:gravity="center"
+                    android:text="Mobile"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"/>
+                <View
+                    android:layout_width="1sp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary"/>
+
+            </LinearLayout>
+            <View
+                android:layout_below="@id/members"
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="1sp"/>
+        </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:id="@+id/recyclerViewMemberReport">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+</LinearLayout>

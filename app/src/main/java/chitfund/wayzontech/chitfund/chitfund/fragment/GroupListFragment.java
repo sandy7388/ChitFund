@@ -63,7 +63,8 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_group_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_group_list,
+                container, false);
         initRecyclerView(view);
         recyclerView();
         return view;
@@ -147,7 +148,8 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
                                 }
 
                             }
-                            spinnerGrpName.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, grpName));
+                            spinnerGrpName.setAdapter(new ArrayAdapter<String>(getActivity(),
+                                    android.R.layout.simple_spinner_dropdown_item, grpName));
 
                         } catch (JSONException e) {
                             e.printStackTrace();
