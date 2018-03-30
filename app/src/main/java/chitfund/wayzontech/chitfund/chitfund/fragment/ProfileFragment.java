@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -68,7 +69,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         //buttonDelete.setOnClickListener(this);
         imageView.setOnClickListener(this);
 
-        //getProfile();
+        getProfile();
 
     }
 
@@ -81,19 +82,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            if (jsonObject.getString("success").equals("1"))
-                            {
-                                strName = jsonObject.getString("name");
-                                strMobile = jsonObject.getString("name");
-                                strEmail = jsonObject.getString("name");
-                                strBirthday = jsonObject.getString("name");
-                                strAddress = jsonObject.getString("");
 
-                                editTextName.setText(strName);
-                                editTextMobile.setText(strMobile);
-                                editTextEmail.setText(strEmail);
-                                editTextBirthday.setText(strBirthday);
-                                editTextAddress.setText(strAddress);
+                            JSONArray jsonArray = jsonObject.getJSONArray("profile_info");
+                            for (int i=0;i<jsonArray.length();i++) {
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                if (jsonObject.getString("success").equals("1")) {
+                                    strName = object.getString("member_name");
+                                    strMobile = object.getString("member_mobile");
+                                    strEmail = object.getString("email");
+                                    strBirthday = object.getString("birth_date");
+                                    strAddress = object.getString("member_address");
+
+                                    editTextName.setText(strName);
+                                    editTextMobile.setText(strMobile);
+                                    editTextEmail.setText(strEmail);
+                                    editTextBirthday.setText(strBirthday);
+                                    editTextAddress.setText(strAddress);
+                                }
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -111,7 +116,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> map = new HashMap<>();
-                map.put("userid",session.getUserID());
+                //map.put("userid",session.getUserID());
                 map.put("memberid",session.getMemberID());
                 return map;
             }

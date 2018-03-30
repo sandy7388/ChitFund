@@ -34,5 +34,5 @@ public class URLs
 
     public static final String UPDATE_URL = BASE_URL + "";
 
-    public static final String PROFILE_URL = BASE_URL + "";
+    public static final String PROFILE_URL = BASE_URL + "groupinfo/getprofile";
 }
