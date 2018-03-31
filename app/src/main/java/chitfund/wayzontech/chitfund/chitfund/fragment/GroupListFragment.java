@@ -65,6 +65,7 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_group_list,
                 container, false);
+        getActivity().setTitle("Group List");
         initRecyclerView(view);
         recyclerView();
         return view;

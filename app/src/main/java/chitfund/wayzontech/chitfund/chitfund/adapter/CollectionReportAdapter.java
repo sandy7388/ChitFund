@@ -26,7 +26,8 @@ public class CollectionReportAdapter extends RecyclerView.Adapter<CollectionRepo
     public CollectionReportViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.adapter_collection_report,parent,false);
+                .inflate(R.layout.adapter_collection_report,
+                        parent,false);
         return new CollectionReportViewHolder(view);
     }
 

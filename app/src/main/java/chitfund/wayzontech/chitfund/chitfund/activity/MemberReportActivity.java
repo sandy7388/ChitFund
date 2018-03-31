@@ -87,7 +87,7 @@ public class MemberReportActivity extends AppCompatActivity implements AdapterVi
 
     void getMemberReport()
     {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.JOINED_GROUP,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.GROUP_REPORT,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response)

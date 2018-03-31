@@ -30,9 +30,17 @@ public class URLs
 
     public static final String COLLECTION_REPORT = BASE_URL + "groupinfo/collectionreport";
 
+    public static final String GROUP_REPORT = BASE_URL + "groupinfo/userwisegroupList";
+
+    public static final String UPCOMING_REPORT = BASE_URL +"groupinfo/upcomingReport";
+
+    public static final String ADVANCE_REPORT = BASE_URL + "groupinfo/advancecolReport";
+
     public static final String DELETE_URL = BASE_URL + "";
 
     public static final String UPDATE_URL = BASE_URL + "";
 
     public static final String PROFILE_URL = BASE_URL + "groupinfo/getprofile";
+
+    public static final String WEBVIEW_URL = BASE_URL + "realtimeauction/webviewTimer";
 }

@@ -62,7 +62,7 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
     View view = inflater.inflate(R.layout.fragment_joined_group,
                 container, false);
         initialization(view);
-        //getJoinedGroup();
+        getActivity().setTitle("Joined Group");
         recyclerViewInit();
 
         return view;

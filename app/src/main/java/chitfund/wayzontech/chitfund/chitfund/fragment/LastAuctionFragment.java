@@ -64,6 +64,7 @@ public class LastAuctionFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_last_auction,
                 container, false);
         initRecyclerView(view);
+        getActivity().setTitle("Last Auction Details");
         return view;
     }
     @SuppressLint("SimpleDateFormat")

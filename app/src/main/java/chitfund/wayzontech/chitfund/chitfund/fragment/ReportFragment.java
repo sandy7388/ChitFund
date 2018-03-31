@@ -11,15 +11,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
+import chitfund.wayzontech.chitfund.chitfund.activity.AdvanceReportActivity;
 import chitfund.wayzontech.chitfund.chitfund.activity.CollectionReportActivity;
 import chitfund.wayzontech.chitfund.chitfund.activity.MemberReportActivity;
-import chitfund.wayzontech.chitfund.chitfund.activity.UpcomingInstallmentActivity;
+import chitfund.wayzontech.chitfund.chitfund.activity.UpcomingReportActivity;
 
 import static android.content.ContentValues.TAG;
 
 public class ReportFragment extends Fragment implements View.OnClickListener {
     private TextView textViewCollectionReport,textViewMemberReport,
-            textViewUpcomingReport;
+            textViewUpcomingReport,textViewAdvanceReport;
     public ReportFragment() {
     }
 
@@ -27,7 +28,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_reports,container,false);
+        View view = inflater.inflate(R.layout.fragment_reports,
+                container,false);
         initController(view);
         return view;
     }
@@ -37,10 +39,12 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
         textViewCollectionReport = view.findViewById(R.id.textViewCollectionReport);
         textViewMemberReport = view.findViewById(R.id.textViewMemberReport);
         textViewUpcomingReport = view.findViewById(R.id.textViewUpcomingReport);
+        textViewAdvanceReport = view.findViewById(R.id.textViewAdvanceReport);
 
         textViewCollectionReport.setOnClickListener(this);
         textViewMemberReport.setOnClickListener(this);
         textViewUpcomingReport.setOnClickListener(this);
+        textViewAdvanceReport.setOnClickListener(this);
 
     }
 
@@ -75,8 +79,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.textViewUpcomingReport:
-                startActivity(new Intent(getActivity(), UpcomingInstallmentActivity.class));
+                startActivity(new Intent(getActivity(), UpcomingReportActivity.class));
                 break;
+            case R.id.textViewAdvanceReport:
+                startActivity(new Intent(getActivity(), AdvanceReportActivity.class));
 
         }
     }

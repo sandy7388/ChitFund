@@ -62,7 +62,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile,
                 container, false);
-
+        getActivity().setTitle("Profile");
         initController(view);
         return view;
     }

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:background="@drawable/button_border"
+            android:weightSum="9"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/ticketNoUpcoming"
+                android:textSize="18dp"
+                android:padding="03sp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Ticket No."
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"/>
+            <TextView
+                android:id="@+id/memberNameUpcoming"
+                android:textSize="18dp"
+                android:padding="03sp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Member Name"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"/>
+            <TextView
+                android:id="@+id/collectionTypeUpcoming"
+                android:textSize="18dp"
+                android:padding="03sp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Collection Type"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"/>
+            <TextView
+                android:id="@+id/amountUpcoming"
+                android:textSize="18dp"
+                android:padding="03sp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Amount"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"/>
+            <TextView
+                android:id="@+id/chequeNoUpcoming"
+                android:textSize="18dp"
+                android:padding="03sp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Cheque No"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"/>
+            <TextView
+                android:id="@+id/chequeDateUpcoming"
+                android:textSize="18dp"
+                android:padding="03sp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Cheque Date"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"/>
+            <TextView
+                android:id="@+id/bankNameUpcoming"
+                android:textSize="18dp"
+                android:padding="03sp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Bank Name"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"/>
+            <TextView
+                android:id="@+id/receiptNoUpcoming"
+                android:textSize="18dp"
+                android:padding="03sp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Receipt No"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"/>
+            <TextView
+                android:id="@+id/receiptDateUpcoming"
+                android:textSize="18dp"
+                android:padding="03sp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Receipt Date"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

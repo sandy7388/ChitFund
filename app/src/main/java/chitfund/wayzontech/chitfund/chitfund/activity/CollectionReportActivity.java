@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -39,9 +40,6 @@ public class CollectionReportActivity extends AppCompatActivity implements Swipe
     private String strTicketNo,strAuctionNo,strMemberName,strCollectionType,
                     strAmount,strChequeNo,strChequeDate,strBankName,
                     strReceiptNo,strReceiptDate;
-    public CollectionReportActivity() {
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,8 +123,15 @@ public class CollectionReportActivity extends AppCompatActivity implements Swipe
 
                                    progressDialog.dismiss();
                                    swipeRefreshLayout.setRefreshing(false);
+                                   Toast.makeText(CollectionReportActivity.this,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
 
                                }
+
+                               else
+                                   progressDialog.dismiss();
+                                   swipeRefreshLayout.setRefreshing(false);
+                                   Toast.makeText(CollectionReportActivity.this,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+
                            }
 
                        } catch (JSONException e) {

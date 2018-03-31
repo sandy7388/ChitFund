@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
+import chitfund.wayzontech.chitfund.chitfund.activity.MainActivity;
 
 import static android.content.ContentValues.TAG;
 
@@ -65,7 +66,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E dd/MM/yyyy");
         date.setText(simpleDateFormat.format(calendar.getTime()));
-
+        getActivity().setTitle("Home");
         return view;
     }
 
@@ -91,24 +92,32 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         switch (v.getId())
         {
+            case R.id.lnr_profile:
+                setFragments(new ProfileFragment());
+                MainActivity.navItemIndex =1;
+                break;
+
             case R.id.linear_auction:
                 setFragments(new AuctionFragment());
-                break;
-            case R.id.lnr_groupList:
-                setFragments(new GroupListFragment());
+                MainActivity.navItemIndex =2;
                 break;
             case R.id.lnr_joinedGroup:
                 setFragments(new JoinedGroupFragment());
+                MainActivity.navItemIndex =3;
                 break;
             case R.id.lnr_last_auction:
                 setFragments(new LastAuctionFragment());
+                MainActivity.navItemIndex =4;
+                break;
+            case R.id.lnr_groupList:
+                setFragments(new GroupListFragment());
+                MainActivity.navItemIndex =5;
                 break;
             case R.id.lnr_notificaion:
                 setFragments(new ReportFragment());
+                MainActivity.navItemIndex =6;
                 break;
-            case R.id.lnr_profile:
-                setFragments(new ProfileFragment());
-                break;
+
         }
     }
 }

@@ -62,7 +62,7 @@ public class EditProfileFragment extends Fragment
     {
         View view = inflater.inflate(R.layout.fragment_edit_profile,
                 container, false);
-
+        getActivity().setTitle("Edit Profile");
         initController(view);
         return view;
     }

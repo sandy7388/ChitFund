@@ -27,6 +27,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -38,6 +39,7 @@ import chitfund.wayzontech.chitfund.chitfund.fragment.HomeFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.JoinedGroupFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.LastAuctionFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.ProfileFragment;
+import chitfund.wayzontech.chitfund.chitfund.fragment.ReportFragment;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.Config;
 import chitfund.wayzontech.chitfund.chitfund.receiverNservices.NotificationUtils;
 import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity
     private Toolbar toolbar;
     private FloatingActionButton fab;
     private View navHeader;
+    private TextView textName,textEmail;
     public static int navItemIndex = 0;
 
     private static final String TAG_HOME = "home";
@@ -148,6 +151,8 @@ public class MainActivity extends AppCompatActivity
         navigationView = findViewById(R.id.nav_view);
         fab = findViewById(R.id.fab);
         navHeader = navigationView.getHeaderView(0);
+        textName = navHeader.findViewById(R.id.userName);
+        textEmail = navHeader.findViewById(R.id.userEmail);
         fab.setOnClickListener(this);
         if(!SessionManager.getInstance(this).isLoggedIn())
         {
@@ -155,30 +160,15 @@ public class MainActivity extends AppCompatActivity
             finish();
         }
         setUpNavigationView();
-        //navigationView.getMenu().getItem(4).setActionView(R.layout.menu_dot);
     }
 
     private void loadHomeFragment() {
-        // selecting appropriate nav menu item
-        //selectNavMenu();
 
-        // set toolbar title
-        //setToolbarTitle();
-
-        // if user select the current navigation menu again, don't do anything
-        // just close the navigation drawer
         if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
             drawer.closeDrawers();
-            // show or hide the fab button
-            //toggleFab();
             return;
         }
 
-
-        // Sometimes, when fragment has huge data, screen seems hanging
-        // when switching between navigation menus
-        // So using runnable, the fragment is loaded with cross fade effect
-        // This effect can be seen in GMail app
         Runnable mPendingRunnable = new Runnable() {
             @Override
             public void run() {
@@ -192,13 +182,9 @@ public class MainActivity extends AppCompatActivity
             }
         };
 
-        // If mPendingRunnable is not null, then add to the message queue
         if (mPendingRunnable != null) {
             mHandler.post(mPendingRunnable);
         }
-
-        // show or hide the fab button
-        //toggleFab();
 
         //Closing drawer on item click
         drawer.closeDrawers();
@@ -228,15 +214,10 @@ public class MainActivity extends AppCompatActivity
             case 5:
                 // Group List
                 return new GroupListFragment();
-//            case 6:
-//                // Notification
-//                return new NotificationsFragment();
             case 6:
                 // Collection Reports
-                //return new CollectionReportActivity();
-            case 7:
-                // Member Reports
-                //return new MemberReportActivity();
+                return new ReportFragment();
+
             default:
                 // Home
                 return new HomeFragment();

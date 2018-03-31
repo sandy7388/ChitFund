@@ -52,9 +52,10 @@
             </intent-filter>
         </service>
         <!-- ./Firebase Notifications -->
-        <activity android:name=".activity.UpcomingInstallmentActivity"/>
-        <activity android:name=".activity.CollectionReportActivity"/>
-        <activity android:name=".activity.MemberReportActivity"/>
+        <activity android:name=".activity.UpcomingReportActivity" />
+        <activity android:name=".activity.CollectionReportActivity" />
+        <activity android:name=".activity.MemberReportActivity" />
+        <activity android:name=".activity.AdvanceReportActivity"></activity>
     </application>
 
 </manifest>

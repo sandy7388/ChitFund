@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:background="@drawable/button_border"
+            android:weightSum="6"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/ticketNoAdvance"
+                android:textSize="18dp"
+                android:padding="03sp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Ticket No."
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"/>
+            <TextView
+                android:id="@+id/memberNameAdvance"
+                android:textSize="18dp"
+                android:padding="03sp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Member Name"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"/>
+            <TextView
+                android:id="@+id/collectionTypeAdvance"
+                android:textSize="18dp"
+                android:padding="03sp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Collection Type"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"/>
+            <TextView
+                android:id="@+id/textViewAmountAdvance"
+                android:textSize="18dp"
+                android:padding="03sp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Amount"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:id="@+id/receiptNoAdvance"
+                android:textSize="18dp"
+                android:padding="03sp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Receipt No"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"/>
+            <TextView
+                android:id="@+id/receiptDateAdvance"
+                android:textSize="18dp"
+                android:padding="03sp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Receipt Date"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>
