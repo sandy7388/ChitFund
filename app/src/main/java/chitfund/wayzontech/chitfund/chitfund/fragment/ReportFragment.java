@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
+import chitfund.wayzontech.chitfund.chitfund.activity.CollectionReportActivity;
+import chitfund.wayzontech.chitfund.chitfund.activity.MemberReportActivity;
 import chitfund.wayzontech.chitfund.chitfund.activity.UpcomingInstallmentActivity;
 
 import static android.content.ContentValues.TAG;
@@ -63,13 +65,13 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
         switch (v.getId())
         {
             case R.id.textViewCollectionReport:
-                startActivity(new Intent(getActivity(), CollectionReportFragment.class));
-                //setFragments(new CollectionReportFragment());
+                startActivity(new Intent(getActivity(), CollectionReportActivity.class));
+                //setFragments(new CollectionReportActivity());
                 break;
 
             case R.id.textViewMemberReport:
-                startActivity(new Intent(getActivity(), MemberReportFragment.class));
-                //setFragments(new MemberReportFragment());
+                startActivity(new Intent(getActivity(), MemberReportActivity.class));
+                //setFragments(new MemberReportActivity());
                 break;
 
             case R.id.textViewUpcomingReport:

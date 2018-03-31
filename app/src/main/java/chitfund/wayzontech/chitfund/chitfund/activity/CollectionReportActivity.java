@@ -1,4 +1,4 @@
-package chitfund.wayzontech.chitfund.chitfund.fragment;
+package chitfund.wayzontech.chitfund.chitfund.activity;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -28,7 +28,7 @@ import chitfund.wayzontech.chitfund.chitfund.model.CollectionReport;
 import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
-public class CollectionReportFragment extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class CollectionReportActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
@@ -39,20 +39,9 @@ public class CollectionReportFragment extends AppCompatActivity implements Swipe
     private String strTicketNo,strAuctionNo,strMemberName,strCollectionType,
                     strAmount,strChequeNo,strChequeDate,strBankName,
                     strReceiptNo,strReceiptDate;
-    public CollectionReportFragment() {
+    public CollectionReportActivity() {
     }
 
-//    @Nullable
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.activity_collection_report,
-//                container,false);
-//        recyclerView = view.findViewById(R.id.recyclerViewCollectionReport);
-//        swipeRefreshLayout = view.findViewById(R.id.swipeToRefreshCollectionReport);
-//        initRecyclerView();
-//        //getData();
-//        return view;
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

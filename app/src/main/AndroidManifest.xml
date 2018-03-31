@@ -53,8 +53,8 @@
         </service>
         <!-- ./Firebase Notifications -->
         <activity android:name=".activity.UpcomingInstallmentActivity"/>
-        <activity android:name=".fragment.CollectionReportFragment"/>
-        <activity android:name=".fragment.MemberReportFragment"/>
+        <activity android:name=".activity.CollectionReportActivity"/>
+        <activity android:name=".activity.MemberReportActivity"/>
     </application>
 
 </manifest>

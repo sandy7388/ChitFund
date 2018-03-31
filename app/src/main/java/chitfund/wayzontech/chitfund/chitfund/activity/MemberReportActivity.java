@@ -1,4 +1,4 @@
-package chitfund.wayzontech.chitfund.chitfund.fragment;
+package chitfund.wayzontech.chitfund.chitfund.activity;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -32,7 +32,7 @@ import chitfund.wayzontech.chitfund.chitfund.model.MemberReport;
 import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
-public class MemberReportFragment extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class MemberReportActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private Spinner spinner;
@@ -45,7 +45,7 @@ public class MemberReportFragment extends AppCompatActivity implements AdapterVi
     private String memberId,memberName,memberMobile,groupName,groupId;
     private SessionManager sessionManager;
     private Button buttonDeleteGroup;
-    public MemberReportFragment() {
+    public MemberReportActivity() {
     }
 
     @Override
@@ -125,7 +125,7 @@ public class MemberReportFragment extends AppCompatActivity implements AdapterVi
                                     memberReportAdapter.notifyDataSetChanged();
                                 }
                             }
-                            spinner.setAdapter(new ArrayAdapter<String>(MemberReportFragment.this,
+                            spinner.setAdapter(new ArrayAdapter<String>(MemberReportActivity.this,
                                     android.R.layout.simple_spinner_dropdown_item,grpName));
 
 

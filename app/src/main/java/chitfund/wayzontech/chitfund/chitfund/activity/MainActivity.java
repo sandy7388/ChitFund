@@ -37,10 +37,7 @@ import chitfund.wayzontech.chitfund.chitfund.fragment.GroupListFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.HomeFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.JoinedGroupFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.LastAuctionFragment;
-import chitfund.wayzontech.chitfund.chitfund.fragment.MemberReportFragment;
-import chitfund.wayzontech.chitfund.chitfund.fragment.NotificationsFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.ProfileFragment;
-import chitfund.wayzontech.chitfund.chitfund.fragment.CollectionReportFragment;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.Config;
 import chitfund.wayzontech.chitfund.chitfund.receiverNservices.NotificationUtils;
 import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
@@ -236,10 +233,10 @@ public class MainActivity extends AppCompatActivity
 //                return new NotificationsFragment();
             case 6:
                 // Collection Reports
-                //return new CollectionReportFragment();
+                //return new CollectionReportActivity();
             case 7:
                 // Member Reports
-                //return new MemberReportFragment();
+                //return new MemberReportActivity();
             default:
                 // Home
                 return new HomeFragment();
