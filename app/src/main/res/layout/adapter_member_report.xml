@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     android:orientation="vertical"
-    android:padding="05dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <View
         android:layout_below="@id/members"
         android:background="@color/colorPrimary"
@@ -25,7 +24,7 @@
 
         <TextView
             android:id="@+id/textViewMemberId"
-            android:gravity="center"
+            android:gravity="center_horizontal|center_vertical"
             android:text="ID"
             android:textColor="@color/colorBlack"
             android:textStyle="bold"
@@ -39,7 +38,7 @@
 
         <TextView
             android:id="@+id/textViewMemberName"
-            android:gravity="center"
+            android:gravity="center_horizontal|center_vertical"
             android:text="Name"
             android:textColor="@color/colorBlack"
             android:textStyle="bold"
@@ -52,7 +51,7 @@
             android:background="@color/colorPrimary"/>
         <TextView
             android:id="@+id/textViewMemberMobile"
-            android:gravity="center"
+            android:gravity="center_horizontal|center_vertical"
             android:text="Mobile"
             android:textColor="@color/colorBlack"
             android:textStyle="bold"

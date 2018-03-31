@@ -66,12 +66,11 @@ public class MainActivity extends AppCompatActivity
     //private static final String TAG_NOTIFICATIONS = "notifications";
     private static final String TAG_GRPLIST = "group_list";
     private static final String TAG_JOINEDGRP = "joined_grplist";
-    private static final String TAG_COLLECTION_REPORTS = "collection_reports";
+    private static final String TAG_REPORTS = "reports";
     private static final String TAG_MEMBER_REPORTS = "member_reports";
 
     public static String CURRENT_TAG = TAG_HOME;
 
-    private boolean shouldLoadHomeFragOnBackPress = true;
     private Handler mHandler;
 
     @Override
@@ -164,7 +163,7 @@ public class MainActivity extends AppCompatActivity
 
     private void loadHomeFragment() {
         // selecting appropriate nav menu item
-        selectNavMenu();
+        //selectNavMenu();
 
         // set toolbar title
         //setToolbarTitle();
@@ -174,7 +173,7 @@ public class MainActivity extends AppCompatActivity
         if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
             drawer.closeDrawers();
             // show or hide the fab button
-            toggleFab();
+            //toggleFab();
             return;
         }
 
@@ -202,7 +201,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         // show or hide the fab button
-        toggleFab();
+        //toggleFab();
 
         //Closing drawer on item click
         drawer.closeDrawers();
@@ -237,10 +236,10 @@ public class MainActivity extends AppCompatActivity
 //                return new NotificationsFragment();
             case 6:
                 // Collection Reports
-                return new CollectionReportFragment();
+                //return new CollectionReportFragment();
             case 7:
                 // Member Reports
-                return new MemberReportFragment();
+                //return new MemberReportFragment();
             default:
                 // Home
                 return new HomeFragment();
@@ -283,18 +282,12 @@ public class MainActivity extends AppCompatActivity
                         navItemIndex = 5;
                         CURRENT_TAG = TAG_GRPLIST;
                         break;
-//                    case R.id.nav_notifications:
-//                        navItemIndex = 6;
-//                        CURRENT_TAG = TAG_NOTIFICATIONS;
-//                        break;
-                    case R.id.nav_collection_report:
+
+                    case R.id.nav_report:
                         navItemIndex = 6;
-                        CURRENT_TAG = TAG_COLLECTION_REPORTS;
+                        CURRENT_TAG = TAG_REPORTS;
                         break;
-                    case R.id.nav_member_report:
-                        navItemIndex = 7;
-                        CURRENT_TAG = TAG_MEMBER_REPORTS;
-                        break;
+
                     default:
                         navItemIndex = 0;
                 }
@@ -416,28 +409,24 @@ public class MainActivity extends AppCompatActivity
 
 
     // onBack pressed
-    boolean doubleBackToExitPressedOnce = false;
-
+    private boolean doubleBackToExitPressedOnce = false;
+    boolean shouldLoadHomeFragOnBackPress = true;
     @Override
     public void onBackPressed() {
 
-        // This code loads home fragment when back key is pressed
-        // when user is in other fragment than home
-        if (shouldLoadHomeFragOnBackPress) {
-            // checking if user is on other navigation menu
-            // rather than home
-            if (navItemIndex != 0) {
-                navItemIndex = 0;
-                CURRENT_TAG = TAG_HOME;
-                loadHomeFragment();
-                return;
-            }
-        }
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawers();
             return;
         }
 
+        if (shouldLoadHomeFragOnBackPress) {
+
+            if (navItemIndex != 0) {
+//                navItemIndex = 0;
+                CURRENT_TAG = TAG_HOME;
+                setFragment(new HomeFragment());
+            }
+        }
 
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
@@ -454,14 +443,10 @@ public class MainActivity extends AppCompatActivity
                 doubleBackToExitPressedOnce=false;
             }
         }, 2000);
+
     }
 
-    // show or hide the fab
-    private void toggleFab() {
-//        if (navItemIndex == 0)
-//            fab.show();
-//        else
-            fab.hide();
-    }
+
+
 
 }

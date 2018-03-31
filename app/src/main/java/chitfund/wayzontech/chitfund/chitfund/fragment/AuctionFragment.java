@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +17,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
+import chitfund.wayzontech.chitfund.chitfund.interfaces.OnBackPressedListener;
 
 /**
  * Created by sandy on 12/3/18.
  */
 
-public class AuctionFragment extends Fragment {
+public class AuctionFragment extends Fragment  {
 
 
     @Nullable
@@ -31,5 +33,4 @@ public class AuctionFragment extends Fragment {
 
         return view;
     }
-
 }

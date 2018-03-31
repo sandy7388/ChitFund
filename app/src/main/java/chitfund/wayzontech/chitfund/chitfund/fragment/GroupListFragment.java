@@ -124,6 +124,7 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
                             for (int i=0;i<groupInfo.length();i++)
                             {
                                 object = groupInfo.getJSONObject(i);
+
                                 grpName.add(object.getString("group_name"));
 
                                 String amount = object.getString("amount");
@@ -148,8 +149,7 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
                                 }
 
                             }
-                            spinnerGrpName.setAdapter(new ArrayAdapter<String>(getActivity(),
-                                    android.R.layout.simple_spinner_dropdown_item, grpName));
+                            spinnerGrpName.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, grpName));
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -203,7 +203,9 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
                         groupListAdapter.notifyDataSetChanged();
 
                     }
-                } catch (JSONException e) {
+                }
+
+                catch (JSONException e) {
                     e.printStackTrace();
                 }
             }

@@ -1,7 +1,13 @@
 package chitfund.wayzontech.chitfund.chitfund.fragment;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -11,34 +17,39 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
 import chitfund.wayzontech.chitfund.chitfund.R;
+import chitfund.wayzontech.chitfund.chitfund.activity.MainActivity;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private EditText editTextName,editTextEmail,
                     editTextAddress,editTextBirthday,editTextMobile;
-    private ImageView imageView;
+    private ImageView imageViewEdit,imageViewProfile,imageViewChange;
     private Button buttonDelete;
     private SessionManager session;
+    private DateFormat date,time;
+    private Date d;
     private String strName,strMobile,strEmail,strAddress,strBirthday;
     public ProfileFragment() {
         // Required empty public constructor
@@ -59,7 +70,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     void initController(View view)
     {
         session = new SessionManager(getContext());
-        imageView = view.findViewById(R.id.imageEdit);
+        imageViewEdit = view.findViewById(R.id.imageEdit);
+        imageViewChange = view.findViewById(R.id.imageChange);
+        imageViewProfile = view.findViewById(R.id.profileImage);
         editTextName = view.findViewById(R.id.profileName);
         editTextAddress = view.findViewById(R.id.profileAddress);
         editTextEmail = view.findViewById(R.id.profileEmail);
@@ -67,8 +80,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         editTextMobile = view.findViewById(R.id.profileMobile);
         buttonDelete = view.findViewById(R.id.btnDeleteAccount);
         //buttonDelete.setOnClickListener(this);
-        imageView.setOnClickListener(this);
-
+        imageViewEdit.setOnClickListener(this);
+        imageViewChange.setOnClickListener(this);
         getProfile();
 
     }
@@ -93,10 +106,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                     strBirthday = object.getString("birth_date");
                                     strAddress = object.getString("member_address");
 
+                                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                    try {
+                                        d = dateFormat.parse(strBirthday);
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    date = new SimpleDateFormat("dd-MM-yyyy");
+
                                     editTextName.setText(strName);
                                     editTextMobile.setText(strMobile);
                                     editTextEmail.setText(strEmail);
-                                    editTextBirthday.setText(strBirthday);
+                                    editTextBirthday.setText(date.format(d));
                                     editTextAddress.setText(strAddress);
                                 }
                             }
@@ -151,6 +172,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             case R.id.btnDeleteAccount:
                 deleteAccount();
                 break;
+            case R.id.imageChange:
+                alertForImage();
+                break;
         }
     }
 
@@ -178,5 +202,62 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             }
         };
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+    }
+    // Alert for logout
+    void alertForImage()
+    {
+        AlertDialog.Builder aBuilder = new AlertDialog.Builder(getContext());
+
+        aBuilder.setMessage("Choose One");
+        //aBuilder.setTitle("Logout Alert");
+        //aBuilder.setIcon(R.drawable.warning);
+        aBuilder.setPositiveButton("Gallery", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(pickPhoto , 1);//one can be replaced with any action code
+            }
+        });
+        aBuilder.setPositiveButton("Camera", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(takePicture, 0);//zero can be replaced with any action code
+            }
+        });
+        aBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog alertDialog = aBuilder.create();
+        alertDialog.show();
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode)
+        {
+            case 0:
+                if (resultCode==RESULT_OK)
+                {
+                    Uri uri = data.getData();
+                    imageViewProfile.setImageURI(uri);
+                }
+            case 1:
+                if (resultCode==RESULT_OK)
+                {
+                    Uri uri = data.getData();
+                    imageViewProfile.setImageURI(uri);
+                }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 }

@@ -2,13 +2,10 @@ package chitfund.wayzontech.chitfund.chitfund.fragment;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -31,8 +28,8 @@ import chitfund.wayzontech.chitfund.chitfund.model.CollectionReport;
 import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
-public class CollectionReportFragment extends Fragment
-{
+public class CollectionReportFragment extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+    private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private ArrayList<CollectionReport> collectionReportArrayList;
@@ -45,33 +42,61 @@ public class CollectionReportFragment extends Fragment
     public CollectionReportFragment() {
     }
 
-    @Nullable
+//    @Nullable
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        View view = inflater.inflate(R.layout.activity_collection_report,
+//                container,false);
+//        recyclerView = view.findViewById(R.id.recyclerViewCollectionReport);
+//        swipeRefreshLayout = view.findViewById(R.id.swipeToRefreshCollectionReport);
+//        initRecyclerView();
+//        //getData();
+//        return view;
+//    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_collection_report,
-                container,false);
-        recyclerView = view.findViewById(R.id.recyclerViewCollectionReport);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_collection_report);
+
+        if (getSupportActionBar()!=null)
+        {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Collection Report");
+        }
+
+        recyclerView = findViewById(R.id.recyclerViewCollectionReport);
+        swipeRefreshLayout = findViewById(R.id.swipeToRefreshCollectionReport);
         initRecyclerView();
-        getData();
-        return view;
+
+
     }
 
    void initRecyclerView()
    {
 
-       session = new SessionManager(getActivity());
+       session = new SessionManager(this);
        collectionReportArrayList = new ArrayList<>();
-       layoutManager = new LinearLayoutManager(getActivity());
+       layoutManager = new LinearLayoutManager(this);
        recyclerView.setLayoutManager(layoutManager);
        recyclerView.setHasFixedSize(true);
-       collectionReportAdapter = new CollectionReportAdapter(collectionReportArrayList,getContext());
+       collectionReportAdapter = new CollectionReportAdapter(collectionReportArrayList,this);
        recyclerView.setAdapter(collectionReportAdapter);
+       swipeRefreshLayout.setOnRefreshListener(this);
+       swipeRefreshLayout.post(new Runnable() {
+           @Override
+           public void run() {
+               swipeRefreshLayout.setRefreshing(true);
+               getData();
+
+           }
+       });
 
    }
 
    void getData()
    {
-       progressDialog = new ProgressDialog(getContext());
+       progressDialog = new ProgressDialog(this);
        progressDialog.show();
        progressDialog.setMessage("Please wait....!");
        progressDialog.setCancelable(true);
@@ -110,10 +135,14 @@ public class CollectionReportFragment extends Fragment
                                    collectionReportAdapter.notifyDataSetChanged();
 
                                    progressDialog.dismiss();
+                                   swipeRefreshLayout.setRefreshing(false);
+
                                }
                            }
 
                        } catch (JSONException e) {
+                           swipeRefreshLayout.setRefreshing(false);
+
                            progressDialog.dismiss();
                            e.printStackTrace();
                        }
@@ -122,7 +151,10 @@ public class CollectionReportFragment extends Fragment
                }, new Response.ErrorListener() {
            @Override
            public void onErrorResponse(VolleyError error) {
+               swipeRefreshLayout.setRefreshing(false);
+
                progressDialog.dismiss();
+
                error.printStackTrace();
            }
        })
@@ -134,7 +166,11 @@ public class CollectionReportFragment extends Fragment
                return params;
            }
        };
-       VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+       VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
    }
 
+    @Override
+    public void onRefresh() {
+        getData();
+    }
 }

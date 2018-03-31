@@ -1,5 +1,6 @@
 package chitfund.wayzontech.chitfund.chitfund.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,7 +35,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // Required empty public constructor
     }
 
-
+    @SuppressLint("SimpleDateFormat")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -103,7 +104,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 setFragments(new LastAuctionFragment());
                 break;
             case R.id.lnr_notificaion:
-                setFragments(new CollectionReportFragment());
+                setFragments(new ReportFragment());
                 break;
             case R.id.lnr_profile:
                 setFragments(new ProfileFragment());

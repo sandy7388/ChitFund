@@ -2,17 +2,13 @@ package chitfund.wayzontech.chitfund.chitfund.fragment;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.android.volley.AuthFailureError;
@@ -36,7 +32,7 @@ import chitfund.wayzontech.chitfund.chitfund.model.MemberReport;
 import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
-public class MemberReportFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class MemberReportFragment extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private Spinner spinner;
@@ -46,36 +42,46 @@ public class MemberReportFragment extends Fragment implements AdapterView.OnItem
     private ProgressDialog progressDialog;
     private ArrayList<String> grpName;
     private MemberReportAdapter memberReportAdapter;
-    private String memberId,memberName,memberMobile,groupName;
+    private String memberId,memberName,memberMobile,groupName,groupId;
     private SessionManager sessionManager;
     private Button buttonDeleteGroup;
     public MemberReportFragment() {
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_member_report,
-                container,false);
-        initController(view);
-        return view;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_member_report);
+        if (getSupportActionBar()!=null)
+        {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Member Report");
+        }
+
+        spinner = findViewById(R.id.spinnerMemberReport);
+        recyclerView =  findViewById(R.id.recyclerViewMemberReport);
+        initController();
+        recyclerView();
     }
 
-    void initController(View view)
+    void initController()
     {
-        spinner = view.findViewById(R.id.spinnerMemberReport);
-        recyclerView =  view.findViewById(R.id.recyclerViewMemberReport);
-        memberReportArrayList = new ArrayList<>();
         grpName = new ArrayList<>();
-        progressDialog = new ProgressDialog(getContext());
-        sessionManager = new SessionManager(getActivity());
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
-        memberReportAdapter = new MemberReportAdapter(getContext(),memberReportArrayList);
-        recyclerView.setAdapter(memberReportAdapter);
+        progressDialog = new ProgressDialog(this);
+        sessionManager = new SessionManager(this);
         spinner.setOnItemSelectedListener(this);
         getMemberReport();
+    }
+
+    void recyclerView()
+    {
+        memberReportArrayList = new ArrayList<>();
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        memberReportAdapter = new MemberReportAdapter(this,memberReportArrayList);
+        recyclerView.setAdapter(memberReportAdapter);
+
     }
 
 
@@ -109,14 +115,20 @@ public class MemberReportFragment extends Fragment implements AdapterView.OnItem
                                     memberName = object.getString("member_name");
                                     memberMobile = object.getString("member_mobile");
 
-                                    MemberReport memberReport = new MemberReport(memberId,memberName,memberMobile);
+                                    MemberReport memberReport = new MemberReport();
+
+                                    memberReport.setMember_id(memberId);
+                                    memberReport.setMember_name(memberName);
+                                    memberReport.setMember_mobile(memberMobile);
 
                                     memberReportArrayList.add(memberReport);
                                     memberReportAdapter.notifyDataSetChanged();
                                 }
                             }
-                            spinner.setAdapter(new ArrayAdapter<String>(getActivity(),
+                            spinner.setAdapter(new ArrayAdapter<String>(MemberReportFragment.this,
                                     android.R.layout.simple_spinner_dropdown_item,grpName));
+
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -139,7 +151,7 @@ public class MemberReportFragment extends Fragment implements AdapterView.OnItem
             }
         };
 
-        VolleySingleton.getInstance(getActivity()).addToRequestQueue(stringRequest);    }
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);    }
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -147,35 +159,42 @@ public class MemberReportFragment extends Fragment implements AdapterView.OnItem
         groupName = spinner.getAdapter().getItem(position).toString();
         if (spinner.getId()==R.id.spinnerMemberReport)
         {
-            try {
-
-
-                for (int i= 0;i<groupJsonArray.length();i++)
-                {
-                    // object from groupInfo array
-                    jsonObject = groupJsonArray.getJSONObject(i);
-
-                    grpName.add(jsonObject.getString("group_name"));
-
-                    // array from innner object
-                    memberJsonArray = jsonObject.getJSONArray("member_info");
-                    for (int j=0;j<memberJsonArray.length();j++)
+            for (int i=0;i<groupJsonArray.length();i++)
+            {
+                try {
+                    if (groupJsonArray.getJSONObject(i).getString("group_name").equals(groupName))
                     {
-                        object = memberJsonArray.getJSONObject(j);
+                        memberReportArrayList = new ArrayList<>();
+                        groupId = groupJsonArray.getJSONObject(i).getString("group_id");
+                        memberJsonArray = groupJsonArray.getJSONObject(i).getJSONArray("member_info");
 
-                        memberId = object.getString("member_id");
-                        memberName = object.getString("member_name");
-                        memberMobile = object.getString("member_mobile");
+                        for (int j = 0; j < memberJsonArray.length(); j++)
+                        {
+                            object = memberJsonArray.getJSONObject(j);
 
-                        MemberReport memberReport = new MemberReport(memberId,memberName,memberMobile);
+                            memberId = object.getString("member_id");
+                            memberName = object.getString("member_name");
+                            memberMobile = object.getString("member_mobile");
 
-                        memberReportArrayList.add(memberReport);
+                            MemberReport memberReport = new MemberReport();
+
+                            memberReport.setMember_id(memberId);
+                            memberReport.setMember_name(memberName);
+                            memberReport.setMember_mobile(memberMobile);
+
+                            memberReportArrayList.add(memberReport);
+
+                        }
+                        memberReportAdapter = new MemberReportAdapter(this, memberReportArrayList);
+                        recyclerView.setAdapter(memberReportAdapter);
                         memberReportAdapter.notifyDataSetChanged();
                     }
+
+                }catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            }catch (JSONException e) {
-                e.printStackTrace();
             }
+
         }
     }
 

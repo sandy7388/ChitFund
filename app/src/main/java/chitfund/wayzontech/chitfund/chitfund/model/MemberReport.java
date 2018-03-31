@@ -10,6 +10,9 @@ public class MemberReport
         this.member_mobile = member_mobile;
     }
 
+    public MemberReport() {
+    }
+
     public String getMember_id() {
         return member_id;
     }

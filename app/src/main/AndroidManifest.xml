@@ -2,10 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="chitfund.wayzontech.chitfund.chitfund">
 
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
         android:allowBackup="true"
@@ -30,27 +33,28 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.RegistrationActivity"
-            android:label="@string/title_activity_register"/>
+            android:label="@string/title_activity_register" />
         <activity
             android:name=".activity.GroupInfoActivity"
             android:parentActivityName=".activity.MainActivity" />
-        <activity android:name=".activity.ChangePasswordActivity"
-            android:label="@string/title_activity_changePassword">
-
-        </activity>
+        <activity
+            android:name=".activity.ChangePasswordActivity"
+            android:label="@string/title_activity_changePassword" />
         <!-- Firebase Notifications -->
         <service android:name=".receiverNservices.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".receiverNservices.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
         <!-- ./Firebase Notifications -->
+        <activity android:name=".activity.UpcomingInstallmentActivity"/>
+        <activity android:name=".fragment.CollectionReportFragment"/>
+        <activity android:name=".fragment.MemberReportFragment"/>
     </application>
 
 </manifest>
