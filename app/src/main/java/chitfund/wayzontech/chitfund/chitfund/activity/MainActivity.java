@@ -389,39 +389,63 @@ public class MainActivity extends AppCompatActivity
     // onBack pressed
     private boolean doubleBackToExitPressedOnce = false;
     boolean shouldLoadHomeFragOnBackPress = true;
+//    @Override
+//    public void onBackPressed() {
+//
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawers();
+//            return;
+//        }
+//
+//        //if (shouldLoadHomeFragOnBackPress) {
+//
+//            if (navItemIndex != 0) {
+//                navItemIndex = 0;
+//                CURRENT_TAG = TAG_HOME;
+//                //setFragment(new HomeFragment());
+//            }
+//        //}
+//
+//        if (doubleBackToExitPressedOnce) {
+//            super.onBackPressed();
+//            return;
+//        }
+//
+//        this.doubleBackToExitPressedOnce = true;
+//
+//        Toast.makeText(this, "Please click back again to exit", Toast.LENGTH_SHORT).show();
+//
+//        new Handler().postDelayed(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                doubleBackToExitPressedOnce=false;
+//            }
+//        }, 2000);
+//
+//    }
+
     @Override
     public void onBackPressed() {
-
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawers();
             return;
         }
 
+        // This code loads home fragment when back key is pressed
+        // when user is in other fragment than home
         if (shouldLoadHomeFragOnBackPress) {
-
+            // checking if user is on other navigation menu
+            // rather than home
             if (navItemIndex != 0) {
-//                navItemIndex = 0;
+                navItemIndex = 0;
                 CURRENT_TAG = TAG_HOME;
-                setFragment(new HomeFragment());
+                loadHomeFragment();
+                return;
             }
         }
 
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
-        }
-
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click back again to exit", Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce=false;
-            }
-        }, 2000);
-
+        super.onBackPressed();
     }
 
 
