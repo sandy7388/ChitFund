@@ -36,9 +36,7 @@ public class URLs
 
     public static final String ADVANCE_REPORT = BASE_URL + "groupinfo/advancecolReport";
 
-    public static final String DELETE_URL = BASE_URL + "";
-
-    public static final String UPDATE_URL = BASE_URL + "";
+    public static final String UPDATE_URL = BASE_URL + "groupinfo/updateProfile";
 
     public static final String PROFILE_URL = BASE_URL + "groupinfo/getprofile";
 

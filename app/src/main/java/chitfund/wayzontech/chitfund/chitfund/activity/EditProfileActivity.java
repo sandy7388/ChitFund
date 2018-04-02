@@ -192,7 +192,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("userid",sessionManager.getUserID());
+                params.put("userid",sessionManager.getMemberID());
                 params.put("name",strName);
                 params.put("mobile",strMobile);
                 params.put("email",strEmail);
