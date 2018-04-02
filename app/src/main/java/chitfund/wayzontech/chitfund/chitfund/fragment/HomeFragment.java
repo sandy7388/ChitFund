@@ -18,6 +18,7 @@ import java.util.Calendar;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.activity.MainActivity;
+import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
 
 import static android.content.ContentValues.TAG;
 
@@ -32,6 +33,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private LinearLayout linearLayout_auction,linearLayout_group,
                         linearLayout_joined,linearLayout_last,
                         linearLayout_notification,linearLayout_profile;
+    private SessionManager session;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -67,6 +69,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E dd/MM/yyyy");
         date.setText(simpleDateFormat.format(calendar.getTime()));
         getActivity().setTitle("Home");
+        session = new SessionManager(getContext());
+        name.setText(session.getMemberID());
         return view;
     }
 
