@@ -420,18 +420,12 @@ public class MainActivity extends RuntimePermissionActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
-        switch (id)
-        {
+        switch (id) {
             case R.id.action_logout:
                 androidLogout();
-                //alertForLogout();
-                break;
-            case R.id.action_edit:
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -559,7 +553,8 @@ public class MainActivity extends RuntimePermissionActivity
 
     private void androidLogout()
     {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.LOGOUT_URL, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.LOGOUT_URL,
+                new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -569,6 +564,7 @@ public class MainActivity extends RuntimePermissionActivity
 
                     if (jsonObject.getString("success").equals("1"))
                     {
+                        Toast.makeText(MainActivity.this,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
                         if (checkNetworkConnection())
                         {
                             SessionManager.getInstance(MainActivity.this).logout();
@@ -577,6 +573,10 @@ public class MainActivity extends RuntimePermissionActivity
                         else
                             Toast.makeText(MainActivity.this,"Please check your network connection",Toast.LENGTH_SHORT).show();
                     }
+
+                    else
+                        Toast.makeText(MainActivity.this,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+
 
                 }
                 catch (JSONException e) {
@@ -595,8 +595,8 @@ public class MainActivity extends RuntimePermissionActivity
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("user_id",session.getUserID());
-                params.put("login_status",loginStatus);
+                params.put("userid",session.getUserID());
+                params.put("loginstatus",loginStatus);
                 return params;
             }
         };

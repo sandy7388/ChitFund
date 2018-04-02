@@ -42,5 +42,7 @@ public class URLs
 
     public static final String WEBVIEW_URL = BASE_URL + "realtimeauction/webviewTimer";
 
-    public static final String LOGOUT_URL = BASE_URL + "loginweb/logout ";
+    public static final String LOGOUT_URL = BASE_URL + "loginweb/logout";
+
+    public static final String LOGIN_CHECK_URL = BASE_URL + "";
 }

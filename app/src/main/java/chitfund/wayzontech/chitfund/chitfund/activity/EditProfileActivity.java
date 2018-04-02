@@ -162,11 +162,11 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                     {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            if (jsonObject.getString("success").equals("1"))
+                            if (jsonObject.getString("success").equals(0))
                             {
                                 progressDialog.dismiss();
                                 Toast.makeText(EditProfileActivity.this,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
-                                setFragments(new ProfileFragment());
+                                startActivity(new Intent(EditProfileActivity.this,MainActivity.class));
                             }
                             else
                                 progressDialog.dismiss();
@@ -192,11 +192,11 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("userid",sessionManager.getMemberID());
-                params.put("name",strName);
-                params.put("mobile",strMobile);
+                params.put("memberid",sessionManager.getMemberID());
+                params.put("membername",strName);
+                params.put("membermobile",strMobile);
                 params.put("email",strEmail);
-                params.put("birthday",strBirthday);
+                params.put("birthdate",strBirthday);
                 params.put("address",strAddress);
                 return params;
             }

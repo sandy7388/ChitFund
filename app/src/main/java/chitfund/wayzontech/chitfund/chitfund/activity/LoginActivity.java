@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,6 +46,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             getSupportActionBar().setTitle("Login");
         }
         initLogin();
+        //checkLoginFromServerSide();
     }
 
     private void initLogin()
@@ -69,7 +72,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 login();
                 break;
             case R.id.btn_register:
-                startActivity(new Intent(this,RegistrationActivity.class));
                 break;
         }
     }
@@ -191,4 +193,80 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         }, 2000);
     }
+
+//    public void checkLoginFromServerSide()
+//    {
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.LOGIN_CHECK_URL,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response)
+//                    {
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            if (jsonObject.getString("success").equals("1"))
+//                            {
+//                                if (SessionManager.getInstance(LoginActivity.this).isLoggedIn()) {
+//                                    finish();
+//                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                                    Toast.makeText(LoginActivity.this,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+//
+//                                }
+//                            }
+//
+//                            else if (jsonObject.getString("success").equals("0"))
+//                            {
+//                                SessionManager.getInstance(LoginActivity.this).logout();
+//                                finish();
+//                                //startActivity(new Intent(LoginActivity.this,LoginActivity.class));
+//
+//                                Toast.makeText(LoginActivity.this,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+//                            }
+//                            if(jsonObject.getString("success").equals("2"))
+//                            {
+//                                progressDialog.dismiss();
+//                                Toast.makeText(LoginActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+//                                //editText_user.setText("");
+//                                //editText_pass.setText("");
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        })
+//        {
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> params = new HashMap<>();
+//                params.put("user_id",sessionManager.getUserID());
+//                return params;
+//            }
+//        };
+//        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+//    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.register, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_register:
+                startActivity(new Intent(this,RegistrationActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

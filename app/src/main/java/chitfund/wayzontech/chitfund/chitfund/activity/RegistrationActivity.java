@@ -186,7 +186,7 @@ public class RegistrationActivity extends AppCompatActivity
                             else
                                 progressDialog.dismiss();
                                 Toast.makeText(RegistrationActivity.this,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(RegistrationActivity.this,RegistrationActivity.class));
+                                startActivity(new Intent(RegistrationActivity.this,LoginActivity.class));
 
                         } catch (JSONException e) {
                             e.printStackTrace();

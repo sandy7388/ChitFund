@@ -66,15 +66,15 @@
 
     <TextView
         android:layout_marginTop="7dp"
-        android:text="Birthday:"
+        android:text="Birthdate:"
         android:textColor="@color/colorBlack"
         android:textSize="18sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
+        android:inputType="date"
         android:id="@+id/editDob"
-        android:inputType="textEmailAddress"
         android:background="@drawable/button_border"
         android:ems="10"
         android:padding="5sp"
@@ -94,7 +94,7 @@
 
     <EditText
         android:id="@+id/editAddress"
-        android:inputType="textEmailAddress"
+        android:inputType="textCapWords"
         android:background="@drawable/button_border"
         android:ems="10"
         android:padding="5sp"

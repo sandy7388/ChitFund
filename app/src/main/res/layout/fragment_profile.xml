@@ -57,7 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="05dp"
-                    android:text="Profile"
+                    android:text="Basic Profile"
                     android:textColor="@color/colorBlack"
                     android:textStyle="bold"
                     android:textSize="18dp" />
@@ -138,7 +138,7 @@
                 android:layout_height="30sp" />
             <TextView
                 android:layout_marginTop="7dp"
-                android:text="Birthday:"
+                android:text="Birthdate:"
                 android:textColor="@color/colorBlack"
                 android:textSize="18sp"
                 android:layout_width="match_parent"
