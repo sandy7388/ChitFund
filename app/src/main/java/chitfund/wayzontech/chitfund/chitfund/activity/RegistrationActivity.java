@@ -70,6 +70,11 @@ public class RegistrationActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         init();
+        if (getSupportActionBar()!=null)
+        {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Registration");
+        }
         getURLForSpinner();
     }
     @SuppressLint("SimpleDateFormat")

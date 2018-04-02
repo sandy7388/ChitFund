@@ -50,7 +50,7 @@ public class AdvanceReportActivity extends AppCompatActivity implements SwipeRef
         if (getSupportActionBar()!=null)
         {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("Collection Report");
+            getSupportActionBar().setTitle("Advance Installment Report");
         }
 
         recyclerView = findViewById(R.id.recyclerViewAdvanceReport);

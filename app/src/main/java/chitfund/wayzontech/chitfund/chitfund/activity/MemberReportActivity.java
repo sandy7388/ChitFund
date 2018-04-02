@@ -62,6 +62,7 @@ public class MemberReportActivity extends AppCompatActivity implements AdapterVi
         recyclerView =  findViewById(R.id.recyclerViewMemberReport);
         initController();
         recyclerView();
+
     }
 
     void initController()
