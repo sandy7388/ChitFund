@@ -31,6 +31,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_reports,
                 container,false);
         initController(view);
+        getActivity().setTitle("Reports");
         return view;
     }
 
