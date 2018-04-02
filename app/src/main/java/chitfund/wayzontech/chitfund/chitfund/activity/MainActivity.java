@@ -1,5 +1,6 @@
 package chitfund.wayzontech.chitfund.chitfund.activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -62,15 +63,17 @@ import chitfund.wayzontech.chitfund.chitfund.receiverNservices.NotificationUtils
 import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends RuntimePermissionActivity
         implements View.OnClickListener
 {
+    private static final int REQUEST_PERMISSIONS = 20;
     private static final String TAG = MainActivity.class.getSimpleName();
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private SessionManager session;
     private NavigationView navigationView;
     private DrawerLayout drawer;
-    private Toolbar toolbar;
+    private ActionBarDrawerToggle toggle;
+    private Toolbar mToolbar;
     private FloatingActionButton fab;
     private View navHeader;
     private TextView textName,textEmail;
@@ -82,9 +85,11 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG_PROFILE = "profile";
     private static final String TAG_AUCTION = "auction";
     private static final String TAG_LAST_AUCTION = "last_auction";
+    //private static final String TAG_NOTIFICATIONS = "notifications";
     private static final String TAG_GRPLIST = "group_list";
     private static final String TAG_JOINEDGRP = "joined_grplist";
     private static final String TAG_REPORTS = "reports";
+    private static final String TAG_MEMBER_REPORTS = "member_reports";
 
     public static String CURRENT_TAG = TAG_HOME;
 
@@ -94,7 +99,9 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         initialize();
+        permission();
         if (savedInstanceState == null) {
             navItemIndex = 0;
             CURRENT_TAG = TAG_HOME;
@@ -104,6 +111,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onReceive(Context context, Intent intent) {
 
+                // checking for type intent filter
                 if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
                     // gcm successfully registered
                     // now subscribe to `global` topic to receive app wide notifications
@@ -125,6 +133,27 @@ public class MainActivity extends AppCompatActivity
         displayFirebaseRegId();
 
     }
+
+    // Runtime Permission
+    @Override
+    public void onPermissionsGranted(final int requestCode) {
+        Toast.makeText(this, "Permissions Received.", Toast.LENGTH_LONG).show();
+    }
+
+    void permission() {
+        MainActivity.super.requestAppPermissions(new
+                        String[]{Manifest.permission.READ_CONTACTS,
+                        Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.ACCESS_FINE_LOCATION}, R.string
+                        .runtime_permissions_txt
+                , REQUEST_PERMISSIONS);
+    }
+
+
+
     private void displayFirebaseRegId() {
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
         String regId = pref.getString("regId", null);
@@ -159,8 +188,8 @@ public class MainActivity extends AppCompatActivity
     }
     public void initialize()
     {
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = findViewById(R.id.mainActivityToolbar);
+        setSupportActionBar(mToolbar);
         session=new SessionManager(this);
         mHandler = new Handler();
         drawer = findViewById(R.id.drawer_layout);
@@ -348,7 +377,7 @@ public class MainActivity extends AppCompatActivity
                 return true;
             }
         });
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.openDrawer, R.string.closeDrawer) {
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, mToolbar, R.string.openDrawer, R.string.closeDrawer) {
 
             @Override
             public void onDrawerClosed(View drawerView) {

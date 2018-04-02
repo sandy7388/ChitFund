@@ -1,7 +1,6 @@
 package chitfund.wayzontech.chitfund.chitfund.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
-import chitfund.wayzontech.chitfund.chitfund.activity.GroupInfoActivity;
 import chitfund.wayzontech.chitfund.chitfund.model.MemberName;
 
 /**

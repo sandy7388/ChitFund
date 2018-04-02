@@ -41,9 +41,8 @@ public class AuctionFragment extends Fragment  {
 
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
-    private void controller(View view) {
-
+    private void controller(View view)
+    {
 
         webView = view.findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);

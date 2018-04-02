@@ -41,7 +41,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         if (getSupportActionBar()!=null)
         {
-            //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle("Login");
         }
         initLogin();
@@ -60,8 +59,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             finish();
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
         }
-
-
     }
 
     @Override

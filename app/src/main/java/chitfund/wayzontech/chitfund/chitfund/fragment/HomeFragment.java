@@ -25,8 +25,7 @@ import static android.content.ContentValues.TAG;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
-    private TextView name,date,auction,lastAuction,notifictions,
-            groupList,joinedGroup,profile;
+    private TextView name,date;
     private String strDate;
     private Calendar calendar;
     private int date_Year,date_Month,date_Day;

@@ -26,7 +26,7 @@
                 android:background="@drawable/button_border"
                 android:orientation="horizontal"
                 android:visibility="visible"
-                android:weightSum="10">
+                android:weightSum="9">
 
                 <TextView
                     android:layout_width="0dp"
