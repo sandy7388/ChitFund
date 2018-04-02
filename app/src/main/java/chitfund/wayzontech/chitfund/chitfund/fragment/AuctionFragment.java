@@ -41,6 +41,7 @@ public class AuctionFragment extends Fragment  {
 
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void controller(View view) {
 
 

@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity
     private SessionManager session;
     private NavigationView navigationView;
     private DrawerLayout drawer;
-    private ActionBarDrawerToggle toggle;
     private Toolbar toolbar;
     private FloatingActionButton fab;
     private View navHeader;
@@ -83,11 +82,9 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG_PROFILE = "profile";
     private static final String TAG_AUCTION = "auction";
     private static final String TAG_LAST_AUCTION = "last_auction";
-    //private static final String TAG_NOTIFICATIONS = "notifications";
     private static final String TAG_GRPLIST = "group_list";
     private static final String TAG_JOINEDGRP = "joined_grplist";
     private static final String TAG_REPORTS = "reports";
-    private static final String TAG_MEMBER_REPORTS = "member_reports";
 
     public static String CURRENT_TAG = TAG_HOME;
 
@@ -107,7 +104,6 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onReceive(Context context, Intent intent) {
 
-                // checking for type intent filter
                 if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
                     // gcm successfully registered
                     // now subscribe to `global` topic to receive app wide notifications
@@ -163,7 +159,7 @@ public class MainActivity extends AppCompatActivity
     }
     public void initialize()
     {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         session=new SessionManager(this);
         mHandler = new Handler();
