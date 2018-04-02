@@ -22,6 +22,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,6 +38,7 @@ import java.util.Map;
 import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.activity.MainActivity;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
+import chitfund.wayzontech.chitfund.chitfund.other.CircleTransform;
 import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
@@ -50,6 +54,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private SessionManager session;
     private DateFormat date,time;
     private Date d;
+    private static final String urlProfileImg = "https://s-media-cache-ak0.pinimg.com/736x/2c/bb/04/2cbb04e7ef9266e1e57a9b0e75bc555f.jpg";
     private String strName,strMobile,strEmail,strAddress,strBirthday;
     public ProfileFragment() {
         // Required empty public constructor
@@ -64,6 +69,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 container, false);
         getActivity().setTitle("Profile");
         initController(view);
+        loadHeaderMenu();
         return view;
     }
 
@@ -173,7 +179,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 deleteAccount();
                 break;
             case R.id.imageChange:
-                alertForImage();
+                //alertForImage();
                 break;
         }
     }
@@ -259,5 +265,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         super.onActivityResult(requestCode, resultCode, data);
 
+    }
+
+    void loadHeaderMenu()
+    {
+        Glide.with(this).load(urlProfileImg)
+                .crossFade()
+                .thumbnail(0.5f)
+                .bitmapTransform(new CircleTransform(getContext()))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(imageViewProfile);
     }
 }

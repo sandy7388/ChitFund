@@ -27,10 +27,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.messaging.FirebaseMessaging;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.fragment.AuctionFragment;
@@ -41,8 +56,11 @@ import chitfund.wayzontech.chitfund.chitfund.fragment.LastAuctionFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.ProfileFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.ReportFragment;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.Config;
+import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
+import chitfund.wayzontech.chitfund.chitfund.other.CircleTransform;
 import chitfund.wayzontech.chitfund.chitfund.receiverNservices.NotificationUtils;
 import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
+import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 public class MainActivity extends AppCompatActivity
         implements View.OnClickListener
@@ -57,8 +75,10 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton fab;
     private View navHeader;
     private TextView textName,textEmail;
+    private ImageView profile;
+    private String strName,strEmail;
     public static int navItemIndex = 0;
-
+    private static final String urlProfileImg = "https://s-media-cache-ak0.pinimg.com/736x/2c/bb/04/2cbb04e7ef9266e1e57a9b0e75bc555f.jpg";
     private static final String TAG_HOME = "home";
     private static final String TAG_PROFILE = "profile";
     private static final String TAG_AUCTION = "auction";
@@ -153,12 +173,14 @@ public class MainActivity extends AppCompatActivity
         navHeader = navigationView.getHeaderView(0);
         textName = navHeader.findViewById(R.id.userName);
         textEmail = navHeader.findViewById(R.id.userEmail);
+        profile = navHeader.findViewById(R.id.imageView);
         fab.setOnClickListener(this);
         if(!SessionManager.getInstance(this).isLoggedIn())
         {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
+        loadHeaderMenu();
         setUpNavigationView();
     }
 
@@ -224,6 +246,54 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    void loadHeaderMenu()
+    {
+        Glide.with(this).load(urlProfileImg)
+                .crossFade()
+                .thumbnail(0.5f)
+                .bitmapTransform(new CircleTransform(this))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(profile);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.PROFILE_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response)
+                    {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray jsonArray = jsonObject.getJSONArray("profile_info");
+                            for (int i=0;i<jsonArray.length();i++) {
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                strName = object.getString("member_name");
+                                strEmail = object.getString("email");
+
+                                textName.setText(strName);
+                                textEmail.setText(strEmail);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<>();
+                map.put("memberid",session.getMemberID());
+                return map;
+            }
+        };
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+
     private void selectNavMenu()
     {
         navigationView.getMenu().getItem(navItemIndex).setChecked(true);
@@ -232,7 +302,7 @@ public class MainActivity extends AppCompatActivity
     {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            public boolean onNavigationItemSelected(MenuItem item) {
 
                 switch (item.getItemId())
                 {
