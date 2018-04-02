@@ -29,13 +29,11 @@
         </activity>
         <activity
             android:name=".activity.LoginActivity"
-            android:label="@string/title_activity_login"
-
-            />
+            android:label="@string/title_activity_login" />
         <activity
             android:name=".activity.RegistrationActivity"
             android:label="@string/title_activity_register"
-            android:parentActivityName=".activity.LoginActivity"/>
+            android:parentActivityName=".activity.LoginActivity" />
         <activity
             android:name=".activity.ChangePasswordActivity"
             android:label="@string/title_activity_changePassword" />
@@ -54,7 +52,8 @@
         <activity android:name=".activity.UpcomingReportActivity" />
         <activity android:name=".activity.CollectionReportActivity" />
         <activity android:name=".activity.MemberReportActivity" />
-        <activity android:name=".activity.AdvanceReportActivity"></activity>
+        <activity android:name=".activity.AdvanceReportActivity" />
+        <activity android:name=".activity.EditProfileActivity"></activity>
     </application>
 
 </manifest>

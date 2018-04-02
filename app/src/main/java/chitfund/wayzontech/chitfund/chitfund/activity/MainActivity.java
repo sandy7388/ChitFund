@@ -9,6 +9,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -74,6 +76,7 @@ public class MainActivity extends RuntimePermissionActivity
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
     private Toolbar mToolbar;
+    private String loginStatus = "0";
     private FloatingActionButton fab;
     private View navHeader;
     private TextView textName,textEmail;
@@ -422,7 +425,8 @@ public class MainActivity extends RuntimePermissionActivity
         switch (id)
         {
             case R.id.action_logout:
-                alertForLogout();
+                androidLogout();
+                //alertForLogout();
                 break;
             case R.id.action_edit:
                 break;
@@ -543,7 +547,62 @@ public class MainActivity extends RuntimePermissionActivity
         super.onBackPressed();
     }
 
+    // Method to check the network connection
+    public boolean checkNetworkConnection() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = null;
+        if (connectivityManager != null) {
+            networkInfo = connectivityManager.getActiveNetworkInfo();
+        }
+        return (networkInfo != null && networkInfo.isConnected());
+    }
 
+    private void androidLogout()
+    {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.LOGOUT_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try
+                {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    if (jsonObject.getString("success").equals("1"))
+                    {
+                        if (checkNetworkConnection())
+                        {
+                            SessionManager.getInstance(MainActivity.this).logout();
+                            finish();
+                        }
+                        else
+                            Toast.makeText(MainActivity.this,"Please check your network connection",Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id",session.getUserID());
+                params.put("login_status",loginStatus);
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
 
 
 }

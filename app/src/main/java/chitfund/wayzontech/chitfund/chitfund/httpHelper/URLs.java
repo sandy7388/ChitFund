@@ -43,4 +43,6 @@ public class URLs
     public static final String PROFILE_URL = BASE_URL + "groupinfo/getprofile";
 
     public static final String WEBVIEW_URL = BASE_URL + "realtimeauction/webviewTimer";
+
+    public static final String LOGOUT_URL = BASE_URL + "loginweb/logout ";
 }

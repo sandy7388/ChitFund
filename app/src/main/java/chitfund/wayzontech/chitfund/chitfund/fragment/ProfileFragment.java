@@ -36,6 +36,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import chitfund.wayzontech.chitfund.chitfund.R;
+import chitfund.wayzontech.chitfund.chitfund.activity.EditProfileActivity;
 import chitfund.wayzontech.chitfund.chitfund.activity.MainActivity;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.other.CircleTransform;
@@ -84,7 +85,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         editTextEmail = view.findViewById(R.id.profileEmail);
         editTextBirthday = view.findViewById(R.id.profileBirthday);
         editTextMobile = view.findViewById(R.id.profileMobile);
-        buttonDelete = view.findViewById(R.id.btnDeleteAccount);
+        //buttonDelete = view.findViewById(R.id.btnDeleteAccount);
         //buttonDelete.setOnClickListener(this);
         imageViewEdit.setOnClickListener(this);
         imageViewChange.setOnClickListener(this);
@@ -173,10 +174,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         switch (v.getId())
         {
             case R.id.imageEdit:
-                setFragments(new EditProfileFragment());
-                break;
-            case R.id.btnDeleteAccount:
-                deleteAccount();
+                //setFragments(new EditProfileFragment());
+                openEditFragment();
                 break;
             case R.id.imageChange:
                 //alertForImage();
@@ -184,31 +183,21 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void deleteAccount()
+    void openEditFragment()
     {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.DELETE_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+        //EditProfileFragment profileFragment = new EditProfileFragment();
+        Intent intent = new Intent(getContext(), EditProfileActivity.class);
 
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+        intent.putExtra("KEY_NAME", strName);
+        intent.putExtra("KEY_MOBILE", strMobile);
+        intent.putExtra("KEY_EMAIL", strEmail);
+        intent.putExtra("KEY_BIRTHDAY", strBirthday);
+        intent.putExtra("KEY_ADDRESS", strAddress);
 
-            }
-        })
-        {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("userid",session.getUserID());
-                params.put("memberid",session.getMemberID());
-                return params;
-            }
-        };
-        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+        startActivity(intent);
     }
+
+
     // Alert for logout
     void alertForImage()
     {
