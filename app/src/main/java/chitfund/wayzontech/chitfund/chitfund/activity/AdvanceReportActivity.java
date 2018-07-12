@@ -152,7 +152,7 @@ public class AdvanceReportActivity extends AppCompatActivity implements SwipeRef
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("memberid",session.getMemberID());
+                params.put("user_id",session.getUserID());
                 return params;
             }
         };

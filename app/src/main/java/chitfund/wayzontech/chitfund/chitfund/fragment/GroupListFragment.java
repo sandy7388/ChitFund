@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -264,7 +263,7 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                params.put("memberid",sessionManager.getMemberID());
+                params.put("user_id",sessionManager.getUserID());
                 params.put("groupid",groupId);
                 return params;
             }

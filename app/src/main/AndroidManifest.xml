@@ -53,7 +53,9 @@
         <activity android:name=".activity.CollectionReportActivity" />
         <activity android:name=".activity.MemberReportActivity" />
         <activity android:name=".activity.AdvanceReportActivity" />
-        <activity android:name=".activity.EditProfileActivity"></activity>
+        <activity android:name=".activity.EditProfileActivity" />
+        <activity android:name=".activity.AuctionActivity"
+            android:parentActivityName=".activity.MainActivity"/>
     </application>
 
 </manifest>

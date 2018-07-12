@@ -2,19 +2,21 @@ package chitfund.wayzontech.chitfund.chitfund.httpHelper;
 
 import com.android.volley.toolbox.StringRequest;
 
+import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
+
 /**
  * Created by sandy on 19/3/18.
  */
 
 public class URLs
 {
-    public static final String BASE_URL = "http://wayzontech.in/chitfund/index.php/webservices/";
+    private static final String BASE_URL = "http://"+ SessionManager.getSubdomain() +".onlinechitfund.com/index.php/webservices/";
 
     public static final String GUARANTOR_URL = BASE_URL + "guarantierlist";
 
     public static final String REGISTRATION_URL = BASE_URL + "registerweb";
 
-    public static final String LOGIN_URL = BASE_URL + "loginweb";
+    public static final String LOGIN_URL ="http://159.89.172.117/webservices.php";
 
     public static final String GROUP_URL = REGISTRATION_URL + "/getgrouplist";
 

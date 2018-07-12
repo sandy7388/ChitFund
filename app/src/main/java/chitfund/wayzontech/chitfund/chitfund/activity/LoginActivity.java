@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private Button button_register,button_login;
     private EditText editText_username,editText_password;
-    private String userid,strUsername,strPassword,member_id;
+    private String userid,strUsername,strPassword,member_id,strId,strName,strSubDomain;
     private ProgressDialog progressDialog;
     private SessionManager sessionManager;
     @Override
@@ -58,9 +58,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         sessionManager = new SessionManager(this);
         button_register.setOnClickListener(this);
         button_login.setOnClickListener(this);
-        if (SessionManager.getInstance(LoginActivity.this).isLoggedIn()) {
+
+        // Check either login or not
+        if(SessionManager.getInstance(this).isLoggedIn())
+        {
             finish();
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            return;
         }
     }
 
@@ -102,27 +106,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             JSONObject jsonObject = new JSONObject(response);
                             if (jsonObject.getString("success").equals("1"))
                             {
-                                if (jsonObject.getString("password_change_status").equals("1"))
-                                {
-                                    progressDialog.dismiss();
-                                    //Toast.makeText(LoginActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                                    userid = jsonObject.getString("user_id");
-                                    member_id = jsonObject.getString("member_id");
-                                    UserLogin userLogin = new UserLogin(userid, strUsername, strPassword,member_id);
-                                    sessionManager.userLogin(userLogin);
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                    //finish();
-                                }
-                                if (jsonObject.getString("password_change_status").equals("0"))
-                                {
-                                    progressDialog.dismiss();
-                                    //Toast.makeText(LoginActivity.this, jsonObject.getString("message1"), Toast.LENGTH_SHORT).show();
-                                    userid = jsonObject.getString("user_id");
-                                    UserLogin userLogin = new UserLogin(userid);
-                                    sessionManager.setUserId(userLogin);
-                                    startActivity(new Intent(LoginActivity.this, ChangePasswordActivity.class));
-                                    //finish();
-                                }
+                                strId = jsonObject.getString("user_id");
+                                strName = jsonObject.getString("uname");
+                                strSubDomain = jsonObject.getString("subdomain");
+                                UserLogin userLogin = new UserLogin();
+                                userLogin.setId(strId);
+                                userLogin.setUsername(strName);
+                                userLogin.setPassword(strPassword);
+                                userLogin.setSubdomain(strSubDomain);
+                                sessionManager.userLogin(userLogin);
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                finish();
                             }
 
                             if (jsonObject.getString("success").equals("0"))
@@ -194,79 +188,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }, 2000);
     }
 
-//    public void checkLoginFromServerSide()
-//    {
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.LOGIN_CHECK_URL,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response)
-//                    {
-//                        try {
-//                            JSONObject jsonObject = new JSONObject(response);
-//                            if (jsonObject.getString("success").equals("1"))
-//                            {
-//                                if (SessionManager.getInstance(LoginActivity.this).isLoggedIn()) {
-//                                    finish();
-//                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//                                    Toast.makeText(LoginActivity.this,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.register, menu);
 //
-//                                }
-//                            }
-//
-//                            else if (jsonObject.getString("success").equals("0"))
-//                            {
-//                                SessionManager.getInstance(LoginActivity.this).logout();
-//                                finish();
-//                                //startActivity(new Intent(LoginActivity.this,LoginActivity.class));
-//
-//                                Toast.makeText(LoginActivity.this,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
-//                            }
-//                            if(jsonObject.getString("success").equals("2"))
-//                            {
-//                                progressDialog.dismiss();
-//                                Toast.makeText(LoginActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-//                                //editText_user.setText("");
-//                                //editText_pass.setText("");
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        })
-//        {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> params = new HashMap<>();
-//                params.put("user_id",sessionManager.getUserID());
-//                return params;
-//            }
-//        };
-//        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+//        return true;
 //    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.register, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.action_register:
-                startActivity(new Intent(this,RegistrationActivity.class));
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        switch (id) {
+//            case R.id.action_register:
+//                startActivity(new Intent(this,RegistrationActivity.class));
+//                break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
 }

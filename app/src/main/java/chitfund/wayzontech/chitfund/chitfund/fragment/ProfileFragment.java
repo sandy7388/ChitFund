@@ -145,7 +145,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                 Map<String, String> map = new HashMap<>();
                 //map.put("userid",session.getUserID());
-                map.put("memberid",session.getMemberID());
+                map.put("user_id",session.getUserID());
                 return map;
             }
         };
@@ -175,7 +175,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         {
             case R.id.imageEdit:
                 //setFragments(new EditProfileFragment());
-                openEditFragment();
+                //openEditFragment();
                 break;
             case R.id.imageChange:
                 //alertForImage();

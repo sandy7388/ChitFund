@@ -86,7 +86,7 @@ public class MainActivity extends RuntimePermissionActivity
     private static final String urlProfileImg = "https://s-media-cache-ak0.pinimg.com/736x/2c/bb/04/2cbb04e7ef9266e1e57a9b0e75bc555f.jpg";
     private static final String TAG_HOME = "home";
     private static final String TAG_PROFILE = "profile";
-    private static final String TAG_AUCTION = "auction";
+    //private static final String TAG_AUCTION = "auction";
     private static final String TAG_LAST_AUCTION = "last_auction";
     //private static final String TAG_NOTIFICATIONS = "notifications";
     private static final String TAG_GRPLIST = "group_list";
@@ -252,19 +252,19 @@ public class MainActivity extends RuntimePermissionActivity
             case 1:
                 // Profile
                 return new ProfileFragment();
+//            case 2:
+//                // Auction
+//                return new AuctionFragment();
             case 2:
-                // Auction
-                return new AuctionFragment();
-            case 3:
                 // Joined Group
                 return new JoinedGroupFragment();
-            case 4:
+            case 3:
                 // Last Auction
                 return new LastAuctionFragment();
-            case 5:
+            case 4:
                 // Group List
                 return new GroupListFragment();
-            case 6:
+            case 5:
                 // Collection Reports
                 return new ReportFragment();
 
@@ -314,7 +314,7 @@ public class MainActivity extends RuntimePermissionActivity
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put("memberid",session.getMemberID());
+                map.put("user_id",session.getUserID());
                 return map;
             }
         };
@@ -342,25 +342,25 @@ public class MainActivity extends RuntimePermissionActivity
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_PROFILE;
                         break;
-                    case R.id.nav_auction:
-                        navItemIndex = 2;
-                        CURRENT_TAG = TAG_AUCTION;
-                        break;
+//                    case R.id.nav_auction:
+//                        navItemIndex = 2;
+//                        CURRENT_TAG = TAG_AUCTION;
+//                        break;
                     case R.id.nav_joinedGroup:
-                        navItemIndex = 3;
+                        navItemIndex = 2;
                         CURRENT_TAG = TAG_JOINEDGRP;
                         break;
                     case R.id.nav_last_auction:
-                        navItemIndex = 4;
+                        navItemIndex = 3;
                         CURRENT_TAG = TAG_LAST_AUCTION;
                         break;
                     case R.id.nav_grpList:
-                        navItemIndex = 5;
+                        navItemIndex = 4;
                         CURRENT_TAG = TAG_GRPLIST;
                         break;
 
                     case R.id.nav_report:
-                        navItemIndex = 6;
+                        navItemIndex = 5;
                         CURRENT_TAG = TAG_REPORTS;
                         break;
 
@@ -406,14 +406,14 @@ public class MainActivity extends RuntimePermissionActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-
-        if (navItemIndex == 4)
-        {
-            navigationView.getMenu().getItem(6).setActionView(R.layout.menu_dot_1);
-        }
+        getMenuInflater().inflate(R.menu.edit_profile,menu);
+//        if (navItemIndex == 4)
+//        {
+//            navigationView.getMenu().getItem(6).setActionView(R.layout.menu_dot_1);
+//        }
         if (navItemIndex == 1)
         {
-            getMenuInflater().inflate(R.menu.edit_profile,menu);
+
         }
         return true;
     }
@@ -423,7 +423,9 @@ public class MainActivity extends RuntimePermissionActivity
         int id = item.getItemId();
         switch (id) {
             case R.id.action_logout:
-                androidLogout();
+                //androidLogout();
+                SessionManager.getInstance(MainActivity.this).logout();
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -482,41 +484,6 @@ public class MainActivity extends RuntimePermissionActivity
     // onBack pressed
     private boolean doubleBackToExitPressedOnce = false;
     boolean shouldLoadHomeFragOnBackPress = true;
-//    @Override
-//    public void onBackPressed() {
-//
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            drawer.closeDrawers();
-//            return;
-//        }
-//
-//        //if (shouldLoadHomeFragOnBackPress) {
-//
-//            if (navItemIndex != 0) {
-//                navItemIndex = 0;
-//                CURRENT_TAG = TAG_HOME;
-//                //setFragment(new HomeFragment());
-//            }
-//        //}
-//
-//        if (doubleBackToExitPressedOnce) {
-//            super.onBackPressed();
-//            return;
-//        }
-//
-//        this.doubleBackToExitPressedOnce = true;
-//
-//        Toast.makeText(this, "Please click back again to exit", Toast.LENGTH_SHORT).show();
-//
-//        new Handler().postDelayed(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                doubleBackToExitPressedOnce=false;
-//            }
-//        }, 2000);
-//
-//    }
 
     @Override
     public void onBackPressed() {
@@ -596,7 +563,7 @@ public class MainActivity extends RuntimePermissionActivity
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("userid",session.getUserID());
-                params.put("loginstatus",loginStatus);
+                //params.put("loginstatus",loginStatus);
                 return params;
             }
         };

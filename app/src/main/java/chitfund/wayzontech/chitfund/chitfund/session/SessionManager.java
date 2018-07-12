@@ -29,6 +29,7 @@ public class SessionManager
     private static final String KEY_USER_ID = "user_id";
     private static final String KEY_NAME = "name";
     private static final String KEY_MEMBER_ID = "member_id";
+    private static final String KEY_SUB_DOMAIN = "subdomain";
 
 //    private static final String KEY_LOCATION_NAME = "location";
 //    private static final String KEY_WORKING_STATUS = "working_status";
@@ -49,13 +50,13 @@ public class SessionManager
     // for user login to store  the user session
     public boolean userLogin(UserLogin userLogin)
     {
-
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(KEY_USERNAME, userLogin.getUsername());
         editor.putString(KEY_USER_PASSWORD,userLogin.getPassword());
         editor.putString(KEY_MEMBER_ID,userLogin.getMember_id());
         editor.putString(KEY_USER_ID,userLogin.getId());
+        editor.putString(KEY_SUB_DOMAIN,userLogin.getSubdomain());
 
         editor.apply();
         editor.commit();
@@ -97,6 +98,13 @@ public class SessionManager
     {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_USERNAME, null) ;
+    }
+
+    // Get Subdomain
+    public static String getSubdomain()
+    {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_SUB_DOMAIN, null) ;
     }
 
     // Get User id

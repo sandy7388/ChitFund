@@ -143,20 +143,23 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
                                         time = new SimpleDateFormat("hh:mm:ss");
                                         System.out.println("Date: " + date.format(d));
                                         System.out.println("Time: " + time.format(d));
+                                        Calendar myCal = Calendar.getInstance();
+                                        myCal.setTime(d);
+                                        myCal.add(Calendar.MONTH, +1);
+                                        d = myCal.getTime();
                                     } catch (ParseException e) {
                                         e.printStackTrace();
                                     }
                                     joinedGroup.setNext_date(date.format(d));
                                     joinedGroupArrayList.add(joinedGroup);
                                     swipeRefreshLayout.setRefreshing(false);
-
                                     joinedGroupAdapter.notifyDataSetChanged();
 
                                 }
                             }
                             else
                                 swipeRefreshLayout.setRefreshing(false);
-                                Toast.makeText(getContext(),"No groups available",Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getContext(),"No groups available",Toast.LENGTH_SHORT).show();
 
                         } catch (JSONException e) {
                             swipeRefreshLayout.setRefreshing(false);

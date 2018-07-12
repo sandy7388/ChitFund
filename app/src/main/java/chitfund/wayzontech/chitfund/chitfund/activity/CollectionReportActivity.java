@@ -156,7 +156,7 @@ public class CollectionReportActivity extends AppCompatActivity implements Swipe
            @Override
            protected Map<String, String> getParams() throws AuthFailureError {
                Map<String, String> params = new HashMap<>();
-               params.put("memberid",session.getMemberID());
+               params.put("user_id",session.getUserID());
                return params;
            }
        };

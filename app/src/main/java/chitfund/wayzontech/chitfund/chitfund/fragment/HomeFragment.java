@@ -69,7 +69,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         date.setText(simpleDateFormat.format(calendar.getTime()));
         getActivity().setTitle("Home");
         session = new SessionManager(getContext());
-        name.setText(session.getMemberID());
+        name.setText(session.getUserID());
         return view;
     }
 
@@ -100,25 +100,25 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 MainActivity.navItemIndex =1;
                 break;
 
-            case R.id.linear_auction:
-                setFragments(new AuctionFragment());
-                MainActivity.navItemIndex =2;
-                break;
+//            case R.id.linear_auction:
+//                setFragments(new AuctionFragment());
+//                MainActivity.navItemIndex =2;
+//                break;
             case R.id.lnr_joinedGroup:
                 setFragments(new JoinedGroupFragment());
-                MainActivity.navItemIndex =3;
+                MainActivity.navItemIndex =2;
                 break;
             case R.id.lnr_last_auction:
                 setFragments(new LastAuctionFragment());
-                MainActivity.navItemIndex =4;
+                MainActivity.navItemIndex =3;
                 break;
             case R.id.lnr_groupList:
                 setFragments(new GroupListFragment());
-                MainActivity.navItemIndex =5;
+                MainActivity.navItemIndex =4;
                 break;
             case R.id.lnr_notificaion:
                 setFragments(new ReportFragment());
-                MainActivity.navItemIndex =6;
+                MainActivity.navItemIndex =5;
                 break;
 
         }
