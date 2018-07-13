@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context="chitfund.wayzontech.chitfund.chitfund.activity.MainActivity">
     <android.support.v7.widget.Toolbar
-        android:id="@+id/mainActivityToolbar"
+        android:id="@+id/mainActivityToolbar1"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:background="?android:attr/colorPrimary"
@@ -16,7 +16,7 @@
 
     <FrameLayout
         android:background="@color/colorWhite"
-        android:layout_below="@id/mainActivityToolbar"
+        android:layout_below="@id/mainActivityToolbar1"
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

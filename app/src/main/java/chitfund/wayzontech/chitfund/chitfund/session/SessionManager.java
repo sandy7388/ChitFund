@@ -54,7 +54,7 @@ public class SessionManager
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(KEY_USERNAME, userLogin.getUsername());
         editor.putString(KEY_USER_PASSWORD,userLogin.getPassword());
-        editor.putString(KEY_MEMBER_ID,userLogin.getMember_id());
+        //editor.putString(KEY_MEMBER_ID,userLogin.getMember_id());
         editor.putString(KEY_USER_ID,userLogin.getId());
         editor.putString(KEY_SUB_DOMAIN,userLogin.getSubdomain());
 

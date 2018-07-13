@@ -10,7 +10,7 @@ import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
 
 public class URLs
 {
-    private static final String BASE_URL = "http://"+ SessionManager.getSubdomain() +".onlinechitfund.com/index.php/webservices/";
+    public static final String BASE_URL = "http://"+ SessionManager.getSubdomain() +".onlinechitfund.com/index.php/webservices/";
 
     public static final String GUARANTOR_URL = BASE_URL + "guarantierlist";
 
@@ -46,5 +46,4 @@ public class URLs
 
     public static final String LOGOUT_URL = BASE_URL + "loginweb/logout";
 
-    public static final String LOGIN_CHECK_URL = BASE_URL + "";
 }

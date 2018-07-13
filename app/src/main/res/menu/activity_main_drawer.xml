@@ -12,10 +12,10 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/user_2"
             android:title="Profile" />
-        <item
-            android:id="@+id/nav_auction"
-            android:icon="@drawable/auction"
-            android:title="Auction" />
+        <!--<item-->
+            <!--android:id="@+id/nav_auction"-->
+            <!--android:icon="@drawable/auction"-->
+            <!--android:title="Auction" />-->
         <item
             android:id="@+id/nav_joinedGroup"
             android:icon="@drawable/networking"

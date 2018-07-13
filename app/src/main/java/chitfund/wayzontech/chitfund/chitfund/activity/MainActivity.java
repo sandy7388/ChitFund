@@ -191,7 +191,7 @@ public class MainActivity extends RuntimePermissionActivity
     }
     public void initialize()
     {
-        mToolbar = findViewById(R.id.mainActivityToolbar);
+        mToolbar = findViewById(R.id.mainActivityToolbar1);
         setSupportActionBar(mToolbar);
         session=new SessionManager(this);
         mHandler = new Handler();
@@ -406,15 +406,15 @@ public class MainActivity extends RuntimePermissionActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        getMenuInflater().inflate(R.menu.edit_profile,menu);
+
 //        if (navItemIndex == 4)
 //        {
 //            navigationView.getMenu().getItem(6).setActionView(R.layout.menu_dot_1);
 //        }
-        if (navItemIndex == 1)
-        {
-
-        }
+//        if (navItemIndex == 1)
+//        {
+//            getMenuInflater().inflate(R.menu.edit_profile,menu);
+//        }
         return true;
     }
 
