@@ -1,6 +1,7 @@
 package chitfund.wayzontech.chitfund.chitfund.activity;
 
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,13 +25,14 @@ import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
-public class AuctionActivity extends AppCompatActivity implements View.OnClickListener {
+public class AuctionActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private TextView txtAmount,txtGroupId;
     private Button buttonAuction;
     private String strAmount,strGroupId;
     private SessionManager session;
     private WebView webView;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class AuctionActivity extends AppCompatActivity implements View.OnClickLi
         txtGroupId = findViewById(R.id.textViewAuctionId);
         webView = findViewById(R.id.webView);
         buttonAuction = findViewById(R.id.buttonAuction);
+        swipeRefreshLayout = findViewById(R.id.swipeToRefreshAuction);
 
         if (getSupportActionBar()!=null)
         {
@@ -56,6 +59,8 @@ public class AuctionActivity extends AppCompatActivity implements View.OnClickLi
         txtGroupId.setText(strGroupId);
 
         buttonAuction.setOnClickListener(this);
+
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     private void controller()
@@ -76,6 +81,13 @@ public class AuctionActivity extends AppCompatActivity implements View.OnClickLi
                 controller();
                 break;
         }
+    }
+
+    @Override
+    public void onRefresh() {
+
+        webView.reload();
+
     }
 
 

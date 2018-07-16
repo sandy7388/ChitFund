@@ -111,7 +111,7 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
     private void getList()
     {
 
-        StringRequest stringRequest = new StringRequest(URLs.GROUP_DETAILS,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,URLs.GROUP_DETAILS,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

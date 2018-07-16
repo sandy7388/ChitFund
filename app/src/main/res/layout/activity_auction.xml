@@ -82,14 +82,22 @@
 
         </LinearLayout>
 
-        <WebView
-            android:focusableInTouchMode="true"
-            android:focusable="true"
-            android:id="@+id/webView"
+        <android.support.v4.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"/>
+            android:id="@+id/swipeToRefreshAuction">
+
+            <WebView
+                android:focusableInTouchMode="true"
+                android:focusable="true"
+                android:id="@+id/webView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"/>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+
     </LinearLayout>
 
 
