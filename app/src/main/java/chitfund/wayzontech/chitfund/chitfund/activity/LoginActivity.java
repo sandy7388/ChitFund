@@ -67,6 +67,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             return;
         }
+        if (AgentSession.getInstance(this).isLoggedIn()) {
+            finish();
+            startActivity(new Intent(LoginActivity.this, AgentActivity.class));
+            return;
+        }
     }
 
     @Override
@@ -133,7 +138,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     agentLogin.setPassword(strPassword);
                                     agentLogin.setSubdomain(strSubDomain);
                                     agentSession.userLogin(agentLogin);
-                                    startActivity(new Intent(LoginActivity.this,. class))
+                                    startActivity(new Intent(LoginActivity.this, AgentActivity.class));
                                     finish();
                                 }
 
