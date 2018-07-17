@@ -9,8 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -157,7 +157,7 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
                             }
                             else
                                 swipeRefreshLayout.setRefreshing(false);
-                                //Toast.makeText(getContext(),"No groups available",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
 
                         } catch (JSONException e) {
                             swipeRefreshLayout.setRefreshing(false);
@@ -176,7 +176,7 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
         })
         {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("userid", memberSession.getUserID());
                 return params;

@@ -8,26 +8,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
-import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.session.AgentSession;
-import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 public class AgentActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -38,6 +27,7 @@ public class AgentActivity extends AppCompatActivity implements AdapterView.OnIt
     private JSONArray groupArray;
     private JSONObject serverResponse, groupNameObject;
     private ProgressDialog progressDialog;
+    private String strRoleId = String.valueOf(4);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,79 +50,77 @@ public class AgentActivity extends AppCompatActivity implements AdapterView.OnIt
             finish();
         }
 
-        getGroupName();
+        try {
+            //getGroupName();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
-    void getGroupName() {
-
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Please wait.....!");
-        progressDialog.show();
-        progressDialog.setCancelable(true);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.AGENT_GROUP_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            serverResponse = new JSONObject(response);
-
-                            if (serverResponse.getString("success").equals("1")) {
-                                groupArray = serverResponse.getJSONArray("Agent_info");
-
-                                for (int i = 0; i < groupArray.length(); i++) {
-                                    groupNameObject = groupArray.getJSONObject(i);
-
-                                    strGroupNameJSON = groupNameObject.getString("group_name");
-                                    strGroupId = groupNameObject.getString("group_id");
-
-                                    groupName.add(strGroupName);
-
-                                    spinnerGroupName.setAdapter(new ArrayAdapter<String>(AgentActivity.this,
-                                            android.R.layout.simple_spinner_dropdown_item, groupName));
-
-                                }
-
-                            } else {
-                                progressDialog.dismiss();
-                            }
-
-
-                        } catch (JSONException e) {
-                            progressDialog.dismiss();
-                            e.printStackTrace();
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                progressDialog.dismiss();
-                error.printStackTrace();
-
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> param = new HashMap<>();
-                param.put("agent_id", agentSession.getUserID());
-                return param;
-            }
-        };
-
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-    }
+//    void getGroupName() {
+//
+//
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.AGENT_GROUP_URL,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(response);
+//
+//                            if (jsonObject.getString("success").equals("1"))
+//                            {
+//                                JSONArray jsonArray = jsonObject.getJSONArray("Agent_info");
+//
+//                                for (int i=0;i<jsonArray.length();i++)
+//                                {
+//                                    JSONObject object = jsonArray.getJSONObject(i);
+//
+//                                    strGroupNameJSON = object.getString("group_name");
+//                                    strGroupIdJSON = object.getString("group_id");
+//
+//                                    groupName.add(strGroupNameJSON);
+//                                }
+//
+//                                spinnerGroupName.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, groupName));
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        })
+//        {
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> param = new HashMap<>();
+//                param.put("agent_id",agentSession.getUserID());
+//                param.put("role_id",strRoleId);
+//                return param;
+//            }
+//        };
+//
+//        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+//
+//    }
 
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        Spinner spinner = (Spinner) parent;
-        strGroupName = spinner.getAdapter().getItem(position).toString();
-
-        switch (spinner.getId()) {
-            case R.id.spinnerGrpNameAgent:
-
-        }
+//        Spinner spinner = (Spinner) parent;
+//        strGroupName = spinner.getAdapter().getItem(position).toString();
+//
+//        switch (spinner.getId()) {
+//            case R.id.spinnerGrpNameAgent:
+//
+//        }
     }
 
     @Override

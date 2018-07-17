@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/border"
     tools:context=".activity.AgentActivity">
 
     <LinearLayout
@@ -13,13 +14,14 @@
         android:padding="15dp">
 
         <TextView
+            android:textColor="@color/colorBlack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="05dp"
             android:text="Select Group Name" />
 
         <Spinner
-
+            android:textColor="@color/colorBlack"
             android:id="@+id/spinnerGrpNameAgent"
             android:layout_width="match_parent"
             android:layout_height="30sp"
@@ -28,12 +30,14 @@
             android:background="@drawable/bg_spinner" />
 
         <TextView
+            android:textColor="@color/colorBlack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Select Member Name" />
 
         <Spinner
+            android:textColor="@color/colorBlack"
             android:id="@+id/spinnerMbrNameAgent"
             android:layout_width="match_parent"
             android:layout_height="30sp"

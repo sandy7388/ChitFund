@@ -1,6 +1,5 @@
 package chitfund.wayzontech.chitfund.chitfund.httpHelper;
 
-import chitfund.wayzontech.chitfund.chitfund.session.AgentSession;
 import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
 
 /**
@@ -11,7 +10,7 @@ public class URLs
 {
     public static final String BASE_URL = "http://"+ MemberSession.getSubdomain() +".onlinechitfund.com/index.php/webservices/";
 
-    public static final String AGENT_BASE_URL = "http://" + AgentSession.getSubdomain() + ".onlinechitfund.com/index.php/webservices/";
+    //public static final String AGENT_BASE_URL = "http://" + AgentSession.getSubdomain() + ".onlinechitfund.com/index.php/webservices/";
 
     public static final String GUARANTOR_URL = BASE_URL + "guarantierlist";
 
@@ -47,6 +46,6 @@ public class URLs
 
     public static final String LOGOUT_URL = BASE_URL + "loginweb/logout";
 
-    public static final String AGENT_GROUP_URL = AGENT_BASE_URL + "Registerweb/group_name_info";
+    //public static final String AGENT_GROUP_URL = AGENT_BASE_URL + "Registerweb/group_name_info";
 
 }

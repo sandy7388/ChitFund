@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import com.android.volley.AuthFailureError;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -34,6 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.activity.EditProfileActivity;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
@@ -93,7 +94,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void getProfile()
     {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.BASE_URL + "groupinfo/getprofile" ,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.PROFILE_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response)
@@ -139,7 +140,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         })
         {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
 
                 Map<String, String> map = new HashMap<>();
                 //map.put("userid",session.getUserID());
