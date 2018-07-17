@@ -1,7 +1,6 @@
 package chitfund.wayzontech.chitfund.chitfund.activity;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,27 +10,16 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import chitfund.wayzontech.chitfund.chitfund.R;
-import chitfund.wayzontech.chitfund.chitfund.fragment.AuctionFragment;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
-import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
-import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
+import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
 
 public class AuctionActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private TextView txtAmount,txtGroupId;
     private Button buttonAuction;
     private String strAmount,strGroupId;
-    private SessionManager session;
+    private MemberSession session;
     private WebView webView;
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -50,7 +38,7 @@ public class AuctionActivity extends AppCompatActivity implements View.OnClickLi
         {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        session = new SessionManager(this);
+        session = new MemberSession(this);
 
         Intent intent = this.getIntent();
         strAmount = intent.getExtras().getString("KEY_AMOUNT");

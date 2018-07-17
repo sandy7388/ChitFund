@@ -24,8 +24,9 @@ import java.util.Map;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
+import chitfund.wayzontech.chitfund.chitfund.model.AgentLogin;
 import chitfund.wayzontech.chitfund.chitfund.model.MemberLogin;
-import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
+import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -34,7 +35,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText editText_username,editText_password;
     private String userid,strUsername,strPassword,member_id,strId,strName,strSubDomain;
     private ProgressDialog progressDialog;
-    private SessionManager sessionManager;
+    private MemberSession memberSession;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,12 +54,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         button_register = findViewById(R.id.btn_register);
         editText_username = findViewById(R.id.edt_userid);
         editText_password = findViewById(R.id.edt_password);
-        sessionManager = new SessionManager(this);
+        memberSession = new MemberSession(this);
         button_register.setOnClickListener(this);
         button_login.setOnClickListener(this);
 
         // Check either login or not
-        if(SessionManager.getInstance(this).isLoggedIn())
+        if(MemberSession.getInstance(this).isLoggedIn())
         {
             finish();
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -114,7 +115,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     memberLogin.setUsername(strName);
                                     memberLogin.setPassword(strPassword);
                                     memberLogin.setSubdomain(strSubDomain);
-                                    sessionManager.userLogin(memberLogin);
+                                    memberSession.userLogin(memberLogin);
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                     finish();
                                 }
@@ -124,12 +125,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     strId = jsonObject.getString("user_id");
                                     strName = jsonObject.getString("uname");
                                     strSubDomain = jsonObject.getString("subdomain");
-                                    MemberLogin memberLogin = new MemberLogin();
-                                    memberLogin.setId(strId);
-                                    memberLogin.setUsername(strName);
-                                    memberLogin.setPassword(strPassword);
-                                    memberLogin.setSubdomain(strSubDomain);
-                                    sessionManager.userLogin(memberLogin);
+                                    AgentLogin agentLogin = new AgentLogin();
+                                    agentLogin.setId(strId);
+                                    agentLogin.setUsername(strName);
+                                    agentLogin.setPassword(strPassword);
+                                    agentLogin.setSubdomain(strSubDomain);
+                                    memberSession.userLogin(agentLogin);
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                     finish();
                                 }

@@ -4,11 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
 import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import chitfund.wayzontech.chitfund.chitfund.activity.LoginActivity;
+import chitfund.wayzontech.chitfund.chitfund.model.AgentLogin;
 import chitfund.wayzontech.chitfund.chitfund.model.MemberLogin;
 
 
@@ -17,13 +20,13 @@ import chitfund.wayzontech.chitfund.chitfund.model.MemberLogin;
  */
 
 @SuppressLint("StaticFieldLeak")
-public class SessionManager
+public class AgentSession
 {
 
-    private static SessionManager mInstance;
+    private static AgentSession mInstance;
     private static Context mCtx;
 
-    private static final String SHARED_PREF_NAME = "mySharedPref";
+    private static final String SHARED_PREF_NAME = "agentSharedPref";
     private static final String KEY_USERNAME = "username";
     private static final String KEY_USER_PASSWORD = "password";
     private static final String KEY_USER_ID = "user_id";
@@ -34,50 +37,50 @@ public class SessionManager
 //    private static final String KEY_LOCATION_NAME = "location";
 //    private static final String KEY_WORKING_STATUS = "working_status";
 
-    public SessionManager(Context context)
+    public AgentSession(Context context)
     {
         mCtx = context;
     }
-    public static synchronized SessionManager getInstance(Context context)
+    public static synchronized AgentSession getInstance(Context context)
     {
         if (mInstance == null)
         {
-            mInstance = new SessionManager(context);
+            mInstance = new AgentSession(context);
         }
         return mInstance;
     }
 
     // for user login to store  the user session
-    public boolean userLogin(MemberLogin memberLogin)
+    public boolean userLogin(AgentLogin agentLogin)
     {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(KEY_USERNAME, memberLogin.getUsername());
-        editor.putString(KEY_USER_PASSWORD, memberLogin.getPassword());
+        editor.putString(KEY_USERNAME, agentLogin.getUsername());
+        editor.putString(KEY_USER_PASSWORD, agentLogin.getPassword());
         //editor.putString(KEY_MEMBER_ID,memberLogin.getMember_id());
-        editor.putString(KEY_USER_ID, memberLogin.getId());
-        editor.putString(KEY_SUB_DOMAIN, memberLogin.getSubdomain());
+        editor.putString(KEY_USER_ID, agentLogin.getId());
+        editor.putString(KEY_SUB_DOMAIN, agentLogin.getSubdomain());
 
         editor.apply();
         editor.commit();
 
         return true;
     }
-    public boolean setUserId(MemberLogin memberLogin)
+    public boolean setUserId(AgentLogin agentLogin)
     {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(KEY_USER_ID, memberLogin.getUsername());
+        editor.putString(KEY_USER_ID, agentLogin.getUsername());
         editor.apply();
         editor.commit();
         return true;
     }
 
-    public boolean setMemberId(MemberLogin memberLogin)
+    public boolean setMemberId(AgentLogin agentLogin)
     {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(KEY_MEMBER_ID, memberLogin.getUsername());
+        editor.putString(KEY_MEMBER_ID, agentLogin.getUsername());
         editor.apply();
         editor.commit();
         return true;

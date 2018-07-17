@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -37,10 +36,9 @@ import java.util.HashMap;
 import java.util.Map;
 import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.activity.EditProfileActivity;
-import chitfund.wayzontech.chitfund.chitfund.activity.MainActivity;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.other.CircleTransform;
-import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
+import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 import static android.app.Activity.RESULT_OK;
@@ -52,7 +50,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     editTextAddress,editTextBirthday,editTextMobile;
     private ImageView imageViewEdit,imageViewProfile,imageViewChange;
     private Button buttonDelete;
-    private SessionManager session;
+    private MemberSession session;
     private DateFormat date,time;
     private Date d;
     private static final String urlProfileImg = "https://s-media-cache-ak0.pinimg.com/736x/2c/bb/04/2cbb04e7ef9266e1e57a9b0e75bc555f.jpg";
@@ -76,7 +74,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     void initController(View view)
     {
-        session = new SessionManager(getContext());
+        session = new MemberSession(getContext());
         imageViewEdit = view.findViewById(R.id.imageEdit);
         imageViewChange = view.findViewById(R.id.imageChange);
         imageViewProfile = view.findViewById(R.id.profileImage);

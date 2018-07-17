@@ -11,7 +11,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,7 +25,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,7 +49,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
-import chitfund.wayzontech.chitfund.chitfund.fragment.AuctionFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.GroupListFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.HomeFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.JoinedGroupFragment;
@@ -62,7 +59,7 @@ import chitfund.wayzontech.chitfund.chitfund.httpHelper.Config;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.other.CircleTransform;
 import chitfund.wayzontech.chitfund.chitfund.receiverNservices.NotificationUtils;
-import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
+import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 public class MainActivity extends RuntimePermissionActivity
@@ -71,7 +68,7 @@ public class MainActivity extends RuntimePermissionActivity
     private static final int REQUEST_PERMISSIONS = 20;
     private static final String TAG = MainActivity.class.getSimpleName();
     private BroadcastReceiver mRegistrationBroadcastReceiver;
-    private SessionManager session;
+    private MemberSession session;
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
@@ -193,7 +190,7 @@ public class MainActivity extends RuntimePermissionActivity
     {
         mToolbar = findViewById(R.id.mainActivityToolbar1);
         setSupportActionBar(mToolbar);
-        session=new SessionManager(this);
+        session=new MemberSession(this);
         mHandler = new Handler();
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -203,7 +200,7 @@ public class MainActivity extends RuntimePermissionActivity
         textEmail = navHeader.findViewById(R.id.userEmail);
         profile = navHeader.findViewById(R.id.imageView);
         fab.setOnClickListener(this);
-        if(!SessionManager.getInstance(this).isLoggedIn())
+        if(!MemberSession.getInstance(this).isLoggedIn())
         {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
@@ -424,7 +421,7 @@ public class MainActivity extends RuntimePermissionActivity
         switch (id) {
             case R.id.action_logout:
                 //androidLogout();
-                SessionManager.getInstance(MainActivity.this).logout();
+                MemberSession.getInstance(MainActivity.this).logout();
                 finish();
                 break;
         }
@@ -466,7 +463,7 @@ public class MainActivity extends RuntimePermissionActivity
         aBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                SessionManager.getInstance(MainActivity.this).logout();
+                MemberSession.getInstance(MainActivity.this).logout();
                 finish();
             }
         });
@@ -534,7 +531,7 @@ public class MainActivity extends RuntimePermissionActivity
                         Toast.makeText(MainActivity.this,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
                         if (checkNetworkConnection())
                         {
-                            SessionManager.getInstance(MainActivity.this).logout();
+                            MemberSession.getInstance(MainActivity.this).logout();
                             finish();
                         }
                         else

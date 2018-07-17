@@ -30,9 +30,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
-import chitfund.wayzontech.chitfund.chitfund.fragment.ProfileFragment;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
-import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
+import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 import static android.content.ContentValues.TAG;
@@ -47,7 +46,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private int date_Year,date_Month,date_Day;
     private Calendar calendar;
     private ProgressDialog progressDialog;
-    private SessionManager sessionManager;
+    private MemberSession memberSession;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +84,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         editTextEmail = findViewById(R.id.editEmail);
         editTextBirthday = findViewById(R.id.editDob);
         editTextAddress = findViewById(R.id.editAddress);
-        sessionManager = new SessionManager(this);
+        memberSession = new MemberSession(this);
         buttonSave = findViewById(R.id.btnEditSave);
         editTextBirthday.setOnClickListener(this);
         buttonSave.setOnClickListener(this);
@@ -192,7 +191,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("user_id",sessionManager.getUserID());
+                params.put("user_id", memberSession.getUserID());
                 params.put("membername",strName);
                 params.put("membermobile",strMobile);
                 params.put("email",strEmail);

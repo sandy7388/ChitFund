@@ -1,7 +1,6 @@
 package chitfund.wayzontech.chitfund.chitfund.fragment;
 
 import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,7 +16,7 @@ import java.util.Calendar;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.activity.MainActivity;
-import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
+import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
 
 import static android.content.ContentValues.TAG;
 
@@ -32,7 +30,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private LinearLayout linearLayout_auction,linearLayout_group,
                         linearLayout_joined,linearLayout_last,
                         linearLayout_notification,linearLayout_profile;
-    private SessionManager session;
+    private MemberSession session;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -68,7 +66,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E dd/MM/yyyy");
         date.setText(simpleDateFormat.format(calendar.getTime()));
         getActivity().setTitle("Home");
-        session = new SessionManager(getContext());
+        session = new MemberSession(getContext());
         name.setText(session.getUserID());
         return view;
     }

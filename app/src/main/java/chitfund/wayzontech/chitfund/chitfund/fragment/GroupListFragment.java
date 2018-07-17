@@ -34,7 +34,7 @@ import chitfund.wayzontech.chitfund.chitfund.activity.MainActivity;
 import chitfund.wayzontech.chitfund.chitfund.adapter.GroupListAdapter;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.model.MemberName;
-import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
+import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 
@@ -52,7 +52,7 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<MemberName> memberNameArrayList;
     private GroupListAdapter groupListAdapter;
-    SessionManager sessionManager;
+    MemberSession memberSession;
     public GroupListFragment() {
         // Required empty public constructor
     }
@@ -74,7 +74,7 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
     {
         grpName = new ArrayList<String>();
         progressDialog = new ProgressDialog(getContext());
-        sessionManager = new SessionManager(getActivity());
+        memberSession = new MemberSession(getActivity());
         button = view.findViewById(R.id.btn_joinGrpFrag);
         textViewAmount = view.findViewById(R.id.text_amtGrpFrg);
         spinnerGrpName = view.findViewById(R.id.spinner_groupName);
@@ -263,7 +263,7 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                params.put("user_id",sessionManager.getUserID());
+                params.put("user_id", memberSession.getUserID());
                 params.put("groupid",groupId);
                 return params;
             }

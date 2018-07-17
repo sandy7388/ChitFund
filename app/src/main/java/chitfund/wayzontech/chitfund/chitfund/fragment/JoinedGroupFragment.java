@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -21,7 +20,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,7 +33,7 @@ import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.adapter.JoinedGroupAdapter;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.model.JoinedGroup;
-import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
+import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 
@@ -43,7 +41,7 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
 
     private RecyclerView recyclerView;
     private String strRemainingDays,inputDateString;
-    private SessionManager sessionManager;
+    private MemberSession memberSession;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ArrayList<JoinedGroup> joinedGroupArrayList;
     private RecyclerView.LayoutManager layoutManager;
@@ -72,7 +70,7 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
     {
         swipeRefreshLayout = view.findViewById(R.id.swipeToRefreshJoinedGroup);
         recyclerView = view.findViewById(R.id.recyclerViewJoinedGroup);
-        sessionManager = new SessionManager(getActivity());
+        memberSession = new MemberSession(getActivity());
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -180,7 +178,7 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("userid",sessionManager.getUserID());
+                params.put("userid", memberSession.getUserID());
                 return params;
             }
         };

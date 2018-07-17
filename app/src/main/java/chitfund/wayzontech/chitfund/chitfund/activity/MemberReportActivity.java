@@ -29,7 +29,7 @@ import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.adapter.MemberReportAdapter;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.model.MemberReport;
-import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
+import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 public class MemberReportActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -43,7 +43,7 @@ public class MemberReportActivity extends AppCompatActivity implements AdapterVi
     private ArrayList<String> grpName;
     private MemberReportAdapter memberReportAdapter;
     private String memberId,memberName,memberMobile,groupName,groupId;
-    private SessionManager sessionManager;
+    private MemberSession memberSession;
     private Button buttonDeleteGroup;
     public MemberReportActivity() {
     }
@@ -69,7 +69,7 @@ public class MemberReportActivity extends AppCompatActivity implements AdapterVi
     {
         grpName = new ArrayList<>();
         progressDialog = new ProgressDialog(this);
-        sessionManager = new SessionManager(this);
+        memberSession = new MemberSession(this);
         spinner.setOnItemSelectedListener(this);
         getMemberReport();
     }
@@ -147,7 +147,7 @@ public class MemberReportActivity extends AppCompatActivity implements AdapterVi
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put("userid",sessionManager.getUserID());
+                map.put("userid", memberSession.getUserID());
                 return map;
             }
         };

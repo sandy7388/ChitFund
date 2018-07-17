@@ -26,7 +26,7 @@ import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.adapter.CollectionReportAdapter;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.model.CollectionReport;
-import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
+import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 public class CollectionReportActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
@@ -35,7 +35,7 @@ public class CollectionReportActivity extends AppCompatActivity implements Swipe
     private LinearLayoutManager layoutManager;
     private ArrayList<CollectionReport> collectionReportArrayList;
     private CollectionReportAdapter collectionReportAdapter;
-    private SessionManager session;
+    private MemberSession session;
     private ProgressDialog progressDialog;
     private String strTicketNo,strAuctionNo,strMemberName,strCollectionType,
                     strAmount,strChequeNo,strChequeDate,strBankName,
@@ -62,7 +62,7 @@ public class CollectionReportActivity extends AppCompatActivity implements Swipe
    void initRecyclerView()
    {
 
-       session = new SessionManager(this);
+       session = new MemberSession(this);
        collectionReportArrayList = new ArrayList<>();
        layoutManager = new LinearLayoutManager(this);
        recyclerView.setLayoutManager(layoutManager);

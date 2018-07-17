@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -35,7 +34,7 @@ import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.adapter.LastAuctionAdapter;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.model.LastAuction;
-import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
+import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 
@@ -50,7 +49,7 @@ public class LastAuctionFragment extends Fragment
     private Button getLastAuction;
     private TextView dateLastAuction;
     private Calendar calendar;
-    private SessionManager session;
+    private MemberSession session;
     private String strDate,date,amount,lockAmount,groupName,receivedBy,closedOn;
     private int date_Year,date_Month,date_Day;
     public LastAuctionFragment() {
@@ -92,7 +91,7 @@ public class LastAuctionFragment extends Fragment
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         dateLastAuction.setText( sdf.format(calendar.getTime()));
         dateLastAuction.setOnClickListener(this);
-        session = new SessionManager(getActivity());
+        session = new MemberSession(getActivity());
     }
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)

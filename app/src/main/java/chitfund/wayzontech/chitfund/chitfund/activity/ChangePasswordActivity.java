@@ -23,7 +23,7 @@ import java.util.Map;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
-import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
+import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 public class ChangePasswordActivity extends AppCompatActivity implements View.OnClickListener {
@@ -31,7 +31,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
     private EditText edtOldPassword,edtNewPassword,edtConfirmPassword;
     private Button btnChangePassword;
     private ProgressDialog progressDialog;
-    private SessionManager sessionManager;
+    private MemberSession memberSession;
     private String strUsername,strOldPassword,strNewPassword,strConfirmPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         edtOldPassword = findViewById(R.id.oldPassword);
         edtNewPassword =findViewById(R.id.newPassword);
         edtConfirmPassword = findViewById(R.id.confirmPassword);
-        sessionManager = new SessionManager(this);
+        memberSession = new MemberSession(this);
 
         btnChangePassword = findViewById(R.id.btnChangePassword);
 
@@ -142,7 +142,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put("userid",sessionManager.getUserID());
+                map.put("userid", memberSession.getUserID());
                 map.put("oldpassword",strOldPassword);
                 map.put("newpassword",strNewPassword);
                 return map;
