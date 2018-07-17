@@ -2,15 +2,14 @@ package chitfund.wayzontech.chitfund.chitfund.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -26,6 +25,7 @@ import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.model.AgentLogin;
 import chitfund.wayzontech.chitfund.chitfund.model.MemberLogin;
+import chitfund.wayzontech.chitfund.chitfund.session.AgentSession;
 import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
@@ -36,6 +36,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String userid,strUsername,strPassword,member_id,strId,strName,strSubDomain;
     private ProgressDialog progressDialog;
     private MemberSession memberSession;
+    private AgentSession agentSession;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +56,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editText_username = findViewById(R.id.edt_userid);
         editText_password = findViewById(R.id.edt_password);
         memberSession = new MemberSession(this);
+        agentSession = new AgentSession(this);
         button_register.setOnClickListener(this);
         button_login.setOnClickListener(this);
 
@@ -130,8 +132,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     agentLogin.setUsername(strName);
                                     agentLogin.setPassword(strPassword);
                                     agentLogin.setSubdomain(strSubDomain);
-                                    memberSession.userLogin(agentLogin);
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    agentSession.userLogin(agentLogin);
+                                    startActivity(new Intent(LoginActivity.this,. class))
                                     finish();
                                 }
 
@@ -174,7 +176,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         })
         {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("username",strUsername);
                 params.put("password",strPassword);

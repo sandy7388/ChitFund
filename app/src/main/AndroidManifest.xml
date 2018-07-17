@@ -54,8 +54,10 @@
         <activity android:name=".activity.MemberReportActivity" />
         <activity android:name=".activity.AdvanceReportActivity" />
         <activity android:name=".activity.EditProfileActivity" />
-        <activity android:name=".activity.AuctionActivity"
-            android:parentActivityName=".activity.MainActivity"/>
+        <activity
+            android:name=".activity.AuctionActivity"
+            android:parentActivityName=".activity.MainActivity" />
+        <activity android:name=".activity.AgentActivity"></activity>
     </application>
 
 </manifest>
