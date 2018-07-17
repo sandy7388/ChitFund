@@ -33,12 +33,12 @@ public class AgentAdapter extends RecyclerView.Adapter<AgentAdapter.AdavanceRepo
     public void onBindViewHolder(AdavanceReportHolder holder, int position) {
         AgentPOJO agentPOJO = agentPOJOArrayList.get(position);
 
-        holder.ticketNo.setText(agentPOJO.getTicket_no());
-        holder.memberName.setText(agentPOJO.getMember_name());
-        holder.collectionType.setText(agentPOJO.getCollection_type());
-        holder.amount.setText(agentPOJO.getAmount());
-        holder.receiptNo.setText(agentPOJO.getReceipt_no());
-        holder.receiptDate.setText(agentPOJO.getReceipt_date());
+//        holder.ticketNo.setText(agentPOJO.getTicket_no());
+//        holder.memberName.setText(agentPOJO.getMember_name());
+//        holder.collectionType.setText(agentPOJO.getCollection_type());
+//        holder.amount.setText(agentPOJO.getAmount());
+//        holder.receiptNo.setText(agentPOJO.getReceipt_no());
+//        holder.receiptDate.setText(agentPOJO.getReceipt_date());
 
     }
 
