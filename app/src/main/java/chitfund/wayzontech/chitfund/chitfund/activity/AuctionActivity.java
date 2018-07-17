@@ -1,6 +1,7 @@
 package chitfund.wayzontech.chitfund.chitfund.activity;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -61,6 +62,8 @@ public class AuctionActivity extends AppCompatActivity implements View.OnClickLi
         buttonAuction.setOnClickListener(this);
 
         swipeRefreshLayout.setOnRefreshListener(this);
+        controller();
+        //handler.post(timedTask);
     }
 
     private void controller()
@@ -79,6 +82,7 @@ public class AuctionActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.buttonAuction:
                 //realTimeAuction();
                 controller();
+                //handler.post(timedTask);
                 break;
         }
     }
@@ -87,6 +91,7 @@ public class AuctionActivity extends AppCompatActivity implements View.OnClickLi
     public void onRefresh() {
 
         webView.reload();
+        swipeRefreshLayout.setRefreshing(false);
 
     }
 
@@ -99,5 +104,15 @@ public class AuctionActivity extends AppCompatActivity implements View.OnClickLi
             return false;
         }
     }
+
+//    Handler handler = new Handler();
+//    Runnable timedTask = new Runnable(){
+//
+//        @Override
+//        public void run() {
+//            webView.reload();
+//            handler.postDelayed(timedTask, 15000);
+//        }
+//    };
 
 }

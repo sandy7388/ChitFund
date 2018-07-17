@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +24,7 @@ import java.util.Map;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
-import chitfund.wayzontech.chitfund.chitfund.model.UserLogin;
+import chitfund.wayzontech.chitfund.chitfund.model.MemberLogin;
 import chitfund.wayzontech.chitfund.chitfund.session.SessionManager;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
@@ -106,17 +104,36 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             JSONObject jsonObject = new JSONObject(response);
                             if (jsonObject.getString("success").equals("1"))
                             {
-                                strId = jsonObject.getString("user_id");
-                                strName = jsonObject.getString("uname");
-                                strSubDomain = jsonObject.getString("subdomain");
-                                UserLogin userLogin = new UserLogin();
-                                userLogin.setId(strId);
-                                userLogin.setUsername(strName);
-                                userLogin.setPassword(strPassword);
-                                userLogin.setSubdomain(strSubDomain);
-                                sessionManager.userLogin(userLogin);
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                finish();
+                                if (jsonObject.getString("role_id").equals("3"))
+                                {
+                                    strId = jsonObject.getString("user_id");
+                                    strName = jsonObject.getString("uname");
+                                    strSubDomain = jsonObject.getString("subdomain");
+                                    MemberLogin memberLogin = new MemberLogin();
+                                    memberLogin.setId(strId);
+                                    memberLogin.setUsername(strName);
+                                    memberLogin.setPassword(strPassword);
+                                    memberLogin.setSubdomain(strSubDomain);
+                                    sessionManager.userLogin(memberLogin);
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    finish();
+                                }
+
+                                if (jsonObject.getString("role_id").equals("4"))
+                                {
+                                    strId = jsonObject.getString("user_id");
+                                    strName = jsonObject.getString("uname");
+                                    strSubDomain = jsonObject.getString("subdomain");
+                                    MemberLogin memberLogin = new MemberLogin();
+                                    memberLogin.setId(strId);
+                                    memberLogin.setUsername(strName);
+                                    memberLogin.setPassword(strPassword);
+                                    memberLogin.setSubdomain(strSubDomain);
+                                    sessionManager.userLogin(memberLogin);
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    finish();
+                                }
+
                             }
 
                             if (jsonObject.getString("success").equals("0"))

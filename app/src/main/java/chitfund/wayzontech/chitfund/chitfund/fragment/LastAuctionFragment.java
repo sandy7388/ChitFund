@@ -162,7 +162,7 @@ public class LastAuctionFragment extends Fragment
                                     lastAuctionArrayList.add(lastAuction);
 
                                     progressDialog.dismiss();
-                                    Toast.makeText(getActivity(),jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getActivity(),jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
 
                                 }
 
@@ -171,7 +171,7 @@ public class LastAuctionFragment extends Fragment
                             }
                             else
                                 progressDialog.dismiss();
-                                Toast.makeText(getActivity(),jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getActivity(),jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
 
 
 
@@ -193,7 +193,7 @@ public class LastAuctionFragment extends Fragment
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                params.put("date",strDate);
+                params.put("auctiondate",strDate);
                 //params.put("userid",session.getUserID());
                 return params;
             }

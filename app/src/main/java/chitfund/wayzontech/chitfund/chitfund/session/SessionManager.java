@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import chitfund.wayzontech.chitfund.chitfund.activity.LoginActivity;
-import chitfund.wayzontech.chitfund.chitfund.model.UserLogin;
+import chitfund.wayzontech.chitfund.chitfund.model.MemberLogin;
 
 
 /**
@@ -48,36 +48,36 @@ public class SessionManager
     }
 
     // for user login to store  the user session
-    public boolean userLogin(UserLogin userLogin)
+    public boolean userLogin(MemberLogin memberLogin)
     {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(KEY_USERNAME, userLogin.getUsername());
-        editor.putString(KEY_USER_PASSWORD,userLogin.getPassword());
-        //editor.putString(KEY_MEMBER_ID,userLogin.getMember_id());
-        editor.putString(KEY_USER_ID,userLogin.getId());
-        editor.putString(KEY_SUB_DOMAIN,userLogin.getSubdomain());
+        editor.putString(KEY_USERNAME, memberLogin.getUsername());
+        editor.putString(KEY_USER_PASSWORD, memberLogin.getPassword());
+        //editor.putString(KEY_MEMBER_ID,memberLogin.getMember_id());
+        editor.putString(KEY_USER_ID, memberLogin.getId());
+        editor.putString(KEY_SUB_DOMAIN, memberLogin.getSubdomain());
 
         editor.apply();
         editor.commit();
 
         return true;
     }
-    public boolean setUserId(UserLogin userLogin)
+    public boolean setUserId(MemberLogin memberLogin)
     {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(KEY_USER_ID,userLogin.getUsername());
+        editor.putString(KEY_USER_ID, memberLogin.getUsername());
         editor.apply();
         editor.commit();
         return true;
     }
 
-    public boolean setMemberId(UserLogin userLogin)
+    public boolean setMemberId(MemberLogin memberLogin)
     {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(KEY_MEMBER_ID,userLogin.getUsername());
+        editor.putString(KEY_MEMBER_ID, memberLogin.getUsername());
         editor.apply();
         editor.commit();
         return true;

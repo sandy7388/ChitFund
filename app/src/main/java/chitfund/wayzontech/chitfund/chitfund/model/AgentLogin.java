@@ -1,18 +1,13 @@
 package chitfund.wayzontech.chitfund.chitfund.model;
 
-/**
- * Created by sandy on 19/3/18.
- */
-
-public class UserLogin
+public class AgentLogin
 {
     private String id,username,password,member_id,subdomain;
 
-
-    public UserLogin() {
+    public AgentLogin() {
     }
 
-    public UserLogin(String id, String username, String password, String subdomain) {
+    public AgentLogin(String id, String username, String password, String subdomain) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -59,4 +54,5 @@ public class UserLogin
     public void setSubdomain(String subdomain) {
         this.subdomain = subdomain;
     }
+
 }

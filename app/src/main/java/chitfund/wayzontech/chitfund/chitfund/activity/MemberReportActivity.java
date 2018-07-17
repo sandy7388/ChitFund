@@ -112,7 +112,7 @@ public class MemberReportActivity extends AppCompatActivity implements AdapterVi
                                 {
                                     object = memberJsonArray.getJSONObject(j);
 
-                                    memberId = object.getString("member_id");
+                                    memberId = object.getString("user_id");
                                     memberName = object.getString("member_name");
                                     memberMobile = object.getString("member_mobile");
 
