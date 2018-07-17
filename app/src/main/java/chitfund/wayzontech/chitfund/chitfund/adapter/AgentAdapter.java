@@ -40,7 +40,6 @@ public class AgentAdapter extends RecyclerView.Adapter<AgentAdapter.AdavanceRepo
         holder.receiptNo.setText(agentPOJO.getReceipt_no());
         holder.receiptDate.setText(agentPOJO.getReceipt_date());
 
-
     }
 
     @Override
