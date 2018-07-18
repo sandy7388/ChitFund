@@ -7,46 +7,183 @@
     android:background="@drawable/border"
     tools:context=".activity.AgentActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="15dp">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
-        <TextView
-            android:textColor="@color/colorBlack"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="05dp"
-            android:text="Select Group Name" />
+            android:orientation="vertical"
+            android:padding="15dp">
 
-        <Spinner
-            android:textColor="@color/colorBlack"
-            android:id="@+id/spinnerGrpNameAgent"
-            android:layout_width="match_parent"
-            android:layout_height="30sp"
-            android:layout_below="@+id/textMsg"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_spinner" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="05dp"
+                android:gravity="center"
+                android:text="Member Collection"
+                android:textColor="@color/colorBlack"
+                android:textSize="20dp" />
 
-        <TextView
-            android:textColor="@color/colorBlack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Select Member Name" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="05dp"
+                android:text="Group Name"
+                android:textColor="@color/colorBlack" />
 
-        <Spinner
-            android:textColor="@color/colorBlack"
-            android:id="@+id/spinnerMbrNameAgent"
-            android:layout_width="match_parent"
-            android:layout_height="30sp"
-            android:layout_below="@+id/textMsg"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_spinner" />
+            <Spinner
+                android:id="@+id/spinnerGrpNameAgent"
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_spinner"
+                android:spinnerMode="dropdown" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Member Name"
+                android:textColor="@color/colorBlack" />
+
+            <Spinner
+                android:id="@+id/spinnerMbrNameAgent"
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_spinner"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Bank Name"
+                android:textColor="@color/colorBlack" />
+
+            <Spinner
+                android:id="@+id/spinnerBankNameAgent"
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_spinner"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Payment Mode"
+                android:textColor="@color/colorBlack" />
+
+            <RadioGroup
+                android:id="@+id/radioGroupAgent"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RadioButton
+                    android:id="@+id/radioCash"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="35dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_border"
+                    android:text="Cash"
+                    android:textColor="@color/colorBlack" />
+
+                <RadioButton
+                    android:id="@+id/radioCheque"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_border"
+                    android:text="Cheque"
+                    android:textColor="@color/colorBlack" />
+            </RadioGroup>
 
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Cheque Number"
+                android:textColor="@color/colorBlack" />
+
+            <EditText
+                android:id="@+id/editTextChequeNo"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_border"
+                android:ems="10"
+                android:inputType="number"
+                android:padding="5dp"
+                android:textColor="@color/colorBlack" />
+
+            <LinearLayout
+                android:id="@+id/linearLayoutAgent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Amount"
+                    android:textColor="@color/colorBlack" />
+
+                <EditText
+                    android:id="@+id/editTextAmountAgent"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/button_border"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:padding="5dp"
+                    android:textColor="@color/colorBlack" />
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Collection Type"
+                android:textColor="@color/colorBlack" />
+
+            <Spinner
+                android:id="@+id/spinnerSubTypeAgent"
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_spinner"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/colorBlack" />
+
+
+            <Button
+                android:id="@+id/buttonCollectPayment"
+                android:layout_width="match_parent"
+                android:layout_height="35sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_border1"
+                android:text="Collect Payment" />
+
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

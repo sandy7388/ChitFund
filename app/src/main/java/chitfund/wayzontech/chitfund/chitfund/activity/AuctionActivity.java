@@ -1,9 +1,8 @@
 package chitfund.wayzontech.chitfund.chitfund.activity;
 
 import android.content.Intent;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -14,14 +13,14 @@ import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
 
-public class AuctionActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class AuctionActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView txtAmount,txtGroupId;
     private Button buttonAuction;
     private String strAmount,strGroupId;
     private MemberSession session;
     private WebView webView;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    //private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +31,7 @@ public class AuctionActivity extends AppCompatActivity implements View.OnClickLi
         txtGroupId = findViewById(R.id.textViewAuctionId);
         webView = findViewById(R.id.webView);
         buttonAuction = findViewById(R.id.buttonAuction);
-        swipeRefreshLayout = findViewById(R.id.swipeToRefreshAuction);
+        //swipeRefreshLayout = findViewById(R.id.swipeToRefreshAuction);
 
         if (getSupportActionBar()!=null)
         {
@@ -49,7 +48,7 @@ public class AuctionActivity extends AppCompatActivity implements View.OnClickLi
 
         buttonAuction.setOnClickListener(this);
 
-        swipeRefreshLayout.setOnRefreshListener(this);
+        //swipeRefreshLayout.setOnRefreshListener(this);
         controller();
         //handler.post(timedTask);
     }
@@ -73,14 +72,6 @@ public class AuctionActivity extends AppCompatActivity implements View.OnClickLi
                 //handler.post(timedTask);
                 break;
         }
-    }
-
-    @Override
-    public void onRefresh() {
-
-        webView.reload();
-        swipeRefreshLayout.setRefreshing(false);
-
     }
 
 

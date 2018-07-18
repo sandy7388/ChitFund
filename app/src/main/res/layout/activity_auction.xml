@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -82,20 +81,14 @@
 
         </LinearLayout>
 
-        <android.support.v4.widget.SwipeRefreshLayout
+        <WebView
+            android:id="@+id/webView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/swipeToRefreshAuction">
-
-            <WebView
-                android:focusableInTouchMode="true"
-                android:focusable="true"
-                android:id="@+id/webView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"/>
-        </android.support.v4.widget.SwipeRefreshLayout>
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
 
 
     </LinearLayout>

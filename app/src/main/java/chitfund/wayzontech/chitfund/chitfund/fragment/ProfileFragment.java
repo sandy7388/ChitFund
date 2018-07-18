@@ -94,7 +94,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void getProfile()
     {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.PROFILE_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.BASE_URL + "groupinfo/getprofile",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response)

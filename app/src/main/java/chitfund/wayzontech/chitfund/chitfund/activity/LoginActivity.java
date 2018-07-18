@@ -123,6 +123,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     memberLogin.setPassword(strPassword);
                                     memberLogin.setSubdomain(strSubDomain);
                                     memberSession.userLogin(memberLogin);
+                                    URLs urLs = new URLs();
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                     finish();
                                 }
