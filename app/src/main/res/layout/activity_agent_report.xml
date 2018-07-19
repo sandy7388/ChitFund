@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.DailyCollectionActivity">
+    tools:context=".activity.AgentReportActivity">
 
     <LinearLayout
         android:id="@+id/linearLayoutMain"
@@ -185,6 +185,7 @@
                 android:padding="5dp"
                 android:textColor="@color/colorBlack" />
         </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/linearLayoutSubmitAmountAgent"

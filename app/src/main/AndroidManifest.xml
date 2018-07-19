@@ -58,7 +58,7 @@
             android:name=".activity.AuctionActivity"
             android:parentActivityName=".activity.MainActivity" />
         <activity android:name=".activity.AgentActivity" />
-        <activity android:name=".activity.DailyCollectionActivity"></activity>
+        <activity android:name=".activity.AgentReportActivity"></activity>
     </application>
 
 </manifest>

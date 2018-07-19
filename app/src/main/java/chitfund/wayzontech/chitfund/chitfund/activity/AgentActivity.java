@@ -55,12 +55,14 @@ public class AgentActivity extends AppCompatActivity
     private JSONObject serverResponse, groupNameObject, serverResponseMember,
             memberNameObject, serverResponseBank, bankNameObject;
     private String strRoleId = String.valueOf(4), strDate, strReceipt, strAmount, strChequeNumber;
-    private Button buttonGetDetails, buttonCollection;
+    private Button buttonDailyCollection, buttonRegularCollection, buttonAdvanceCollection;
     private EditText editTextChequeNumber, editTextAmount;
     private LinearLayout linearLayout, linearLayoutBankName;
-    private RadioButton radioButtonCash, radioButtonCheque;
+    private RadioButton radioButtonCash, radioButtonCheque, radioButtonAdvance, radioButtonDaily,
+            radioButtonRegular;
     private RadioGroup radioGroup, radioGroupCollectionType;
     private String paymentMode = "";
+    private String collectionType = "";
     private int date_Year, date_Month, date_Day;
     private Calendar calendar;
 
@@ -68,16 +70,17 @@ public class AgentActivity extends AppCompatActivity
     private EditText editTextInstallmentNo, editTextMemberCommission, editTextEntryNo,
             editTextRemailingCollection, editTextTotalRemailingCollection,
             editTextAmountNew, editTextFinalAmount, editTextSubmitAmount,
-            editTextAdvanceAmount;
+            editTextAdvanceAmount, editTextReceiptNo;
 
     private String strInstallmentNo, strMemeberCommission, strEntryNo,
             strRemailingCollection, strTotalRemailingCollection,
-            strAmountNew, strFinalAmount, strSubmitAmount, strAdvanceAmount;
+            strAmountNew, strFinalAmount, strSubmitAmount, strAdvanceAmount,
+            strReceiptNo;
 
     private LinearLayout linearLayoutInstallmentNo, linearLayoutMemeberCommission,
             linearLayoutEntryNo, linearLayoutRemailingCollection, linearLayoutTotalRemailingCollection,
             linearLayoutAmount, linearLayoutFinalAmount, linearLayoutSubmitAmount,
-            linearLayoutAdvanceAmount, linearLayoutMain;
+            linearLayoutAdvanceAmount, linearLayoutMain, linearLayoutReceiptNo, linearLayoutPaymentMode;
 
 
     @Override
@@ -93,9 +96,15 @@ public class AgentActivity extends AppCompatActivity
         spinnerGroupName = findViewById(R.id.spinnerGrpNameAgent);
         spinnerMemberName = findViewById(R.id.spinnerMbrNameAgent);
         spinnerBankName = findViewById(R.id.spinnerBankNameAgent);
-        buttonCollection = findViewById(R.id.buttonCollectPayment);
+        buttonAdvanceCollection = findViewById(R.id.buttonCollectAdvancePayment);
+        buttonDailyCollection = findViewById(R.id.buttonCollectDailyPayment);
+        buttonRegularCollection = findViewById(R.id.buttonCollectRegularPayment);
         radioGroup = findViewById(R.id.radioGroupAgent);
         radioGroupCollectionType = findViewById(R.id.radioGroupCollection);
+
+        radioButtonAdvance = findViewById(R.id.radioAdvance);
+        radioButtonDaily = findViewById(R.id.radioDaily);
+        radioButtonRegular = findViewById(R.id.radioRegular);
         editTextChequeNumber = findViewById(R.id.editTextChequeNo);
         editTextAmount = findViewById(R.id.editTextAmountAgent);
         linearLayout = findViewById(R.id.linearLayoutAgent);
@@ -104,7 +113,9 @@ public class AgentActivity extends AppCompatActivity
         spinnerGroupName.setOnItemSelectedListener(this);
         spinnerMemberName.setOnItemSelectedListener(this);
         spinnerBankName.setOnItemSelectedListener(this);
-        buttonCollection.setOnClickListener(this);
+        buttonAdvanceCollection.setOnClickListener(this);
+        buttonDailyCollection.setOnClickListener(this);
+        buttonRegularCollection.setOnClickListener(this);
 
         radioGroup.setOnCheckedChangeListener(this);
         radioGroupCollectionType.setOnCheckedChangeListener(this);
@@ -132,7 +143,7 @@ public class AgentActivity extends AppCompatActivity
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         SimpleDateFormat receiptNo = new SimpleDateFormat("yyyyMMddhhmmss");
         strDate = simpleDateFormat.format(date);
-        strReceipt = receiptNo.format(date);
+        //strReceipt = receiptNo.format(date);
     }
 
 
@@ -148,6 +159,7 @@ public class AgentActivity extends AppCompatActivity
         editTextFinalAmount = findViewById(R.id.editTextFinalAmount);
         editTextSubmitAmount = findViewById(R.id.editTextSubmitAmount);
         editTextAdvanceAmount = findViewById(R.id.editTextAdvanceAmount);
+        editTextReceiptNo = findViewById(R.id.editTextReceiptNo);
 
         // Linear Layout
         linearLayoutInstallmentNo = findViewById(R.id.linearLayoutInstallmentNoAgent);
@@ -160,6 +172,10 @@ public class AgentActivity extends AppCompatActivity
         linearLayoutSubmitAmount = findViewById(R.id.linearLayoutSubmitAmountAgent);
         linearLayoutAdvanceAmount = findViewById(R.id.linearLayoutAdvanceAmountAgent);
         linearLayoutMain = findViewById(R.id.linearLayoutMain);
+        linearLayoutReceiptNo = findViewById(R.id.linearLayoutReceiptNo);
+        linearLayoutPaymentMode = findViewById(R.id.linearLayoutPaymentMode);
+
+
     }
 
     private void textGetter() {
@@ -172,6 +188,7 @@ public class AgentActivity extends AppCompatActivity
         strFinalAmount = editTextFinalAmount.getText().toString();
         strSubmitAmount = editTextSubmitAmount.getText().toString();
         strAdvanceAmount = editTextAdvanceAmount.getText().toString();
+        strReceiptNo = editTextReceiptNo.getText().toString();
     }
 
     void getGroupName() {
@@ -322,6 +339,7 @@ public class AgentActivity extends AppCompatActivity
                             System.out.println("strBankId" + strBankId);
 
                             getMemberName();
+                            radioButtonAdvance.setChecked(true);
 
                         }
 
@@ -416,14 +434,26 @@ public class AgentActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.buttonCollectPayment:
-                makeCollection();
+            case R.id.buttonCollectAdvancePayment:
+                makeAdvanceCollection();
+                break;
+            case R.id.buttonCollectDailyPayment:
+                makeDailyCollection();
+                break;
+            case R.id.buttonCollectRegularPayment:
+                makeRegularCollection();
                 break;
         }
 
     }
 
-    private void makeCollection() {
+    private void makeDailyCollection() {
+    }
+
+    private void makeRegularCollection() {
+    }
+
+    private void makeAdvanceCollection() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please wait.....!");
         progressDialog.show();
@@ -498,7 +528,6 @@ public class AgentActivity extends AppCompatActivity
 
                 if (checkedId == R.id.radioCash) {
                     // Changes the textview's text to "Checked: example radiobutton text"
-
                     linearLayout.setVisibility(View.GONE);
                     linearLayoutBankName.setVisibility(View.GONE);
                     paymentMode = checkedRadioButton.getText().toString();
@@ -509,7 +538,6 @@ public class AgentActivity extends AppCompatActivity
                     linearLayout.setVisibility(View.VISIBLE);
                     linearLayoutBankName.setVisibility(View.VISIBLE);
                     paymentMode = checkedRadioButton.getText().toString();
-
                     System.out.println("Checked Cheque:" + paymentMode);
                 }
                 break;
@@ -518,44 +546,39 @@ public class AgentActivity extends AppCompatActivity
 
                 if (checkedId == R.id.radioAdvance) {
                     linearLayoutMain.setVisibility(View.GONE);
+                    buttonDailyCollection.setVisibility(View.GONE);
+                    buttonRegularCollection.setVisibility(View.GONE);
+                    buttonAdvanceCollection.setVisibility(View.VISIBLE);
+                    linearLayoutPaymentMode.setVisibility(View.VISIBLE);
+                    collectionType = checkedRadioButton.getText().toString();
+                    System.out.println("Checked Advance:" + collectionType);
                 }
                 if (checkedId == R.id.radioDaily) {
                     linearLayoutMain.setVisibility(View.VISIBLE);
+                    linearLayoutPaymentMode.setVisibility(View.GONE);
+                    linearLayoutBankName.setVisibility(View.GONE);
+                    linearLayout.setVisibility(View.GONE);
+                    buttonAdvanceCollection.setVisibility(View.GONE);
+                    buttonRegularCollection.setVisibility(View.GONE);
+                    buttonDailyCollection.setVisibility(View.VISIBLE);
+                    collectionType = checkedRadioButton.getText().toString();
+                    System.out.println("Checked Daily:" + collectionType);
                 }
                 if (checkedId == R.id.radioRegular) {
                     linearLayoutMain.setVisibility(View.VISIBLE);
+                    buttonDailyCollection.setVisibility(View.GONE);
+                    buttonAdvanceCollection.setVisibility(View.GONE);
+                    buttonRegularCollection.setVisibility(View.VISIBLE);
+                    linearLayoutPaymentMode.setVisibility(View.VISIBLE);
+                    collectionType = checkedRadioButton.getText().toString();
+                    System.out.println("Checked Regular:" + collectionType);
                 }
 
                 break;
 
         }
-//        if (group.getId()==R.id.radioGroupAgent)
-//
-//        {
-//            if (checkedId == R.id.radioCash) {
-//                // Changes the textview's text to "Checked: example radiobutton text"
-//
-//                linearLayout.setVisibility(View.GONE);
-//                linearLayoutBankName.setVisibility(View.GONE);
-//                paymentMode = checkedRadioButton.getText().toString();
-//                System.out.println("Checked:" + paymentMode);
-//
-//            }
-//            if (checkedId == R.id.radioCheque) {
-//                linearLayout.setVisibility(View.VISIBLE);
-//                linearLayoutBankName.setVisibility(View.VISIBLE);
-//                paymentMode = checkedRadioButton.getText().toString();
-//
-//                System.out.println("Checked Cheque:" + paymentMode);
-//            }
-//        }
-
 
     }
 
-//    void radioPaymentMode()
-//    {
-//
-//    }
 }
 

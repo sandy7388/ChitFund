@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
 
-public class DailyCollectionActivity extends AppCompatActivity {
+public class AgentReportActivity extends AppCompatActivity {
 
     private EditText editTextInstallmentNo, editTextMemberCommission, editTextEntryNo,
             editTextRemailingCollection, editTextTotalRemailingCollection,
@@ -26,7 +26,7 @@ public class DailyCollectionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_daily_collection);
+        setContentView(R.layout.activity_agent_report);
 
 
         initialization();
