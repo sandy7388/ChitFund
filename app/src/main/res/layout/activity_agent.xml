@@ -110,25 +110,6 @@
                     android:textColor="@color/colorBlack" />
             </RadioGroup>
 
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Cheque Number"
-                android:textColor="@color/colorBlack" />
-
-            <EditText
-                android:id="@+id/editTextChequeNo"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/button_border"
-                android:ems="10"
-                android:inputType="number"
-                android:padding="5dp"
-                android:textColor="@color/colorBlack" />
-
             <LinearLayout
                 android:id="@+id/linearLayoutAgent"
                 android:layout_width="match_parent"
@@ -139,11 +120,12 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Amount"
+                    android:layout_marginTop="10dp"
+                    android:text="Cheque Number"
                     android:textColor="@color/colorBlack" />
 
                 <EditText
-                    android:id="@+id/editTextAmountAgent"
+                    android:id="@+id/editTextChequeNo"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:layout_marginTop="15dp"
@@ -153,6 +135,24 @@
                     android:padding="5dp"
                     android:textColor="@color/colorBlack" />
             </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Amount"
+                android:textColor="@color/colorBlack" />
+
+            <EditText
+                android:id="@+id/editTextAmountAgent"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_border"
+                android:ems="10"
+                android:inputType="number"
+                android:padding="5dp"
+                android:textColor="@color/colorBlack" />
 
 
             <TextView

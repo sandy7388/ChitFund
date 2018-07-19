@@ -423,7 +423,6 @@ public class AgentActivity extends AppCompatActivity
                 map.put("member_id", strMemberId);
                 map.put("bl_id", strBankId);
                 map.put("payment_mode", paymentMode);
-
                 map.put("amount", strAmount);
                 map.put("cheque_no", strChequeNumber);
                 map.put("collection_type", strCollectionType);

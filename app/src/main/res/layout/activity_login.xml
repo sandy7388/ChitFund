@@ -34,6 +34,7 @@
             android:layout_marginTop="10dp"
             android:text="Mobile Number" />
         <EditText
+            android:maxLength="10"
             android:textColor="@color/colorBlack"
             android:background="@drawable/edittextborder"
             android:inputType="number"
