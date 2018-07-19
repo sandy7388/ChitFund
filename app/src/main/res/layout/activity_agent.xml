@@ -62,17 +62,49 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Bank Name"
+                android:text="Collection Type"
                 android:textColor="@color/colorBlack" />
 
-            <Spinner
-                android:id="@+id/spinnerBankNameAgent"
+            <RadioGroup
+                android:id="@+id/radioGroupCollection"
                 android:layout_width="match_parent"
-                android:layout_height="30sp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/bg_spinner"
-                android:spinnerMode="dropdown"
-                android:textColor="@color/colorBlack" />
+                android:layout_height="35dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <RadioButton
+                    android:id="@+id/radioAdvance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="05dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_border"
+                    android:text="Advance"
+                    android:textColor="@color/colorBlack" />
+
+                <RadioButton
+                    android:id="@+id/radioDaily"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="05dp"
+                    android:layout_marginRight="05dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_border"
+                    android:text="Daily"
+                    android:textColor="@color/colorBlack" />
+
+                <RadioButton
+                    android:id="@+id/radioRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="05dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_border"
+                    android:text="Regular"
+                    android:textColor="@color/colorBlack" />
+            </RadioGroup>
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -109,6 +141,30 @@
                     android:text="Cheque"
                     android:textColor="@color/colorBlack" />
             </RadioGroup>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutBankNameAgent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bank Name"
+                    android:textColor="@color/colorBlack" />
+
+                <Spinner
+                    android:id="@+id/spinnerBankNameAgent"
+                    android:layout_width="match_parent"
+                    android:layout_height="30sp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_spinner"
+                    android:spinnerMode="dropdown"
+                    android:textColor="@color/colorBlack" />
+            </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/linearLayoutAgent"
@@ -154,23 +210,237 @@
                 android:padding="5dp"
                 android:textColor="@color/colorBlack" />
 
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/linearLayoutMain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Collection Type"
-                android:textColor="@color/colorBlack" />
+                android:orientation="vertical">
 
-            <Spinner
-                android:id="@+id/spinnerSubTypeAgent"
-                android:layout_width="match_parent"
-                android:layout_height="30sp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/bg_spinner"
-                android:spinnerMode="dropdown"
-                android:textColor="@color/colorBlack" />
+                <LinearLayout
+                    android:id="@+id/linearLayoutInstallmentNoAgent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Installment Number"
+                        android:textColor="@color/colorBlack" />
+
+                    <EditText
+                        android:id="@+id/editTextInstallmentNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/button_border"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:padding="5dp"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutMemberCommissionAgent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Member Commission"
+                        android:textColor="@color/colorBlack" />
+
+                    <EditText
+                        android:id="@+id/editTextMemberCommission"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/button_border"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:padding="5dp"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutEntryNoAgent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Entry Number"
+                        android:textColor="@color/colorBlack" />
+
+                    <EditText
+                        android:id="@+id/editTextEntryNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/button_border"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:padding="5dp"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutRemainingCollectionAgent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Remaining Collection"
+                        android:textColor="@color/colorBlack" />
+
+                    <EditText
+                        android:id="@+id/editTextRemainingCollection"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/button_border"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:padding="5dp"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutTotalRemainingCollectionAgent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Total Remaining Collection"
+                        android:textColor="@color/colorBlack" />
+
+                    <EditText
+                        android:id="@+id/editTextTotalRemainingCollection"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/button_border"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:padding="5dp"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutAmountAgent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Amount"
+                        android:textColor="@color/colorBlack" />
+
+                    <EditText
+                        android:id="@+id/editTextAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/button_border"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:padding="5dp"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutFinalAmountAgent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Final Amount"
+                        android:textColor="@color/colorBlack" />
+
+                    <EditText
+                        android:id="@+id/editTextFinalAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/button_border"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:padding="5dp"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutSubmitAmountAgent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Submit Amount"
+                        android:textColor="@color/colorBlack" />
+
+                    <EditText
+                        android:id="@+id/editTextSubmitAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/button_border"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:padding="5dp"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutAdvanceAmountAgent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Advance Amount"
+                        android:textColor="@color/colorBlack" />
+
+                    <EditText
+                        android:id="@+id/editTextAdvanceAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/button_border"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:padding="5dp"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
+            </LinearLayout>
 
             <Button
                 android:id="@+id/buttonCollectPayment"

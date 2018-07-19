@@ -44,10 +44,11 @@ public class AgentActivity extends AppCompatActivity
 
     private AgentSession agentSession;
     Date date = new Date();
-    private Spinner spinnerGroupName, spinnerMemberName, spinnerBankName, spinnerCollectionType;
+    private Spinner spinnerGroupName, spinnerMemberName, spinnerBankName;
     private String strGroupNameJSON, strGroupName, strGroupIdJSON,
             strGroupId, strMemberName, strMemberId, strMemberNameJSON,
-            strMemberIdJSON, strBankName, strBankId, strBankNameJSON, strBankIdJSON, strCollectionType;
+            strMemberIdJSON, strBankName, strBankId, strBankNameJSON,
+            strBankIdJSON;
     private ArrayList<String> groupName, memberName, bankName;
     private JSONArray groupArray, memberArray, bankArray;
     private ProgressDialog progressDialog;
@@ -56,18 +57,34 @@ public class AgentActivity extends AppCompatActivity
     private String strRoleId = String.valueOf(4), strDate, strReceipt, strAmount, strChequeNumber;
     private Button buttonGetDetails, buttonCollection;
     private EditText editTextChequeNumber, editTextAmount;
-    private LinearLayout linearLayout;
+    private LinearLayout linearLayout, linearLayoutBankName;
     private RadioButton radioButtonCash, radioButtonCheque;
-    private RadioGroup radioGroup;
+    private RadioGroup radioGroup, radioGroupCollectionType;
     private String paymentMode = "";
     private int date_Year, date_Month, date_Day;
     private Calendar calendar;
-    private String[] country = {"Select One", "Advance", "Daily", "Regular"};
+
+
+    private EditText editTextInstallmentNo, editTextMemberCommission, editTextEntryNo,
+            editTextRemailingCollection, editTextTotalRemailingCollection,
+            editTextAmountNew, editTextFinalAmount, editTextSubmitAmount,
+            editTextAdvanceAmount;
+
+    private String strInstallmentNo, strMemeberCommission, strEntryNo,
+            strRemailingCollection, strTotalRemailingCollection,
+            strAmountNew, strFinalAmount, strSubmitAmount, strAdvanceAmount;
+
+    private LinearLayout linearLayoutInstallmentNo, linearLayoutMemeberCommission,
+            linearLayoutEntryNo, linearLayoutRemailingCollection, linearLayoutTotalRemailingCollection,
+            linearLayoutAmount, linearLayoutFinalAmount, linearLayoutSubmitAmount,
+            linearLayoutAdvanceAmount, linearLayoutMain;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agent);
+        initialization();
         controller();
 
     }
@@ -76,20 +93,21 @@ public class AgentActivity extends AppCompatActivity
         spinnerGroupName = findViewById(R.id.spinnerGrpNameAgent);
         spinnerMemberName = findViewById(R.id.spinnerMbrNameAgent);
         spinnerBankName = findViewById(R.id.spinnerBankNameAgent);
-        spinnerCollectionType = findViewById(R.id.spinnerSubTypeAgent);
         buttonCollection = findViewById(R.id.buttonCollectPayment);
         radioGroup = findViewById(R.id.radioGroupAgent);
+        radioGroupCollectionType = findViewById(R.id.radioGroupCollection);
         editTextChequeNumber = findViewById(R.id.editTextChequeNo);
         editTextAmount = findViewById(R.id.editTextAmountAgent);
         linearLayout = findViewById(R.id.linearLayoutAgent);
+        linearLayoutBankName = findViewById(R.id.linearLayoutBankNameAgent);
         agentSession = new AgentSession(this);
         spinnerGroupName.setOnItemSelectedListener(this);
         spinnerMemberName.setOnItemSelectedListener(this);
         spinnerBankName.setOnItemSelectedListener(this);
-        spinnerCollectionType.setOnItemSelectedListener(this);
         buttonCollection.setOnClickListener(this);
 
         radioGroup.setOnCheckedChangeListener(this);
+        radioGroupCollectionType.setOnCheckedChangeListener(this);
         groupName = new ArrayList<>();
         memberName = new ArrayList<>();
         bankName = new ArrayList<>();
@@ -106,11 +124,6 @@ public class AgentActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
-        ArrayAdapter aa = new ArrayAdapter(this, R.layout.spinner_layout, country);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //Setting the ArrayAdapter data on the Spinner
-        spinnerCollectionType.setAdapter(aa);
-
         calendar = Calendar.getInstance();
         date_Year = calendar.get(Calendar.YEAR);
         date_Month = calendar.get(Calendar.MONTH);
@@ -120,6 +133,45 @@ public class AgentActivity extends AppCompatActivity
         SimpleDateFormat receiptNo = new SimpleDateFormat("yyyyMMddhhmmss");
         strDate = simpleDateFormat.format(date);
         strReceipt = receiptNo.format(date);
+    }
+
+
+    private void initialization() {
+
+        // EditText
+        editTextInstallmentNo = findViewById(R.id.editTextInstallmentNo);
+        editTextMemberCommission = findViewById(R.id.editTextMemberCommission);
+        editTextEntryNo = findViewById(R.id.editTextEntryNo);
+        editTextRemailingCollection = findViewById(R.id.editTextRemainingCollection);
+        editTextTotalRemailingCollection = findViewById(R.id.editTextTotalRemainingCollection);
+        editTextAmountNew = findViewById(R.id.editTextAmount);
+        editTextFinalAmount = findViewById(R.id.editTextFinalAmount);
+        editTextSubmitAmount = findViewById(R.id.editTextSubmitAmount);
+        editTextAdvanceAmount = findViewById(R.id.editTextAdvanceAmount);
+
+        // Linear Layout
+        linearLayoutInstallmentNo = findViewById(R.id.linearLayoutInstallmentNoAgent);
+        linearLayoutMemeberCommission = findViewById(R.id.linearLayoutMemberCommissionAgent);
+        linearLayoutEntryNo = findViewById(R.id.linearLayoutEntryNoAgent);
+        linearLayoutRemailingCollection = findViewById(R.id.linearLayoutRemainingCollectionAgent);
+        linearLayoutTotalRemailingCollection = findViewById(R.id.linearLayoutTotalRemainingCollectionAgent);
+        linearLayoutAmount = findViewById(R.id.linearLayoutAmountAgent);
+        linearLayoutFinalAmount = findViewById(R.id.linearLayoutFinalAmountAgent);
+        linearLayoutSubmitAmount = findViewById(R.id.linearLayoutSubmitAmountAgent);
+        linearLayoutAdvanceAmount = findViewById(R.id.linearLayoutAdvanceAmountAgent);
+        linearLayoutMain = findViewById(R.id.linearLayoutMain);
+    }
+
+    private void textGetter() {
+        strInstallmentNo = editTextInstallmentNo.getText().toString();
+        strMemeberCommission = editTextMemberCommission.getText().toString();
+        strEntryNo = editTextEntryNo.getText().toString();
+        strRemailingCollection = editTextRemailingCollection.getText().toString();
+        strTotalRemailingCollection = editTextTotalRemailingCollection.getText().toString();
+        strAmount = editTextAmountNew.getText().toString();
+        strFinalAmount = editTextFinalAmount.getText().toString();
+        strSubmitAmount = editTextSubmitAmount.getText().toString();
+        strAdvanceAmount = editTextAdvanceAmount.getText().toString();
     }
 
     void getGroupName() {
@@ -279,10 +331,6 @@ public class AgentActivity extends AppCompatActivity
                 }
                 break;
 
-            case R.id.spinnerSubTypeAgent:
-                strCollectionType = spinner.getAdapter().getItem(position).toString();
-                System.out.println("strCollectionType" + strCollectionType);
-
         }
     }
 
@@ -425,7 +473,7 @@ public class AgentActivity extends AppCompatActivity
                 map.put("payment_mode", paymentMode);
                 map.put("amount", strAmount);
                 map.put("cheque_no", strChequeNumber);
-                map.put("collection_type", strCollectionType);
+                //map.put("collection_type", strCollectionType);
                 map.put("date", strDate);
                 map.put("receipt_no", strReceipt);
 
@@ -444,22 +492,70 @@ public class AgentActivity extends AppCompatActivity
         // This puts the value (true/false) into the variable
         boolean isChecked = checkedRadioButton.isChecked();
         // If the radiobutton that has changed in check state is now checked...
-        if (checkedId == R.id.radioCash) {
-            // Changes the textview's text to "Checked: example radiobutton text"
 
-            linearLayout.setVisibility(View.GONE);
-            paymentMode = checkedRadioButton.getText().toString();
-            System.out.println("Checked:" + paymentMode);
+        switch (group.getId()) {
+            case R.id.radioGroupAgent:
+
+                if (checkedId == R.id.radioCash) {
+                    // Changes the textview's text to "Checked: example radiobutton text"
+
+                    linearLayout.setVisibility(View.GONE);
+                    linearLayoutBankName.setVisibility(View.GONE);
+                    paymentMode = checkedRadioButton.getText().toString();
+                    System.out.println("Checked:" + paymentMode);
+
+                }
+                if (checkedId == R.id.radioCheque) {
+                    linearLayout.setVisibility(View.VISIBLE);
+                    linearLayoutBankName.setVisibility(View.VISIBLE);
+                    paymentMode = checkedRadioButton.getText().toString();
+
+                    System.out.println("Checked Cheque:" + paymentMode);
+                }
+                break;
+
+            case R.id.radioGroupCollection:
+
+                if (checkedId == R.id.radioAdvance) {
+                    linearLayoutMain.setVisibility(View.GONE);
+                }
+                if (checkedId == R.id.radioDaily) {
+                    linearLayoutMain.setVisibility(View.VISIBLE);
+                }
+                if (checkedId == R.id.radioRegular) {
+                    linearLayoutMain.setVisibility(View.VISIBLE);
+                }
+
+                break;
 
         }
-        if (checkedId == R.id.radioCheque) {
-            linearLayout.setVisibility(View.VISIBLE);
+//        if (group.getId()==R.id.radioGroupAgent)
+//
+//        {
+//            if (checkedId == R.id.radioCash) {
+//                // Changes the textview's text to "Checked: example radiobutton text"
+//
+//                linearLayout.setVisibility(View.GONE);
+//                linearLayoutBankName.setVisibility(View.GONE);
+//                paymentMode = checkedRadioButton.getText().toString();
+//                System.out.println("Checked:" + paymentMode);
+//
+//            }
+//            if (checkedId == R.id.radioCheque) {
+//                linearLayout.setVisibility(View.VISIBLE);
+//                linearLayoutBankName.setVisibility(View.VISIBLE);
+//                paymentMode = checkedRadioButton.getText().toString();
+//
+//                System.out.println("Checked Cheque:" + paymentMode);
+//            }
+//        }
 
-            paymentMode = checkedRadioButton.getText().toString();
-
-            System.out.println("Checked Cheque:" + paymentMode);
-        }
 
     }
+
+//    void radioPaymentMode()
+//    {
+//
+//    }
 }
 
