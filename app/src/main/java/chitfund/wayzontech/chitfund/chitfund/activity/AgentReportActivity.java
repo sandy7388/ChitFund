@@ -19,8 +19,9 @@ public class AgentReportActivity extends AppCompatActivity {
             strAmount, strFinalAmount, strSubmitAmount, strAdvanceAmount;
 
     private LinearLayout linearLayoutInstallmentNo, linearLayoutMemeberCommission,
-            linearLayoutEntryNo, linearLayoutRemailingCollection, linearLayoutTotalRemailingCollection,
-            linearLayoutAmount, linearLayoutFinalAmount, linearLayoutSubmitAmount,
+            linearLayoutEntryNo, linearLayoutRemailingCollection,
+            linearLayoutTotalRemailingCollection, linearLayoutAmount,
+            linearLayoutFinalAmount, linearLayoutSubmitAmount,
             linearLayoutAdvanceAmount, linearLayoutMain;
 
     @Override
