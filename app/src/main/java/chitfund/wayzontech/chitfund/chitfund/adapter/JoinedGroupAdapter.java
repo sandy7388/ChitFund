@@ -2,12 +2,15 @@ package chitfund.wayzontech.chitfund.chitfund.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -176,10 +179,41 @@ public class JoinedGroupAdapter extends RecyclerView.Adapter<JoinedGroupAdapter.
                             textView.setVisibility(View.VISIBLE);
                         }
                         blink();
+                        Animation();
                     }
                 });
             }
         }).start();
+    }
+
+    private void Animation() {
+        Animation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(500); //You can manage the blinking time with this parameter
+        anim.setStartOffset(20);
+        anim.setRepeatMode(Animation.REVERSE);
+        anim.setRepeatCount(Animation.INFINITE);
+        anim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                // if you want to change color at start of animation
+                //textView.settextcolor("your color");
+                textView.setTextColor(Color.parseColor("#FFFFFF"));
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                // if you want to change color at end of animation
+                //textView.settextcolor("your color");
+                textView.setTextColor(Color.parseColor("#0c0cf4"));
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+                //textView.setTextColor(Color.parseColor("#0c0cf4"));
+            }
+        });
+        textView.startAnimation(anim);
     }
 
     public class JoinedGroupHolder extends RecyclerView.ViewHolder {
@@ -217,6 +251,7 @@ public class JoinedGroupAdapter extends RecyclerView.Adapter<JoinedGroupAdapter.
                                 textView.setVisibility(View.VISIBLE);
                             }
                             blink();
+
                         }
                     });
                 }

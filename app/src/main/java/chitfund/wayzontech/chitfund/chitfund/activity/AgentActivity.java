@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -44,7 +45,7 @@ import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 public class AgentActivity extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener, View.OnClickListener,
         RadioGroup.OnCheckedChangeListener {
-
+    CustomDialogClass customDialogClass;
     private AgentSession agentSession;
     private Date date = new Date();
     private Spinner spinnerGroupName, spinnerMemberName, spinnerBankName;
@@ -84,8 +85,7 @@ public class AgentActivity extends AppCompatActivity
             linearLayoutEntryNo, linearLayoutRemailingCollection, linearLayoutTotalRemailingCollection,
             linearLayoutAmount, linearLayoutFinalAmount, linearLayoutSubmitAmount,
             linearLayoutAdvanceAmount, linearLayoutMain, linearLayoutReceiptNo, linearLayoutPaymentMode;
-
-
+    private Button yes, no;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,7 +151,6 @@ public class AgentActivity extends AppCompatActivity
         //strReceipt = receiptNo.format(date);
     }
 
-
     private void initialization() {
 
         // EditText
@@ -181,9 +180,13 @@ public class AgentActivity extends AppCompatActivity
         linearLayoutPaymentMode = findViewById(R.id.linearLayoutPaymentMode);
 
 
+        customDialogClass = new CustomDialogClass(AgentActivity.this);
+        radioButtonAdvance.setChecked(true);
+        radioButtonCash.setChecked(true);
+
     }
 
-    private void textGetter() {
+    private void textGetter1() {
         strInstallmentNo = editTextInstallmentNo.getText().toString();
         strMemeberCommission = editTextMemberCommission.getText().toString();
         strEntryNo = editTextEntryNo.getText().toString();
@@ -225,7 +228,7 @@ public class AgentActivity extends AppCompatActivity
 
                             }
                         } catch (JSONException e) {
-                            progressDialog.dismiss();
+                            //progressDialog.dismiss();
                             e.printStackTrace();
                         }
 
@@ -453,28 +456,34 @@ public class AgentActivity extends AppCompatActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buttonCollectAdvancePayment:
-                makeAdvanceCollection();
-
-//                CustomDialogClass cdd=new CustomDialogClass(AgentActivity.this);
-//
-//                cdd.show();
+                //makeAdvanceCollection();
+                customDialogClass.show();
 
                 break;
             case R.id.buttonCollectDailyPayment:
-                makeDailyCollection();
+                //makeDailyCollection();
+
+                customDialogClass.show();
                 break;
             case R.id.buttonCollectRegularPayment:
-                makeRegularCollection();
+                //makeRegularCollection();
+                customDialogClass.show();
                 break;
         }
 
     }
 
-    private void makeDailyCollection() {
-
+    private void textGetter() {
         strAmount = editTextAmount.getText().toString();
         strReceiptNo = editTextReceiptNo.getText().toString();
         strChequeNumber = editTextChequeNumber.getText().toString();
+    }
+
+    private void makeDailyCollection() {
+
+        textGetter();
+
+        validation();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_DAILY_COLLECTION_URL,
                 new Response.Listener<String>() {
@@ -541,10 +550,8 @@ public class AgentActivity extends AppCompatActivity
 
 
     private void makeRegularCollection() {
-
-        strAmount = editTextAmount.getText().toString();
-        strReceiptNo = editTextReceiptNo.getText().toString();
-        strChequeNumber = editTextChequeNumber.getText().toString();
+        textGetter();
+        validation();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_REGULAR_COLLECTION_URL,
                 new Response.Listener<String>() {
@@ -625,24 +632,8 @@ public class AgentActivity extends AppCompatActivity
     }
 
     public void makeAdvanceCollection() {
-
-        strAmount = editTextAmount.getText().toString();
-        strReceiptNo = editTextReceiptNo.getText().toString();
-        strChequeNumber = editTextChequeNumber.getText().toString();
-
-        if (strAmount.equals("")) {
-            Toast.makeText(this, "This field can not be null", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (strReceiptNo.equals("")) {
-            Toast.makeText(this, "This field can not be null", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (strChequeNumber.equals("")) {
-            Toast.makeText(this, "This field can not be null", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
+        textGetter();
+        validation();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_ADVANCE_COLLECTION_URL,
                 new Response.Listener<String>() {
                     @Override
@@ -721,6 +712,21 @@ public class AgentActivity extends AppCompatActivity
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
+    void validation() {
+        if (strAmount.equals("")) {
+            Toast.makeText(this, "This field can not be null", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (strReceiptNo.equals("")) {
+            Toast.makeText(this, "This field can not be null", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (strChequeNumber.equals("")) {
+            Toast.makeText(this, "This field can not be null", Toast.LENGTH_SHORT).show();
+            return;
+        }
+    }
+
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
 
@@ -766,6 +772,7 @@ public class AgentActivity extends AppCompatActivity
                     linearLayoutPaymentMode.setVisibility(View.GONE);
                     linearLayoutBankName.setVisibility(View.GONE);
                     linearLayout.setVisibility(View.GONE);
+                    linearLayoutMain.setVisibility(View.GONE);
                     buttonAdvanceCollection.setVisibility(View.GONE);
                     buttonRegularCollection.setVisibility(View.GONE);
                     buttonDailyCollection.setVisibility(View.VISIBLE);
@@ -779,6 +786,7 @@ public class AgentActivity extends AppCompatActivity
                     buttonRegularCollection.setVisibility(View.VISIBLE);
                     linearLayoutPaymentMode.setVisibility(View.VISIBLE);
                     collectionType = checkedRadioButton.getText().toString();
+                    linearLayoutMain.setVisibility(View.GONE);
                     System.out.println("Checked Regular:" + collectionType);
                 }
 
@@ -788,10 +796,37 @@ public class AgentActivity extends AppCompatActivity
 
     }
 
-    public class CustomDialogClass extends Dialog {
+    public class CustomDialogClass extends Dialog implements View.OnClickListener {
 
         public CustomDialogClass(@NonNull Context context) {
             super(context);
+        }
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            setContentView(R.layout.custom_dialog);
+            yes = findViewById(R.id.btn_yes);
+            no = findViewById(R.id.btn_no);
+            yes.setOnClickListener(this);
+            no.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.btn_yes:
+                    makeAdvanceCollection();
+                    break;
+                case R.id.btn_no:
+                    dismiss();
+                    break;
+                default:
+                    break;
+            }
+            dismiss();
         }
     }
 
