@@ -1,164 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10sp">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_marginTop="15sp"
-        android:layout_below="@id/relative_search_agent"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="05dp"
+        app:cardElevation="05dp">
+
         <LinearLayout
-            android:layout_marginTop="15sp"
-            android:orientation="horizontal"
-            android:weightSum="2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:textColor="@color/colorBlack"
-                android:text="Date:"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/textLastAuctDate"
-                android:text="Date"
-                android:textSize="20sp"
-                android:layout_width="0sp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relative_search_agent"
+            android:layout_marginTop="5sp"
+            android:background="@drawable/border_1dp"
+            android:orientation="vertical"
+            android:padding="05dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5sp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textLastAuctDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:drawableLeft="@drawable/calendar"
+                    android:gravity=""
+                    android:text="Date"
+                    android:textColor="@color/colorWhite" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Amount:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textLastAuctAmount"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Amount"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Lock Amount:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textLastLockAmount"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Lock Amount"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Group Name:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textLastGroupName"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Group Name"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Received By:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textLastReceivedBy"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Received By"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Closed On:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textLastClosedOn"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Closed On"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="15sp"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <TextView
-                android:textColor="@color/colorBlack"
-                android:text="Amount:"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:drawableLeft="@drawable/rupee_indian"
-                android:id="@+id/textLastAuctAmount"
-                android:text="Amount"
-                android:textSize="20sp"
-                android:layout_width="0sp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
+    </android.support.v7.widget.CardView>
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="15sp"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:textColor="@color/colorBlack"
-                android:text="Lock Amount:"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:drawableLeft="@drawable/rupee_indian"
-                android:id="@+id/textLastLockAmount"
-                android:text="Lock Amount"
-                android:textSize="20sp"
-                android:layout_width="0sp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="15sp"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:textColor="@color/colorBlack"
-                android:text="Group Name:"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/textLastGroupName"
-                android:text="Group Name"
-                android:textSize="20sp"
-                android:layout_width="0sp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="15sp"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:textColor="@color/colorBlack"
-                android:text="Received By:"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/textLastReceivedBy"
-                android:text="Received By"
-                android:textSize="20sp"
-                android:layout_width="0sp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="15sp"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:textColor="@color/colorBlack"
-                android:text="Closed On:"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:drawableLeft="@drawable/rupee_indian"
-                android:id="@+id/textLastClosedOn"
-                android:text="Closed On"
-                android:textSize="20sp"
-                android:layout_width="0sp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-
-    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

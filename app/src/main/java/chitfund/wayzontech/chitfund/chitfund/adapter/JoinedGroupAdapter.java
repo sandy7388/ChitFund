@@ -3,10 +3,8 @@ package chitfund.wayzontech.chitfund.chitfund.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.activity.AuctionActivity;
-import chitfund.wayzontech.chitfund.chitfund.activity.RegistrationActivity;
-import chitfund.wayzontech.chitfund.chitfund.fragment.HomeFragment;
 import chitfund.wayzontech.chitfund.chitfund.model.JoinedGroup;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by sandy on 24/3/18.
@@ -38,10 +32,12 @@ public class JoinedGroupAdapter extends RecyclerView.Adapter<JoinedGroupAdapter.
     private Calendar start_calendar = Calendar.getInstance();
     private Calendar end_calendar = Calendar.getInstance();
     private Date d;
-    private DateFormat date,time;
+    private DateFormat date, time;
     private Context context;
     private ArrayList<JoinedGroup> joinedGroupArrayList;
-    private String strRemainingDays,inputDateString;
+    private String strRemainingDays, inputDateString;
+    private TextView textView;
+
     //private int strRemainingDays;
     public JoinedGroupAdapter(Context context, ArrayList<JoinedGroup> joinedGroupArrayList) {
         this.context = context;
@@ -51,7 +47,7 @@ public class JoinedGroupAdapter extends RecyclerView.Adapter<JoinedGroupAdapter.
     @Override
     public JoinedGroupHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.adapter_new_joined_group,parent,false);
+                .inflate(R.layout.adapter_new_joined_group, parent, false);
 
 //        inputDateString = "29/03/2018";
 //        Calendar calCurr = Calendar.getInstance();
@@ -92,7 +88,14 @@ public class JoinedGroupAdapter extends RecyclerView.Adapter<JoinedGroupAdapter.
 
         countdown(holder.textViewRemainingDays);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startAuction(position);
+//            }
+//        });
+
+        textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startAuction(position);
@@ -105,23 +108,7 @@ public class JoinedGroupAdapter extends RecyclerView.Adapter<JoinedGroupAdapter.
         return joinedGroupArrayList.size();
     }
 
-    public class JoinedGroupHolder extends RecyclerView.ViewHolder {
-
-        private TextView textViewId,textViewName,textViewNextDate,
-                textViewAmount,textViewRemainingDays;
-        private Button textViewRemainingDays1;
-        private JoinedGroupHolder(View itemView) {
-            super(itemView);
-
-            textViewId = itemView.findViewById(R.id.groupId);
-            textViewName = itemView.findViewById(R.id.groupName);
-            textViewNextDate = itemView.findViewById(R.id.nxt_auction);
-            textViewAmount = itemView.findViewById(R.id.amount);
-            textViewRemainingDays = itemView.findViewById(R.id.remainingDays);
-        }
-    }
-   private void countdown(final TextView textview)
-    {
+    private void countdown(final TextView textview) {
         //end_calendar.set();
 
         long start_millis = start_calendar.getTimeInMillis(); //get the start time in milliseconds
@@ -144,7 +131,7 @@ public class JoinedGroupAdapter extends RecyclerView.Adapter<JoinedGroupAdapter.
 
                 long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
 
-                textview.setText(days+"d" + ":" + hours +"h"+ ":" + minutes +"m"+ ":" + seconds+"s"); //You can compute the millisUntilFinished on hours/minutes/seconds
+                textview.setText(days + "d" + ":" + hours + "h" + ":" + minutes + "m" + ":" + seconds + "s"); //You can compute the millisUntilFinished on hours/minutes/seconds
             }
 
             @Override
@@ -157,16 +144,83 @@ public class JoinedGroupAdapter extends RecyclerView.Adapter<JoinedGroupAdapter.
         cdt.start();
     }
 
-    private void startAuction(int position)
-    {
+    private void startAuction(int position) {
         JoinedGroup joinedGroup = new JoinedGroup();
 
         joinedGroup = joinedGroupArrayList.get(position);
 
         Intent intent = new Intent(context, AuctionActivity.class);
-        intent.putExtra("KEY_AMOUNT",joinedGroup.getAmount());
+        intent.putExtra("KEY_AMOUNT", joinedGroup.getAmount());
         intent.putExtra("KEY_ID", joinedGroup.getGroup_id());
 
         context.startActivity(intent);
+    }
+
+    private void blink() {
+        final Handler handler = new Handler();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int timeToBlink = 500;    //in milissegunds
+                try {
+                    Thread.sleep(timeToBlink);
+                } catch (Exception e) {
+                }
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if (textView.getVisibility() == View.VISIBLE) {
+                            textView.setVisibility(View.INVISIBLE);
+                        } else {
+                            textView.setVisibility(View.VISIBLE);
+                        }
+                        blink();
+                    }
+                });
+            }
+        }).start();
+    }
+
+    public class JoinedGroupHolder extends RecyclerView.ViewHolder {
+
+        private TextView textViewId, textViewName, textViewNextDate,
+                textViewAmount, textViewRemainingDays, textViewStartAuction;
+        private Button textViewRemainingDays1;
+
+        public JoinedGroupHolder(View itemView) {
+            super(itemView);
+
+            textViewId = itemView.findViewById(R.id.groupId);
+            textViewName = itemView.findViewById(R.id.groupName);
+            textViewNextDate = itemView.findViewById(R.id.nxt_auction);
+            textViewAmount = itemView.findViewById(R.id.amount);
+            textViewRemainingDays = itemView.findViewById(R.id.remainingDays);
+            textView = itemView.findViewById(R.id.start_auction);
+
+            final Handler handler = new Handler();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int timeToBlink = 500;    //in milissegunds
+                    try {
+                        Thread.sleep(timeToBlink);
+                    } catch (Exception e) {
+                    }
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            if (textView.getVisibility() == View.VISIBLE) {
+                                textView.setVisibility(View.INVISIBLE);
+                            } else {
+                                textView.setVisibility(View.VISIBLE);
+                            }
+                            blink();
+                        }
+                    });
+                }
+            }).start();
+        }
     }
 }

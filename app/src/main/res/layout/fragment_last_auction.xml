@@ -10,13 +10,13 @@
     <RelativeLayout
         android:id="@+id/relative_search_agent"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="30dp"
         android:layout_gravity="center"
         android:orientation="horizontal"
         android:weightSum="2">
 
         <TextView
-            android:drawableLeft="@drawable/search"
+            android:drawableLeft="@drawable/calendar"
             android:padding="05dp"
             android:gravity="center|left"
             android:id="@+id/text_getLastAuctionDate"
