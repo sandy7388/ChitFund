@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.android.volley.AuthFailureError;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -119,37 +119,43 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
                         try {
                             serverResponse = new JSONObject(response);
 
-                            groupInfo = serverResponse.getJSONArray("group_info");
+                            if (serverResponse.getString("success").equals("1")) {
+                                groupInfo = serverResponse.getJSONArray("group_info");
 
-                            for (int i=0;i<groupInfo.length();i++)
-                            {
-                                object = groupInfo.getJSONObject(i);
+                                for (int i = 0; i < groupInfo.length(); i++) {
+                                    object = groupInfo.getJSONObject(i);
 
-                                grpName.add(object.getString("group_name"));
+                                    grpName.add(object.getString("group_name"));
 
-                                String amount = object.getString("amount");
-                                textViewAmount.setText(amount);
+                                    String amount = object.getString("amount");
+                                    textViewAmount.setText(amount);
 
-                                JSONArray jsonArray = object.getJSONArray("group_member");
+                                    JSONArray jsonArray = object.getJSONArray("group_member");
 
-                                for (int j=0;j<jsonArray.length();j++)
-                                {
-                                    JSONObject jsonObject = jsonArray.getJSONObject(j);
+                                    for (int j = 0; j < jsonArray.length(); j++) {
+                                        JSONObject jsonObject = jsonArray.getJSONObject(j);
 
-                                    member_Name = jsonObject.getString("member_name");
+                                        member_Name = jsonObject.getString("member_name");
 
-                                    memberId = jsonObject.getString("member_id");
+                                        memberId = jsonObject.getString("member_id");
 
-                                    MemberName member = new MemberName();
-                                    member.setName(member_Name);
-                                    member.setId(memberId);
+                                        MemberName member = new MemberName();
+                                        member.setName(member_Name);
+                                        member.setId(memberId);
 
-                                    memberNameArrayList.add(member);
-                                    groupListAdapter.notifyDataSetChanged();
+                                        memberNameArrayList.add(member);
+                                        groupListAdapter.notifyDataSetChanged();
+                                    }
+
                                 }
 
+                                Toast.makeText(getContext(), serverResponse.getString("message"), Toast.LENGTH_SHORT).show();
+                                spinnerGrpName.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, grpName));
+
+                            } else {
+                                Toast.makeText(getContext(), serverResponse.getString("message"), Toast.LENGTH_SHORT).show();
                             }
-                            spinnerGrpName.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, grpName));
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -261,7 +267,7 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
         })
         {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String,String> params = new HashMap<>();
                 params.put("user_id", memberSession.getUserID());
                 params.put("groupid",groupId);

@@ -1,8 +1,11 @@
 package chitfund.wayzontech.chitfund.chitfund.activity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,7 +46,7 @@ public class AgentActivity extends AppCompatActivity
         RadioGroup.OnCheckedChangeListener {
 
     private AgentSession agentSession;
-    Date date = new Date();
+    private Date date = new Date();
     private Spinner spinnerGroupName, spinnerMemberName, spinnerBankName;
     private String strGroupNameJSON, strGroupName, strGroupIdJSON,
             strGroupId, strMemberName, strMemberId, strMemberNameJSON,
@@ -105,6 +108,8 @@ public class AgentActivity extends AppCompatActivity
         radioButtonAdvance = findViewById(R.id.radioAdvance);
         radioButtonDaily = findViewById(R.id.radioDaily);
         radioButtonRegular = findViewById(R.id.radioRegular);
+        radioButtonCash = findViewById(R.id.radioCash);
+        radioButtonCheque = findViewById(R.id.radioCheque);
         editTextChequeNumber = findViewById(R.id.editTextChequeNo);
         editTextAmount = findViewById(R.id.editTextAmountAgent);
         linearLayout = findViewById(R.id.linearLayoutAgent);
@@ -130,7 +135,7 @@ public class AgentActivity extends AppCompatActivity
 
         try {
             getGroupName();
-            getBankName();
+            //getBankName();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -157,8 +162,8 @@ public class AgentActivity extends AppCompatActivity
         editTextTotalRemailingCollection = findViewById(R.id.editTextTotalRemainingCollection);
         editTextAmountNew = findViewById(R.id.editTextAmount);
         editTextFinalAmount = findViewById(R.id.editTextFinalAmount);
-        editTextSubmitAmount = findViewById(R.id.editTextSubmitAmount);
-        editTextAdvanceAmount = findViewById(R.id.editTextAdvanceAmount);
+//        editTextSubmitAmount = findViewById(R.id.editTextSubmitAmount);
+//        editTextAdvanceAmount = findViewById(R.id.editTextAdvanceAmount);
         editTextReceiptNo = findViewById(R.id.editTextReceiptNo);
 
         // Linear Layout
@@ -169,8 +174,8 @@ public class AgentActivity extends AppCompatActivity
         linearLayoutTotalRemailingCollection = findViewById(R.id.linearLayoutTotalRemainingCollectionAgent);
         linearLayoutAmount = findViewById(R.id.linearLayoutAmountAgent);
         linearLayoutFinalAmount = findViewById(R.id.linearLayoutFinalAmountAgent);
-        linearLayoutSubmitAmount = findViewById(R.id.linearLayoutSubmitAmountAgent);
-        linearLayoutAdvanceAmount = findViewById(R.id.linearLayoutAdvanceAmountAgent);
+//        linearLayoutSubmitAmount = findViewById(R.id.linearLayoutSubmitAmountAgent);
+//        linearLayoutAdvanceAmount = findViewById(R.id.linearLayoutAdvanceAmountAgent);
         linearLayoutMain = findViewById(R.id.linearLayoutMain);
         linearLayoutReceiptNo = findViewById(R.id.linearLayoutReceiptNo);
         linearLayoutPaymentMode = findViewById(R.id.linearLayoutPaymentMode);
@@ -188,7 +193,7 @@ public class AgentActivity extends AppCompatActivity
         strFinalAmount = editTextFinalAmount.getText().toString();
         strSubmitAmount = editTextSubmitAmount.getText().toString();
         strAdvanceAmount = editTextAdvanceAmount.getText().toString();
-        strReceiptNo = editTextReceiptNo.getText().toString();
+
     }
 
     void getGroupName() {
@@ -212,12 +217,15 @@ public class AgentActivity extends AppCompatActivity
                                     strGroupIdJSON = groupNameObject.getString("group_id");
 
                                     groupName.add(strGroupNameJSON);
+                                    //progressDialog.dismiss();
                                 }
+                                //progressDialog.dismiss();
 
                                 spinnerGroupName.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_layout, groupName));
 
                             }
                         } catch (JSONException e) {
+                            progressDialog.dismiss();
                             e.printStackTrace();
                         }
 
@@ -225,6 +233,8 @@ public class AgentActivity extends AppCompatActivity
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                progressDialog.dismiss();
 
             }
         }) {
@@ -300,6 +310,8 @@ public class AgentActivity extends AppCompatActivity
                             System.out.println("strGroupId" + strGroupId);
 
                             getMemberName();
+                            radioButtonAdvance.setChecked(true);
+                            radioButtonCash.setChecked(true);
 
                         }
 
@@ -338,8 +350,9 @@ public class AgentActivity extends AppCompatActivity
                             strBankId = bankArray.getJSONObject(k).getString("bl_id");
                             System.out.println("strBankId" + strBankId);
 
-                            getMemberName();
-                            radioButtonAdvance.setChecked(true);
+                            //getMemberName();
+                            progressDialog.dismiss();
+
 
                         }
 
@@ -360,7 +373,7 @@ public class AgentActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main_agent, menu);
         return true;
     }
 
@@ -371,6 +384,10 @@ public class AgentActivity extends AppCompatActivity
             case R.id.action_logout:
                 AgentSession.getInstance(AgentActivity.this).logout();
                 finish();
+                break;
+
+            case R.id.action_ReportActivity:
+                startActivity(new Intent(this, AgentReportActivity2.class));
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -398,6 +415,7 @@ public class AgentActivity extends AppCompatActivity
                                     strMemberNameJSON = memberNameObject.getString("member_name");
                                     strMemberIdJSON = memberNameObject.getString("member_id");
                                     memberName.add(strMemberNameJSON);
+                                    progressDialog.dismiss();
                                 }
 
                                 progressDialog.dismiss();
@@ -436,6 +454,11 @@ public class AgentActivity extends AppCompatActivity
         switch (v.getId()) {
             case R.id.buttonCollectAdvancePayment:
                 makeAdvanceCollection();
+
+//                CustomDialogClass cdd=new CustomDialogClass(AgentActivity.this);
+//
+//                cdd.show();
+
                 break;
             case R.id.buttonCollectDailyPayment:
                 makeDailyCollection();
@@ -448,20 +471,12 @@ public class AgentActivity extends AppCompatActivity
     }
 
     private void makeDailyCollection() {
-    }
-
-    private void makeRegularCollection() {
-    }
-
-    private void makeAdvanceCollection() {
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Please wait.....!");
-        progressDialog.show();
-        progressDialog.setCancelable(true);
 
         strAmount = editTextAmount.getText().toString();
+        strReceiptNo = editTextReceiptNo.getText().toString();
         strChequeNumber = editTextChequeNumber.getText().toString();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_MEMBER_URL,
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_DAILY_COLLECTION_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -473,13 +488,22 @@ public class AgentActivity extends AppCompatActivity
                                 progressDialog.dismiss();
 
                                 Toast.makeText(AgentActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                                editTextAmount.setText("");
+                                editTextReceiptNo.setText("");
+                                editTextChequeNumber.setText("");
                             } else
                                 progressDialog.dismiss();
 
                             Toast.makeText(AgentActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
 
+                            editTextAmount.setText("");
+                            editTextReceiptNo.setText("");
+                            editTextChequeNumber.setText("");
                         } catch (JSONException e) {
                             progressDialog.dismiss();
+                            editTextAmount.setText("");
+                            editTextReceiptNo.setText("");
+                            editTextChequeNumber.setText("");
                             e.printStackTrace();
                         }
 
@@ -488,6 +512,9 @@ public class AgentActivity extends AppCompatActivity
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
+                editTextAmount.setText("");
+                editTextReceiptNo.setText("");
+                editTextChequeNumber.setText("");
                 error.printStackTrace();
 
             }
@@ -495,17 +522,197 @@ public class AgentActivity extends AppCompatActivity
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<>();
+
                 map.put("agent_id", agentSession.getUserID());
                 map.put("role_id", strRoleId);
                 map.put("group_id", strGroupId);
-                map.put("member_id", strMemberId);
-                map.put("bl_id", strBankId);
-                map.put("payment_mode", paymentMode);
                 map.put("amount", strAmount);
-                map.put("cheque_no", strChequeNumber);
+                map.put("mode", paymentMode);
+                map.put("receipt_no", strReceiptNo);
+                map.put("reciept_date", strDate);
+                map.put("member_id", strMemberId);
+
+                return map;
+
+            }
+        };
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+
+    private void makeRegularCollection() {
+
+        strAmount = editTextAmount.getText().toString();
+        strReceiptNo = editTextReceiptNo.getText().toString();
+        strChequeNumber = editTextChequeNumber.getText().toString();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_REGULAR_COLLECTION_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            if (jsonObject.getString("success").equals("1")) {
+                                progressDialog.dismiss();
+
+                                Toast.makeText(AgentActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                                editTextAmount.setText("");
+                                editTextReceiptNo.setText("");
+                                editTextChequeNumber.setText("");
+                            } else
+                                progressDialog.dismiss();
+
+                            Toast.makeText(AgentActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+
+                            editTextAmount.setText("");
+                            editTextReceiptNo.setText("");
+                            editTextChequeNumber.setText("");
+                        } catch (JSONException e) {
+                            progressDialog.dismiss();
+                            editTextAmount.setText("");
+                            editTextReceiptNo.setText("");
+                            editTextChequeNumber.setText("");
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                editTextAmount.setText("");
+                editTextReceiptNo.setText("");
+                editTextChequeNumber.setText("");
+                error.printStackTrace();
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> map = new HashMap<>();
+                if (radioButtonCash.isChecked()) {
+                    map.put("agent_id", agentSession.getUserID());
+                    map.put("role_id", strRoleId);
+                    map.put("group_id", strGroupId);
+                    map.put("amount", strAmount);
+                    map.put("mode", paymentMode);
+                    //map.put("bank_id", strBankId);
+                    map.put("receipt_no", strReceiptNo);
+                    map.put("reciept_date", strDate);
+                    //map.put("cheque_id", strChequeNumber);
+                    map.put("member_id", strMemberId);
+                } else {
+                    map.put("agent_id", agentSession.getUserID());
+                    map.put("role_id", strRoleId);
+                    map.put("group_id", strGroupId);
+                    map.put("amount", strAmount);
+                    map.put("mode", paymentMode);
+                    map.put("bank_id", strBankId);
+                    map.put("receipt_no", strReceiptNo);
+                    map.put("reciept_date", strDate);
+                    map.put("cheque_id", strChequeNumber);
+                    map.put("member_id", strMemberId);
+                }
                 //map.put("collection_type", strCollectionType);
-                map.put("date", strDate);
-                map.put("receipt_no", strReceipt);
+
+                return map;
+
+            }
+        };
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+    public void makeAdvanceCollection() {
+
+        strAmount = editTextAmount.getText().toString();
+        strReceiptNo = editTextReceiptNo.getText().toString();
+        strChequeNumber = editTextChequeNumber.getText().toString();
+
+        if (strAmount.equals("")) {
+            Toast.makeText(this, "This field can not be null", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (strReceiptNo.equals("")) {
+            Toast.makeText(this, "This field can not be null", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (strChequeNumber.equals("")) {
+            Toast.makeText(this, "This field can not be null", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_ADVANCE_COLLECTION_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            if (jsonObject.getString("success").equals("1")) {
+                                progressDialog.dismiss();
+
+                                Toast.makeText(AgentActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                                editTextAmount.setText("");
+                                editTextReceiptNo.setText("");
+                                editTextChequeNumber.setText("");
+                            } else
+                                progressDialog.dismiss();
+
+                            Toast.makeText(AgentActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+
+                            editTextAmount.setText("");
+                            editTextReceiptNo.setText("");
+                            editTextChequeNumber.setText("");
+                        } catch (JSONException e) {
+                            progressDialog.dismiss();
+                            editTextAmount.setText("");
+                            editTextReceiptNo.setText("");
+                            editTextChequeNumber.setText("");
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                editTextAmount.setText("");
+                editTextReceiptNo.setText("");
+                editTextChequeNumber.setText("");
+                error.printStackTrace();
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> map = new HashMap<>();
+                if (radioButtonCash.isChecked()) {
+                    map.put("agent_id", agentSession.getUserID());
+                    map.put("role_id", strRoleId);
+                    map.put("group_id", strGroupId);
+                    map.put("amount", strAmount);
+                    map.put("mode", paymentMode);
+                    //map.put("bank_id", strBankId);
+                    map.put("receipt_no", strReceiptNo);
+                    map.put("reciept_date", strDate);
+                    //map.put("cheque_id", strChequeNumber);
+                    map.put("member_id", strMemberId);
+                } else {
+                    map.put("agent_id", agentSession.getUserID());
+                    map.put("role_id", strRoleId);
+                    map.put("group_id", strGroupId);
+                    map.put("amount", strAmount);
+                    map.put("mode", paymentMode);
+                    map.put("bank_id", strBankId);
+                    map.put("receipt_no", strReceiptNo);
+                    map.put("reciept_date", strDate);
+                    map.put("cheque_id", strChequeNumber);
+                    map.put("member_id", strMemberId);
+                }
+                //map.put("collection_type", strCollectionType);
 
                 return map;
 
@@ -535,6 +742,7 @@ public class AgentActivity extends AppCompatActivity
 
                 }
                 if (checkedId == R.id.radioCheque) {
+                    getBankName();
                     linearLayout.setVisibility(View.VISIBLE);
                     linearLayoutBankName.setVisibility(View.VISIBLE);
                     paymentMode = checkedRadioButton.getText().toString();
@@ -578,6 +786,13 @@ public class AgentActivity extends AppCompatActivity
 
         }
 
+    }
+
+    public class CustomDialogClass extends Dialog {
+
+        public CustomDialogClass(@NonNull Context context) {
+            super(context);
+        }
     }
 
 }

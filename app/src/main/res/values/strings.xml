@@ -10,6 +10,8 @@
 
     <string name="action_settings">Logout</string>
 
+    <string name="action_report">Reports</string>
+
     <string name="action_register">Register</string>
     <string name="action_edit">Edit</string>
     <string name="title_activity_registration">RegistrationActivity</string>

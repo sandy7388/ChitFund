@@ -5,8 +5,7 @@
     android:id="@+id/swipeToRefreshJoinedGroup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="0sp"
-    android:background="@color/colorWhite">
+    android:padding="0sp">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -65,8 +64,9 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewJoinedGroup"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary"></android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent" />
+
+
     </LinearLayout>
 
 </android.support.v4.widget.SwipeRefreshLayout>

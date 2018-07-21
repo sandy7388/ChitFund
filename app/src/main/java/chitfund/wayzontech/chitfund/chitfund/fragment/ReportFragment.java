@@ -2,8 +2,10 @@ package chitfund.wayzontech.chitfund.chitfund.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,16 +13,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
-import chitfund.wayzontech.chitfund.chitfund.activity.AdvanceReportActivity;
 import chitfund.wayzontech.chitfund.chitfund.activity.CollectionReportActivity;
 import chitfund.wayzontech.chitfund.chitfund.activity.MemberReportActivity;
-import chitfund.wayzontech.chitfund.chitfund.activity.UpcomingReportActivity;
+import chitfund.wayzontech.chitfund.chitfund.adapter.ViewPagerMemberAdapter;
 
 import static android.content.ContentValues.TAG;
 
-public class ReportFragment extends Fragment implements View.OnClickListener {
+public class ReportFragment extends Fragment implements View.OnClickListener, TabLayout.OnTabSelectedListener {
     private TextView textViewCollectionReport,textViewMemberReport,
             textViewUpcomingReport,textViewAdvanceReport;
+
+    TabLayout tabLayout;
+    ViewPager viewPager;
     public ReportFragment() {
     }
 
@@ -46,6 +50,19 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
         textViewMemberReport.setOnClickListener(this);
         textViewUpcomingReport.setOnClickListener(this);
         textViewAdvanceReport.setOnClickListener(this);
+
+        tabLayout = view.findViewById(R.id.tabLayoutMember);
+        viewPager = view.findViewById(R.id.viewPagerMember);
+
+        tabLayout.addTab(tabLayout.newTab().setText("Collection Report"));
+        tabLayout.addTab(tabLayout.newTab().setText("Member Report"));
+        //tabLayout.addTab(tabLayout.newTab().setText("Movie"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        final ViewPagerMemberAdapter adapter = new ViewPagerMemberAdapter(getContext(), getChildFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+
+        tabLayout.addOnTabSelectedListener(this);
 
     }
 
@@ -80,11 +97,26 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.textViewUpcomingReport:
-                startActivity(new Intent(getActivity(), UpcomingReportActivity.class));
+                //startActivity(new Intent(getActivity(), UpcomingReportActivity.class));
                 break;
             case R.id.textViewAdvanceReport:
-                startActivity(new Intent(getActivity(), AdvanceReportActivity.class));
+                //startActivity(new Intent(getActivity(), AdvanceReportActivity.class));
 
         }
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        viewPager.setCurrentItem(tab.getPosition());
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 }

@@ -57,8 +57,14 @@
         <activity
             android:name=".activity.AuctionActivity"
             android:parentActivityName=".activity.MainActivity" />
-        <activity android:name=".activity.AgentActivity" />
-        <activity android:name=".activity.AgentReportActivity"></activity>
+        <activity
+            android:name=".activity.AgentActivity"
+            android:label="Member Collection" />
+        <activity android:name=".activity.AgentReportActivity" />
+        <activity
+            android:name=".activity.AgentReportActivity2"
+            android:label="Collection Report"
+            android:parentActivityName=".activity.AgentActivity" />
     </application>
 
 </manifest>

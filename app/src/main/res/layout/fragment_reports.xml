@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:background="@drawable/button_border"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:padding="10dp"
+
     android:layout_gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <LinearLayout
+        android:visibility="gone"
         android:orientation="horizontal"
         android:weightSum="2"
         android:layout_width="match_parent"
@@ -40,6 +41,7 @@
 
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/textViewUpcomingReport"
         android:textSize="20sp"
         android:textColor="@color/colorWhite"
@@ -51,6 +53,7 @@
         android:layout_margin="10dp"/>
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/textViewAdvanceReport"
         android:textSize="20sp"
         android:textColor="@color/colorWhite"
@@ -60,5 +63,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayoutMember"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1db995"></android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPagerMember"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+        tools:layout_editor_absoluteX="8dp" />
 
 </LinearLayout>

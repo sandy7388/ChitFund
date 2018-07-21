@@ -250,7 +250,6 @@
 
 
                 <LinearLayout
-
                     android:layout_weight="1"
                     android:background="@drawable/button_border1"
                     android:id="@+id/lnr_profile"

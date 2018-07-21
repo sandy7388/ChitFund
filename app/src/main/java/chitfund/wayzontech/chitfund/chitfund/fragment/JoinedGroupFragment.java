@@ -137,7 +137,7 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
                                     try {
                                         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                                         d = dateFormat.parse(auctionDate);
-                                        date = new SimpleDateFormat("dd-MM-yyyy");
+                                        date = new SimpleDateFormat("dd-MMM-yyyy");
                                         time = new SimpleDateFormat("hh:mm:ss");
                                         System.out.println("Date: " + date.format(d));
                                         System.out.println("Time: " + time.format(d));

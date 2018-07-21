@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -71,14 +70,8 @@ public class LastAuctionFragment extends Fragment
     {
         getLastAuction = view.findViewById(R.id.button_getLastAuction);
         dateLastAuction = view.findViewById(R.id.text_getLastAuctionDate);
-        lastAuctionArrayList = new ArrayList<>();
         recyclerView =  view.findViewById(R.id.recyclerViewLastAuctionAdapter);
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
-        lastAuctionAdapter = new LastAuctionAdapter(getContext(),lastAuctionArrayList);
-        recyclerView.setAdapter(lastAuctionAdapter);
-
+        initRecyclerview();
         getLastAuction.setOnClickListener(this);
         dateLastAuction.setOnClickListener(this);
         progressDialog = new ProgressDialog(getActivity());
@@ -92,6 +85,15 @@ public class LastAuctionFragment extends Fragment
         dateLastAuction.setText( sdf.format(calendar.getTime()));
         dateLastAuction.setOnClickListener(this);
         session = new MemberSession(getActivity());
+    }
+
+    void initRecyclerview() {
+        lastAuctionArrayList = new ArrayList<>();
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        lastAuctionAdapter = new LastAuctionAdapter(getContext(), lastAuctionArrayList);
+        recyclerView.setAdapter(lastAuctionAdapter);
     }
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
@@ -190,13 +192,14 @@ public class LastAuctionFragment extends Fragment
         })
         {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String,String> params = new HashMap<>();
                 params.put("auctiondate",strDate);
                 //params.put("userid",session.getUserID());
                 return params;
             }
         };
+        initRecyclerview();
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 }
