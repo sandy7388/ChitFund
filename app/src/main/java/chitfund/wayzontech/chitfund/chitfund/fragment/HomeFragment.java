@@ -67,7 +67,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         date.setText(simpleDateFormat.format(calendar.getTime()));
         getActivity().setTitle("Home");
         session = new MemberSession(getContext());
-        name.setText(session.getUserID());
+        name.setText(session.getUsername());
         return view;
     }
 

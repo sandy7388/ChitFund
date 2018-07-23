@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -181,8 +180,8 @@ public class AgentActivity extends AppCompatActivity
 
 
         customDialogClass = new CustomDialogClass(AgentActivity.this);
-        radioButtonAdvance.setChecked(true);
-        radioButtonCash.setChecked(true);
+//        radioButtonAdvance.setChecked(true);
+//        radioButtonCash.setChecked(true);
 
     }
 
@@ -456,18 +455,18 @@ public class AgentActivity extends AppCompatActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buttonCollectAdvancePayment:
-                //makeAdvanceCollection();
-                customDialogClass.show();
+                makeAdvanceCollection();
+                //customDialogClass.show();
 
                 break;
             case R.id.buttonCollectDailyPayment:
-                //makeDailyCollection();
+                makeDailyCollection();
 
-                customDialogClass.show();
+                //customDialogClass.show();
                 break;
             case R.id.buttonCollectRegularPayment:
-                //makeRegularCollection();
-                customDialogClass.show();
+                makeRegularCollection();
+                //customDialogClass.show();
                 break;
         }
 
@@ -483,7 +482,14 @@ public class AgentActivity extends AppCompatActivity
 
         textGetter();
 
-        validation();
+        if (strAmount.equals("") || strAmount.equals("0")) {
+            Toast.makeText(this, "This field can not be null", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (strReceiptNo.equals("")) {
+            Toast.makeText(this, "This field can not be null", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_DAILY_COLLECTION_URL,
                 new Response.Listener<String>() {
@@ -536,7 +542,7 @@ public class AgentActivity extends AppCompatActivity
                 map.put("role_id", strRoleId);
                 map.put("group_id", strGroupId);
                 map.put("amount", strAmount);
-                map.put("mode", paymentMode);
+                //map.put("mode", paymentMode);
                 map.put("receipt_no", strReceiptNo);
                 map.put("reciept_date", strDate);
                 map.put("member_id", strMemberId);
@@ -550,6 +556,7 @@ public class AgentActivity extends AppCompatActivity
 
 
     private void makeRegularCollection() {
+
         textGetter();
         validation();
 
@@ -798,7 +805,7 @@ public class AgentActivity extends AppCompatActivity
 
     public class CustomDialogClass extends Dialog implements View.OnClickListener {
 
-        public CustomDialogClass(@NonNull Context context) {
+        public CustomDialogClass(Context context) {
             super(context);
         }
 
@@ -818,7 +825,8 @@ public class AgentActivity extends AppCompatActivity
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_yes:
-                    makeAdvanceCollection();
+                    //makeAdvanceCollection();
+                    makeRegularCollection();
                     break;
                 case R.id.btn_no:
                     dismiss();
