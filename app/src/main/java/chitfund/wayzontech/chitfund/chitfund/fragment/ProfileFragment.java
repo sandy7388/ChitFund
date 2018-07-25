@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -56,6 +57,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private Date d;
     private static final String urlProfileImg = "https://s-media-cache-ak0.pinimg.com/736x/2c/bb/04/2cbb04e7ef9266e1e57a9b0e75bc555f.jpg";
     private String strName,strMobile,strEmail,strAddress,strBirthday;
+    private TextView textViewLogout;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -84,17 +86,19 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         editTextEmail = view.findViewById(R.id.profileEmail);
         editTextBirthday = view.findViewById(R.id.profileBirthday);
         editTextMobile = view.findViewById(R.id.profileMobile);
+        textViewLogout = view.findViewById(R.id.textViewProfileFragmentLogout);
         //buttonDelete = view.findViewById(R.id.btnDeleteAccount);
         //buttonDelete.setOnClickListener(this);
         imageViewEdit.setOnClickListener(this);
         imageViewChange.setOnClickListener(this);
+        textViewLogout.setOnClickListener(this);
         getProfile();
 
     }
 
     private void getProfile()
     {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.BASE_URL + "groupinfo/getprofile",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.PROFILE_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response)
@@ -179,7 +183,33 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             case R.id.imageChange:
                 //alertForImage();
                 break;
+
+            case R.id.textViewProfileFragmentLogout:
+                logout();
         }
+    }
+
+    private void logout() {
+        AlertDialog.Builder aBuilder = new AlertDialog.Builder(getActivity(), R.style.AlertDialogStyle);
+
+        aBuilder.setMessage("Are you sure, You want to Logout");
+        aBuilder.setTitle("Logout Alert");
+        //aBuilder.setIcon(R.drawable.warning);
+        aBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                MemberSession.getInstance(getContext()).logout();
+                //finish();
+            }
+        });
+        aBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog = aBuilder.create();
+        alertDialog.show();
     }
 
     void openEditFragment()

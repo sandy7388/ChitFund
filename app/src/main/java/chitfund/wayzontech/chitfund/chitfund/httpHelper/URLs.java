@@ -10,13 +10,13 @@ public class URLs
 {
     public static final String BASE_URL = "http://"+ MemberSession.getSubdomain() +".onlinechitfund.com/index.php/webservices/";
 
+    public static final String LOGIN_URL = "http://159.89.172.117/webservices.php";
     //public static final String AGENT_BASE_URL = "http://" + AgentSession.getSubdomain() + ".onlinechitfund.com/index.php/webservices/";
 
     public static final String GUARANTOR_URL = BASE_URL + "guarantierlist";
 
     public static final String REGISTRATION_URL = BASE_URL + "registerweb";
 
-    public static final String LOGIN_URL ="http://159.89.172.117/webservices.php";
 
     public static final String GROUP_URL = REGISTRATION_URL + "/getgrouplist";
 

@@ -119,7 +119,7 @@ public class DailyReportFragment extends Fragment implements AdapterView.OnItemS
 
     private void getDate() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(
-                getActivity(), this, date_Year, date_Month, date_Day);
+                getActivity(), R.style.DialogTheme, this, date_Year, date_Month, date_Day);
         datePickerDialog.show();
     }
 
@@ -270,8 +270,8 @@ public class DailyReportFragment extends Fragment implements AdapterView.OnItemS
                                         strCollectionType = object.getString("collection_type");
                                         strAmount = object.getString("amount");
 
-                                        try {
-                                            DailyReport dailyReport = new DailyReport();
+
+                                        DailyReport dailyReport = new DailyReport();
                                             dailyReport.setMemberName(strMemberName);
                                             dailyReport.setCollectionType(strCollectionType);
                                             dailyReport.setAmount(strAmount);
@@ -279,10 +279,6 @@ public class DailyReportFragment extends Fragment implements AdapterView.OnItemS
 
                                             dailyReportArrayList.add(dailyReport);
                                             adapter.notifyDataSetChanged();
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                        }
-
 
                                     }
                                 } else

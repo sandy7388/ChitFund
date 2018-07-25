@@ -1,11 +1,14 @@
 package chitfund.wayzontech.chitfund.chitfund.activity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,6 +71,7 @@ public class AgentActivity extends AppCompatActivity
     private String collectionType = "";
     private int date_Year, date_Month, date_Day;
     private Calendar calendar;
+    private boolean isFirst, isSecond, isThird;
 
 
     private EditText editTextInstallmentNo, editTextMemberCommission, editTextEntryNo,
@@ -138,6 +142,10 @@ public class AgentActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        isFirst = false;
+        isSecond = false;
+        isThird = false;
 
         calendar = Calendar.getInstance();
         date_Year = calendar.get(Calendar.YEAR);
@@ -384,8 +392,7 @@ public class AgentActivity extends AppCompatActivity
         int id = item.getItemId();
         switch (id) {
             case R.id.action_logout:
-                AgentSession.getInstance(AgentActivity.this).logout();
-                finish();
+                alertForLogout();
                 break;
 
             case R.id.action_ReportActivity:
@@ -455,19 +462,21 @@ public class AgentActivity extends AppCompatActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buttonCollectAdvancePayment:
-                makeAdvanceCollection();
-                //customDialogClass.show();
-
-                break;
-            case R.id.buttonCollectDailyPayment:
-                makeDailyCollection();
-
-                //customDialogClass.show();
+                //makeAdvanceCollection(isFirst);
+                isFirst = true;
+                customDialogClass.show();
                 break;
             case R.id.buttonCollectRegularPayment:
-                makeRegularCollection();
-                //customDialogClass.show();
+                isSecond = true;
+                //makeRegularCollection(isSecond);
+                customDialogClass.show();
                 break;
+            case R.id.buttonCollectDailyPayment:
+                //makeDailyCollection(isThird);
+                isThird = true;
+                customDialogClass.show();
+                break;
+
         }
 
     }
@@ -478,7 +487,216 @@ public class AgentActivity extends AppCompatActivity
         strChequeNumber = editTextChequeNumber.getText().toString();
     }
 
-    private void makeDailyCollection() {
+    public void makeAdvanceCollection(boolean isFirst) {
+        textGetter();
+        if (radioButtonCheque.isChecked()) {
+            validation();
+        } else {
+            if (strAmount.equals("")) {
+                Toast.makeText(this, "This field can not be null", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (strReceiptNo.equals("")) {
+                Toast.makeText(this, "This field can not be null", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+        }
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Please wait.....!");
+        progressDialog.show();
+        progressDialog.setCancelable(true);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_ADVANCE_COLLECTION_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            if (jsonObject.getString("success").equals("1")) {
+                                progressDialog.dismiss();
+
+                                Toast.makeText(AgentActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                                editTextAmount.setText("");
+                                editTextReceiptNo.setText("");
+                                editTextChequeNumber.setText("");
+                            } else if (jsonObject.getString("success").equals("0")) {
+                                progressDialog.dismiss();
+
+                                Toast.makeText(AgentActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+
+                                editTextAmount.setText("");
+                                editTextReceiptNo.setText("");
+                                editTextChequeNumber.setText("");
+                            } else {
+                                progressDialog.dismiss();
+                                Toast.makeText(AgentActivity.this, "Something went wrong, Try again", Toast.LENGTH_SHORT).show();
+                            }
+                            editTextChequeNumber.setText("");
+                        } catch (JSONException e) {
+                            progressDialog.dismiss();
+                            editTextAmount.setText("");
+                            editTextReceiptNo.setText("");
+                            editTextChequeNumber.setText("");
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                editTextAmount.setText("");
+                editTextReceiptNo.setText("");
+                editTextChequeNumber.setText("");
+                error.printStackTrace();
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> map = new HashMap<>();
+                if (radioButtonCash.isChecked()) {
+                    map.put("agent_id", agentSession.getUserID());
+                    map.put("role_id", strRoleId);
+                    map.put("group_id", strGroupId);
+                    map.put("amount", strAmount);
+                    map.put("mode", paymentMode);
+                    //map.put("bank_id", strBankId);
+                    map.put("receipt_no", strReceiptNo);
+                    map.put("reciept_date", strDate);
+                    //map.put("cheque_id", strChequeNumber);
+                    map.put("member_id", strMemberId);
+                } else {
+                    map.put("agent_id", agentSession.getUserID());
+                    map.put("role_id", strRoleId);
+                    map.put("group_id", strGroupId);
+                    map.put("amount", strAmount);
+                    map.put("mode", paymentMode);
+                    map.put("bank_id", strBankId);
+                    map.put("receipt_no", strReceiptNo);
+                    map.put("reciept_date", strDate);
+                    map.put("cheque_id", strChequeNumber);
+                    map.put("member_id", strMemberId);
+                }
+                //map.put("collection_type", strCollectionType);
+
+                return map;
+
+            }
+        };
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+    private void makeRegularCollection(boolean isSecond) {
+
+        textGetter();
+
+        if (radioButtonCheque.isChecked()) {
+            validation();
+        } else {
+            if (strAmount.equals("")) {
+                Toast.makeText(this, "This field can not be null", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (strReceiptNo.equals("")) {
+                Toast.makeText(this, "This field can not be null", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+        }
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Please wait.....!");
+        progressDialog.show();
+        progressDialog.setCancelable(true);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_REGULAR_COLLECTION_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            if (jsonObject.getString("success").equals("1")) {
+                                progressDialog.dismiss();
+
+                                Toast.makeText(AgentActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                                editTextAmount.setText("");
+                                editTextReceiptNo.setText("");
+                                editTextChequeNumber.setText("");
+                            } else if (jsonObject.getString("success").equals("0")) {
+                                progressDialog.dismiss();
+
+                                Toast.makeText(AgentActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+
+                                editTextAmount.setText("");
+                                editTextReceiptNo.setText("");
+                                editTextChequeNumber.setText("");
+                            } else {
+                                progressDialog.dismiss();
+                                Toast.makeText(AgentActivity.this, "Something went wrong, Try again", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            progressDialog.dismiss();
+                            editTextAmount.setText("");
+                            editTextReceiptNo.setText("");
+                            editTextChequeNumber.setText("");
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                editTextAmount.setText("");
+                editTextReceiptNo.setText("");
+                editTextChequeNumber.setText("");
+                error.printStackTrace();
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> map = new HashMap<>();
+                if (radioButtonCash.isChecked()) {
+                    map.put("agent_id", agentSession.getUserID());
+                    map.put("role_id", strRoleId);
+                    map.put("group_id", strGroupId);
+                    map.put("amount", strAmount);
+                    map.put("mode", paymentMode);
+                    //map.put("bank_id", strBankId);
+                    map.put("receipt_no", strReceiptNo);
+                    map.put("reciept_date", strDate);
+                    //map.put("cheque_id", strChequeNumber);
+                    map.put("member_id", strMemberId);
+                } else {
+                    map.put("agent_id", agentSession.getUserID());
+                    map.put("role_id", strRoleId);
+                    map.put("group_id", strGroupId);
+                    map.put("amount", strAmount);
+                    map.put("mode", paymentMode);
+                    map.put("bank_id", strBankId);
+                    map.put("receipt_no", strReceiptNo);
+                    map.put("reciept_date", strDate);
+                    map.put("cheque_id", strChequeNumber);
+                    map.put("member_id", strMemberId);
+                }
+                //map.put("collection_type", strCollectionType);
+
+                return map;
+
+            }
+        };
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+    private void makeDailyCollection(boolean isThird) {
 
         textGetter();
 
@@ -491,6 +709,10 @@ public class AgentActivity extends AppCompatActivity
             return;
         }
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Please wait.....!");
+        progressDialog.show();
+        progressDialog.setCancelable(true);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_DAILY_COLLECTION_URL,
                 new Response.Listener<String>() {
                     @Override
@@ -506,14 +728,21 @@ public class AgentActivity extends AppCompatActivity
                                 editTextAmount.setText("");
                                 editTextReceiptNo.setText("");
                                 editTextChequeNumber.setText("");
-                            } else
+
+
+                            } else if (jsonObject.getString("success").equals("0")) {
                                 progressDialog.dismiss();
 
-                            Toast.makeText(AgentActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AgentActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
 
-                            editTextAmount.setText("");
-                            editTextReceiptNo.setText("");
-                            editTextChequeNumber.setText("");
+                                editTextAmount.setText("");
+                                editTextReceiptNo.setText("");
+                                editTextChequeNumber.setText("");
+                            } else {
+                                progressDialog.dismiss();
+                                Toast.makeText(AgentActivity.this, "Something went wrong, Try again", Toast.LENGTH_SHORT).show();
+                            }
+
                         } catch (JSONException e) {
                             progressDialog.dismiss();
                             editTextAmount.setText("");
@@ -554,170 +783,6 @@ public class AgentActivity extends AppCompatActivity
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
-
-    private void makeRegularCollection() {
-
-        textGetter();
-        validation();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_REGULAR_COLLECTION_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-
-                            if (jsonObject.getString("success").equals("1")) {
-                                progressDialog.dismiss();
-
-                                Toast.makeText(AgentActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                                editTextAmount.setText("");
-                                editTextReceiptNo.setText("");
-                                editTextChequeNumber.setText("");
-                            } else
-                                progressDialog.dismiss();
-
-                            Toast.makeText(AgentActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-
-                            editTextAmount.setText("");
-                            editTextReceiptNo.setText("");
-                            editTextChequeNumber.setText("");
-                        } catch (JSONException e) {
-                            progressDialog.dismiss();
-                            editTextAmount.setText("");
-                            editTextReceiptNo.setText("");
-                            editTextChequeNumber.setText("");
-                            e.printStackTrace();
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                progressDialog.dismiss();
-                editTextAmount.setText("");
-                editTextReceiptNo.setText("");
-                editTextChequeNumber.setText("");
-                error.printStackTrace();
-
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> map = new HashMap<>();
-                if (radioButtonCash.isChecked()) {
-                    map.put("agent_id", agentSession.getUserID());
-                    map.put("role_id", strRoleId);
-                    map.put("group_id", strGroupId);
-                    map.put("amount", strAmount);
-                    map.put("mode", paymentMode);
-                    //map.put("bank_id", strBankId);
-                    map.put("receipt_no", strReceiptNo);
-                    map.put("reciept_date", strDate);
-                    //map.put("cheque_id", strChequeNumber);
-                    map.put("member_id", strMemberId);
-                } else {
-                    map.put("agent_id", agentSession.getUserID());
-                    map.put("role_id", strRoleId);
-                    map.put("group_id", strGroupId);
-                    map.put("amount", strAmount);
-                    map.put("mode", paymentMode);
-                    map.put("bank_id", strBankId);
-                    map.put("receipt_no", strReceiptNo);
-                    map.put("reciept_date", strDate);
-                    map.put("cheque_id", strChequeNumber);
-                    map.put("member_id", strMemberId);
-                }
-                //map.put("collection_type", strCollectionType);
-
-                return map;
-
-            }
-        };
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-    }
-
-    public void makeAdvanceCollection() {
-        textGetter();
-        validation();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_ADVANCE_COLLECTION_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-
-                            if (jsonObject.getString("success").equals("1")) {
-                                progressDialog.dismiss();
-
-                                Toast.makeText(AgentActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                                editTextAmount.setText("");
-                                editTextReceiptNo.setText("");
-                                editTextChequeNumber.setText("");
-                            } else
-                                progressDialog.dismiss();
-
-                            Toast.makeText(AgentActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-
-                            editTextAmount.setText("");
-                            editTextReceiptNo.setText("");
-                            editTextChequeNumber.setText("");
-                        } catch (JSONException e) {
-                            progressDialog.dismiss();
-                            editTextAmount.setText("");
-                            editTextReceiptNo.setText("");
-                            editTextChequeNumber.setText("");
-                            e.printStackTrace();
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                progressDialog.dismiss();
-                editTextAmount.setText("");
-                editTextReceiptNo.setText("");
-                editTextChequeNumber.setText("");
-                error.printStackTrace();
-
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> map = new HashMap<>();
-                if (radioButtonCash.isChecked()) {
-                    map.put("agent_id", agentSession.getUserID());
-                    map.put("role_id", strRoleId);
-                    map.put("group_id", strGroupId);
-                    map.put("amount", strAmount);
-                    map.put("mode", paymentMode);
-                    //map.put("bank_id", strBankId);
-                    map.put("receipt_no", strReceiptNo);
-                    map.put("reciept_date", strDate);
-                    //map.put("cheque_id", strChequeNumber);
-                    map.put("member_id", strMemberId);
-                } else {
-                    map.put("agent_id", agentSession.getUserID());
-                    map.put("role_id", strRoleId);
-                    map.put("group_id", strGroupId);
-                    map.put("amount", strAmount);
-                    map.put("mode", paymentMode);
-                    map.put("bank_id", strBankId);
-                    map.put("receipt_no", strReceiptNo);
-                    map.put("reciept_date", strDate);
-                    map.put("cheque_id", strChequeNumber);
-                    map.put("member_id", strMemberId);
-                }
-                //map.put("collection_type", strCollectionType);
-
-                return map;
-
-            }
-        };
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-    }
 
     void validation() {
         if (strAmount.equals("")) {
@@ -803,6 +868,30 @@ public class AgentActivity extends AppCompatActivity
 
     }
 
+    // Alert for logout
+    void alertForLogout() {
+        AlertDialog.Builder aBuilder = new AlertDialog.Builder(this);
+
+        aBuilder.setMessage("Are you sure, You want to Logout");
+        aBuilder.setTitle("Logout Alert");
+        //aBuilder.setIcon(R.drawable.warning);
+        aBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                AgentSession.getInstance(AgentActivity.this).logout();
+                finish();
+            }
+        });
+        aBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog = aBuilder.create();
+        alertDialog.show();
+    }
+
     public class CustomDialogClass extends Dialog implements View.OnClickListener {
 
         public CustomDialogClass(Context context) {
@@ -825,8 +914,20 @@ public class AgentActivity extends AppCompatActivity
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_yes:
-                    //makeAdvanceCollection();
-                    makeRegularCollection();
+                    if (isFirst) {
+                        makeAdvanceCollection(isFirst);
+                        isFirst = false;
+                        Log.d("isFirst", "isFirst");
+                    } else if (isSecond) {
+                        makeRegularCollection(isSecond);
+                        isSecond = false;
+                        Log.d("isFirst", "isSecond");
+                    } else {
+                        makeDailyCollection(isThird);
+                        isThird = false;
+                        Log.d("isFirst", "isThird");
+                    }
+
                     break;
                 case R.id.btn_no:
                     dismiss();
@@ -837,6 +938,5 @@ public class AgentActivity extends AppCompatActivity
             dismiss();
         }
     }
-
 }
 

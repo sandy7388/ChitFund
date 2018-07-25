@@ -6,7 +6,7 @@
                 <shape>
                     <gradient android:angle="90" android:endColor="#ffffff" android:startColor="#ffffff" android:type="linear" />
 
-                    <stroke android:width="0.33dp" android:color="#000000" />
+                    <stroke android:width="0.33dp" android:color="@color/cardview_dark_background" />
 
                     <corners android:radius="05dp" />
 

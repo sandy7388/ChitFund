@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -19,12 +18,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,11 +33,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.google.firebase.messaging.FirebaseMessaging;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -54,10 +47,7 @@ import chitfund.wayzontech.chitfund.chitfund.fragment.JoinedGroupFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.LastAuctionFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.ProfileFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.ReportFragment;
-import chitfund.wayzontech.chitfund.chitfund.httpHelper.Config;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
-import chitfund.wayzontech.chitfund.chitfund.other.CircleTransform;
-import chitfund.wayzontech.chitfund.chitfund.receiverNservices.NotificationUtils;
 import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
@@ -106,30 +96,43 @@ public class MainActivity extends RuntimePermissionActivity
             CURRENT_TAG = TAG_HOME;
             loadHomeFragment();
         }
+
+        isNetworkConnected();
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
 
-                // checking for type intent filter
-                if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
-                    // gcm successfully registered
-                    // now subscribe to `global` topic to receive app wide notifications
-                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+//                // checking for type intent filter
+//                if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
+//                    // gcm successfully registered
+//                    // now subscribe to `global` topic to receive app wide notifications
+//                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+//
+//                    //displayFirebaseRegId();
+//
+//                } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
+//                    // new push notification is received
+//
+//                    String message = intent.getStringExtra("message");
+//
+//                    Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
+//
+//                }
 
-                    displayFirebaseRegId();
+                if (intent.getExtras() != null) {
+                    NetworkInfo ni = (NetworkInfo) intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
+                    if (ni != null && ni.getState() == NetworkInfo.State.CONNECTED) {
+                        // we're connected
 
-                } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
-                    // new push notification is received
-
-                    String message = intent.getStringExtra("message");
-
-                    Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
-
+                        Toast.makeText(context, "Good! Connected to Internet", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "Sorry! Not connected to internet", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         };
 
-        displayFirebaseRegId();
+        //displayFirebaseRegId();
 
     }
 
@@ -152,39 +155,40 @@ public class MainActivity extends RuntimePermissionActivity
     }
 
 
+//    private void displayFirebaseRegId() {
+//        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+//        String regId = pref.getString("regId", null);
+//
+//        Log.e(TAG, "Firebase reg id: " + regId);
+////        Toast.makeText(getApplicationContext(), "Firebase reg id: " + regId
+////                , Toast.LENGTH_LONG).show();
+//
+//    }
 
-    private void displayFirebaseRegId() {
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
-        String regId = pref.getString("regId", null);
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//        // register GCM registration complete receiver
+//        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+//                new IntentFilter(Config.REGISTRATION_COMPLETE));
+//
+//        // register new push message receiver
+//        // by doing this, the activity will be notified each time a new message arrives
+//        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+//                new IntentFilter(Config.PUSH_NOTIFICATION));
+//
+//        // clear the notification area when the app is opened
+//        NotificationUtils.clearNotifications(getApplicationContext());
+//    }
 
-        Log.e(TAG, "Firebase reg id: " + regId);
-//        Toast.makeText(getApplicationContext(), "Firebase reg id: " + regId
-//                , Toast.LENGTH_LONG).show();
+//    @Override
+//    protected void onPause() {
+//        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+//        super.onPause();
+//    }
 
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // register GCM registration complete receiver
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(Config.REGISTRATION_COMPLETE));
-
-        // register new push message receiver
-        // by doing this, the activity will be notified each time a new message arrives
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(Config.PUSH_NOTIFICATION));
-
-        // clear the notification area when the app is opened
-        NotificationUtils.clearNotifications(getApplicationContext());
-    }
-
-    @Override
-    protected void onPause() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
-        super.onPause();
-    }
     public void initialize()
     {
         mToolbar = findViewById(R.id.mainActivityToolbar1);
@@ -197,14 +201,14 @@ public class MainActivity extends RuntimePermissionActivity
         navHeader = navigationView.getHeaderView(0);
         textName = navHeader.findViewById(R.id.userName);
         textEmail = navHeader.findViewById(R.id.userEmail);
-        profile = navHeader.findViewById(R.id.imageView);
+        //profile = navHeader.findViewById(R.id.imageView);
         fab.setOnClickListener(this);
         if(!MemberSession.getInstance(this).isLoggedIn())
         {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
-        //loadHeaderMenu();
+
         setUpNavigationView();
     }
 
@@ -269,54 +273,6 @@ public class MainActivity extends RuntimePermissionActivity
                 return new HomeFragment();
         }
     }
-
-    void loadHeaderMenu()
-    {
-        Glide.with(this).load(urlProfileImg)
-                .crossFade()
-                .thumbnail(0.5f)
-                .bitmapTransform(new CircleTransform(this))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(profile);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.PROFILE_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response)
-                    {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            JSONArray jsonArray = jsonObject.getJSONArray("profile_info");
-                            for (int i=0;i<jsonArray.length();i++) {
-                                JSONObject object = jsonArray.getJSONObject(i);
-                                strName = object.getString("member_name");
-                                strEmail = object.getString("email");
-
-                                textName.setText(strName);
-                                textEmail.setText(strEmail);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        })
-        {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> map = new HashMap<>();
-                map.put("user_id",session.getUserID());
-                return map;
-            }
-        };
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-    }
-
 
     private void selectNavMenu()
     {
@@ -420,8 +376,10 @@ public class MainActivity extends RuntimePermissionActivity
         switch (id) {
             case R.id.action_logout:
                 //androidLogout();
-                MemberSession.getInstance(MainActivity.this).logout();
-                finish();
+//                MemberSession.getInstance(MainActivity.this).logout();
+//                finish();
+
+                alertForLogout();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -565,6 +523,26 @@ public class MainActivity extends RuntimePermissionActivity
         };
 
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+    public boolean isNetworkConnected() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(mRegistrationBroadcastReceiver);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(mRegistrationBroadcastReceiver, filter);
     }
 
 

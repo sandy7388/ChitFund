@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <RelativeLayout
+                android:visibility="gone"
                 android:layout_marginTop="5sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -43,6 +44,7 @@
             </RelativeLayout>
 
             <View
+                android:visibility="gone"
                 android:layout_marginTop="3sp"
                 android:layout_width="match_parent"
                 android:layout_height="1sp"
@@ -181,6 +183,17 @@
                 android:textSize="18sp"
                 android:layout_width="match_parent"
                 android:layout_height="30sp" />
+
+            <TextView
+                android:id="@+id/textViewProfileFragmentLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="Logout"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
+
 
         </LinearLayout>
 

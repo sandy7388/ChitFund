@@ -119,7 +119,7 @@ public class LastAuctionFragment extends Fragment
     private void getDate()
     {
         DatePickerDialog datePickerDialog = new DatePickerDialog(
-                getContext(), this, date_Year, date_Month, date_Day);
+                getContext(), R.style.DialogTheme, this, date_Year, date_Month, date_Day);
         datePickerDialog.show();
     }
 

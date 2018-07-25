@@ -6,7 +6,7 @@ package chitfund.wayzontech.chitfund.chitfund.model;
 
 public class MemberLogin
 {
-    private String id,username,password,member_id,subdomain;
+    private String id, username, password, member_id, subdomain, strName;
 
 
     public MemberLogin() {
@@ -58,5 +58,13 @@ public class MemberLogin
 
     public void setSubdomain(String subdomain) {
         this.subdomain = subdomain;
+    }
+
+    public String getStrName() {
+        return strName;
+    }
+
+    public void setStrName(String strName) {
+        this.strName = strName;
     }
 }

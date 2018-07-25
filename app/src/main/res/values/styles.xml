@@ -40,6 +40,15 @@
     </style>
 
 
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#F00</item>
+    </style>
 
+
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#f3f3f3</item>
+        <item name="android:textColor">#F00</item>
+        <item name="android:textColorPrimary">#000</item>
+    </style>
 
 </resources>

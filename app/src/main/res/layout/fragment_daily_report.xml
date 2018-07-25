@@ -37,6 +37,7 @@
         android:weightSum="2">
 
         <TextView
+            android:textColor="#000"
             android:id="@+id/editText_search_agentDaily_report"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

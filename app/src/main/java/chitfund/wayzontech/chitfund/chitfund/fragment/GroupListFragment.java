@@ -125,11 +125,9 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
                                 for (int i = 0; i < groupInfo.length(); i++) {
                                     object = groupInfo.getJSONObject(i);
 
-                                    grpName.add(object.getString("group_name"));
-
                                     String amount = object.getString("amount");
                                     textViewAmount.setText(amount);
-
+                                    grpName.add(object.getString("group_name"));
                                     JSONArray jsonArray = object.getJSONArray("group_member");
 
                                     for (int j = 0; j < jsonArray.length(); j++) {
@@ -149,8 +147,8 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
 
                                 }
 
-                                Toast.makeText(getContext(), serverResponse.getString("message"), Toast.LENGTH_SHORT).show();
-                                spinnerGrpName.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, grpName));
+                                //Toast.makeText(getContext(), serverResponse.getString("message"), Toast.LENGTH_SHORT).show();
+                                spinnerGrpName.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.spinner_layout, grpName));
 
                             } else {
                                 Toast.makeText(getContext(), serverResponse.getString("message"), Toast.LENGTH_SHORT).show();

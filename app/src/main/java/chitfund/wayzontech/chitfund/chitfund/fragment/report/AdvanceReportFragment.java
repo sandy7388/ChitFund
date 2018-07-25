@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -91,8 +90,6 @@ public class AdvanceReportFragment extends Fragment implements AdapterView.OnIte
         progressDialog.setMessage("Please wait.....!");
         progressDialog.show();
         progressDialog.setCancelable(true);
-
-        advanceReportArrayList = new ArrayList<AdvanceReport>();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_ADVANCE_REPORT_URL,
                 new Response.Listener<String>() {
                     @SuppressLint("SimpleDateFormat")
@@ -104,33 +101,31 @@ public class AdvanceReportFragment extends Fragment implements AdapterView.OnIte
                             if (jsonObject.getString("success").equals("1")) {
                                 JSONArray jsonArray = jsonObject.getJSONArray("Agentwise_Advance_collection_report");
                                 for (int i = 0; i < jsonArray.length(); i++) {
+
                                     JSONObject object = jsonArray.getJSONObject(i);
-                                    //strGroupName = object.getString("group_name");
                                     strMemberName = object.getString("member_name");
                                     strDateTime = object.getString("receipt_date");
                                     strAmount = object.getString("amount");
+
 
                                     DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
                                     DateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy");
                                     Date date = inputFormat.parse(strDateTime);
                                     String outputDateStr = outputFormat.format(date);
-
                                     AdvanceReport advanceReport = new AdvanceReport();
-
-                                    //advanceReport.setGroupName(strGroupName);
                                     advanceReport.setMemberName(strMemberName);
                                     advanceReport.setDateTime(outputDateStr);
                                     advanceReport.setAmount(strAmount);
                                     progressDialog.dismiss();
-
                                     advanceReportArrayList.add(advanceReport);
                                     adapter.notifyDataSetChanged();
-                                    Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
 
                                 }
+
+
                             } else
                                 progressDialog.dismiss();
-                            Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
 
                         } catch (JSONException e) {
                             progressDialog.dismiss();
@@ -157,8 +152,9 @@ public class AdvanceReportFragment extends Fragment implements AdapterView.OnIte
                 return params;
             }
         };
-        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
         recyclerViewInit();
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+
     }
 
     void getGroupName() {
