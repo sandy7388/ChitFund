@@ -35,14 +35,14 @@ import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.adapter.agentReportAdapter.AdvanceAgentReportAdapter;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.AgentURL;
 import chitfund.wayzontech.chitfund.chitfund.model.agentReport.AdvanceReport;
-import chitfund.wayzontech.chitfund.chitfund.session.AgentSession;
+import chitfund.wayzontech.chitfund.chitfund.session.SubdomainSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 public class AdvanceReportFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     private ArrayList<String> groupName;
     private RecyclerView recyclerView;
     private String strRemainingDays, inputDateString;
-    private AgentSession agentSession;
+    private static final String AGENT_GROUP_URL = "Registerweb/group_name_info";
     private ArrayList<AdvanceReport> advanceReportArrayList;
     private RecyclerView.LayoutManager layoutManager;
     private String strGroupName, strMemberName, strDateTime, strAmount;
@@ -56,7 +56,8 @@ public class AdvanceReportFragment extends Fragment implements AdapterView.OnIte
             strMemberIdJSON, strBankName, strBankId, strBankNameJSON,
             strBankIdJSON, strRoleId = String.valueOf(4);
     private Spinner spinnerGroupName;
-
+    private static final String AGENT_ADVANCE_REPORT_URL = "Registerweb/report1/";
+    private SubdomainSession session;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -65,7 +66,7 @@ public class AdvanceReportFragment extends Fragment implements AdapterView.OnIte
         View view = inflater.inflate(R.layout.fragment_advance_report, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerViewAgentAdvanceReport);
-        agentSession = new AgentSession(getActivity());
+        session = new SubdomainSession(getActivity());
         spinnerGroupName = view.findViewById(R.id.spinnerGrpNameAdvanceReportAgent);
         spinnerGroupName.setOnItemSelectedListener(this);
         //getActivity().setTitle("Advance Collection Report");
@@ -90,7 +91,7 @@ public class AdvanceReportFragment extends Fragment implements AdapterView.OnIte
         progressDialog.setMessage("Please wait.....!");
         progressDialog.show();
         progressDialog.setCancelable(true);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_ADVANCE_REPORT_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://" + session.getSubDomain() + AgentURL.AGENT_BASE_URL + AGENT_ADVANCE_REPORT_URL,
                 new Response.Listener<String>() {
                     @SuppressLint("SimpleDateFormat")
                     @Override
@@ -146,7 +147,7 @@ public class AdvanceReportFragment extends Fragment implements AdapterView.OnIte
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("agent_id", agentSession.getUserID());
+                params.put("agent_id", session.getUserID());
                 params.put("group_id", strGroupId);
                 params.put("role_id", strRoleId);
                 return params;
@@ -160,7 +161,7 @@ public class AdvanceReportFragment extends Fragment implements AdapterView.OnIte
     void getGroupName() {
 
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_GROUP_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://" + session.getSubDomain() + AgentURL.AGENT_BASE_URL + AGENT_GROUP_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -197,7 +198,7 @@ public class AdvanceReportFragment extends Fragment implements AdapterView.OnIte
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> param = new HashMap<>();
-                param.put("agent_id", agentSession.getUserID());
+                param.put("agent_id", session.getUserID());
                 param.put("role_id", strRoleId);
                 return param;
             }

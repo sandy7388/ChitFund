@@ -31,7 +31,7 @@ import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.adapter.AgentReportAdapter;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.AgentURL;
 import chitfund.wayzontech.chitfund.chitfund.model.AgentReport;
-import chitfund.wayzontech.chitfund.chitfund.session.AgentSession;
+import chitfund.wayzontech.chitfund.chitfund.session.SubdomainSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 public class AgentReportActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
@@ -43,10 +43,12 @@ public class AgentReportActivity extends AppCompatActivity implements View.OnCli
     private TextView textViewDate;
     private Button buttonDate;
     private String strDate, strMemberName, strGroupName, strAmount, strCollectionType, strDateTime;
-    private AgentSession session;
+    public static final String AGENT_REPORT_URL = "Registerweb/group_member_info";
     private int date_Year, date_Month, date_Day;
     private Calendar calendar;
     private String strRoleId = String.valueOf(4);
+    private SubdomainSession session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +58,7 @@ public class AgentReportActivity extends AppCompatActivity implements View.OnCli
         textViewDate = findViewById(R.id.text_getAgentReportDate);
         buttonDate = findViewById(R.id.button_getAgentReport);
 
-        session = new AgentSession(this);
+        session = new SubdomainSession(this);
         calendar = Calendar.getInstance();
         date_Year = calendar.get(Calendar.YEAR);
         date_Month = calendar.get(Calendar.MONTH);
@@ -116,7 +118,7 @@ public class AgentReportActivity extends AppCompatActivity implements View.OnCli
         progressDialog.show();
         strDate = textViewDate.getText().toString();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_REPORT_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://" + session.getSubDomain() + AgentURL.AGENT_BASE_URL + AGENT_REPORT_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

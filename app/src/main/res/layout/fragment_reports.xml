@@ -68,7 +68,7 @@
         android:id="@+id/tabLayoutMember"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#1db995"></android.support.design.widget.TabLayout>
+        android:background="@color/colorPrimary"></android.support.design.widget.TabLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPagerMember"

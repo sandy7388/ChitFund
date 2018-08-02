@@ -34,7 +34,7 @@ import chitfund.wayzontech.chitfund.chitfund.activity.MainActivity;
 import chitfund.wayzontech.chitfund.chitfund.adapter.GroupListAdapter;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.model.MemberName;
-import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
+import chitfund.wayzontech.chitfund.chitfund.session.SubdomainSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 
@@ -52,7 +52,9 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<MemberName> memberNameArrayList;
     private GroupListAdapter groupListAdapter;
-    MemberSession memberSession;
+    private static final String GROUP_DETAILS = "registerweb/getgrouplist";
+    private static final String JOIN_GROUP = "groupinfo/joingroup";
+    SubdomainSession session;
     public GroupListFragment() {
         // Required empty public constructor
     }
@@ -74,7 +76,7 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
     {
         grpName = new ArrayList<String>();
         progressDialog = new ProgressDialog(getContext());
-        memberSession = new MemberSession(getActivity());
+        session = new SubdomainSession(getActivity());
         button = view.findViewById(R.id.btn_joinGrpFrag);
         textViewAmount = view.findViewById(R.id.text_amtGrpFrg);
         spinnerGrpName = view.findViewById(R.id.spinner_groupName);
@@ -111,7 +113,7 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
     private void getList()
     {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,URLs.GROUP_DETAILS,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://" + session.getSubDomain() + URLs.BASE_URL + GROUP_DETAILS,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -229,7 +231,7 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
         progressDialog.show();
         progressDialog.setMessage("Please wait....!");
         progressDialog.setCancelable(true);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,URLs.JOIN_GROUP,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://" + session.getSubDomain() + URLs.BASE_URL + JOIN_GROUP,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -267,7 +269,7 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
             @Override
             protected Map<String, String> getParams() {
                 Map<String,String> params = new HashMap<>();
-                params.put("user_id", memberSession.getUserID());
+                params.put("user_id", session.getUserID());
                 params.put("groupid",groupId);
                 return params;
             }

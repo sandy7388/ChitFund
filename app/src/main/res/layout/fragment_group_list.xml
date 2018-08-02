@@ -132,6 +132,7 @@
         android:layout_height="wrap_content"/>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/btn_joinGrpFrag"
         android:layout_width="120sp"
         android:layout_height="35sp"

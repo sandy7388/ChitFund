@@ -1,10 +1,8 @@
 package chitfund.wayzontech.chitfund.chitfund.httpHelper;
 
-import chitfund.wayzontech.chitfund.chitfund.session.AgentSession;
-
 public class AgentURL {
 
-    public static final String AGENT_BASE_URL = "http://" + AgentSession.getSubdomain() + ".onlinechitfund.com/index.php/webservices/";
+    public static final String AGENT_BASE_URL = ".onlinechitfund.com/index.php/webservices/";
 
     public static final String AGENT_GROUP_URL = AGENT_BASE_URL + "Registerweb/group_name_info";
 

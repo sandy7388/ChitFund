@@ -28,7 +28,7 @@ import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.adapter.MemberReportAdapter;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.model.MemberReport;
-import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
+import chitfund.wayzontech.chitfund.chitfund.session.SubdomainSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 public class MemberReportActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -42,9 +42,9 @@ public class MemberReportActivity extends AppCompatActivity implements AdapterVi
     private ArrayList<String> grpName;
     private MemberReportAdapter memberReportAdapter;
     private String memberId,memberName,memberMobile,groupName,groupId;
-    private MemberSession memberSession;
+    private static final String GROUP_REPORT = "groupinfo/userwisegroupList";
     private Button buttonDeleteGroup;
-
+    private SubdomainSession session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +66,7 @@ public class MemberReportActivity extends AppCompatActivity implements AdapterVi
     {
         grpName = new ArrayList<>();
         progressDialog = new ProgressDialog(this);
-        memberSession = new MemberSession(this);
+        session = new SubdomainSession(this);
         spinner.setOnItemSelectedListener(this);
         getMemberReport();
     }
@@ -85,7 +85,7 @@ public class MemberReportActivity extends AppCompatActivity implements AdapterVi
 
     void getMemberReport()
     {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.GROUP_REPORT,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://" + session.getSubDomain() + URLs.BASE_URL + GROUP_REPORT,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response)
@@ -144,7 +144,7 @@ public class MemberReportActivity extends AppCompatActivity implements AdapterVi
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<>();
-                map.put("userid", memberSession.getUserID());
+                map.put("userid", session.getUserID());
                 return map;
             }
         };

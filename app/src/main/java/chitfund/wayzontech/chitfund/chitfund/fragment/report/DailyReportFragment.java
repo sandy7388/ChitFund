@@ -39,7 +39,7 @@ import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.adapter.agentReportAdapter.DailyAgentReportAdapter;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.AgentURL;
 import chitfund.wayzontech.chitfund.chitfund.model.agentReport.DailyReport;
-import chitfund.wayzontech.chitfund.chitfund.session.AgentSession;
+import chitfund.wayzontech.chitfund.chitfund.session.SubdomainSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 public class DailyReportFragment extends Fragment implements AdapterView.OnItemSelectedListener,
@@ -48,7 +48,7 @@ public class DailyReportFragment extends Fragment implements AdapterView.OnItemS
     private ArrayList<String> groupName;
     private RecyclerView recyclerView;
     private String strRemainingDays, inputDateString;
-    private AgentSession agentSession;
+    private static final String AGENT_GROUP_URL = "Registerweb/group_name_info";
     private ArrayList<DailyReport> dailyReportArrayList;
     private RecyclerView.LayoutManager layoutManager;
     private String strGroupName, strMemberName, strDateTime, strAmount, strCollectionType, outputDateStr;
@@ -66,8 +66,8 @@ public class DailyReportFragment extends Fragment implements AdapterView.OnItemS
     private Calendar calendar;
     private TextView textViewDate;
     private Button buttonDate;
-
-
+    private static final String AGENT_DAILY_REPORT_URL = "Registerweb/report2/";
+    private SubdomainSession session;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -84,7 +84,7 @@ public class DailyReportFragment extends Fragment implements AdapterView.OnItemS
     void initialization(View view) {
         groupName = new ArrayList<>();
         recyclerView = view.findViewById(R.id.recyclerViewAgentDailyReport);
-        agentSession = new AgentSession(getActivity());
+        session = new SubdomainSession(getActivity());
         spinnerGroupName = view.findViewById(R.id.spinnerGrpNameDailyReportAgent);
         textViewDate = view.findViewById(R.id.editText_search_agentDaily_report);
         buttonDate = view.findViewById(R.id.button_search_agentDaily_report);
@@ -126,7 +126,7 @@ public class DailyReportFragment extends Fragment implements AdapterView.OnItemS
     void getGroupName() {
 
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_GROUP_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://" + session.getSubDomain() + AgentURL.AGENT_BASE_URL + AGENT_GROUP_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -165,7 +165,7 @@ public class DailyReportFragment extends Fragment implements AdapterView.OnItemS
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> param = new HashMap<>();
-                param.put("agent_id", agentSession.getUserID());
+                param.put("agent_id", session.getUserID());
                 param.put("role_id", strRoleId);
                 return param;
             }
@@ -253,7 +253,7 @@ public class DailyReportFragment extends Fragment implements AdapterView.OnItemS
             }
             outputDateStr = outputFormat.format(date);
 
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_DAILY_REPORT_URL,
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://" + session.getSubDomain() + AgentURL.AGENT_BASE_URL + AGENT_DAILY_REPORT_URL,
                     new Response.Listener<String>() {
                         @SuppressLint("SimpleDateFormat")
                         @Override
@@ -301,7 +301,7 @@ public class DailyReportFragment extends Fragment implements AdapterView.OnItemS
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
-                    params.put("agent_id", agentSession.getUserID());
+                    params.put("agent_id", session.getUserID());
                     params.put("group_id", strGroupId);
                     params.put("role_id", strRoleId);
                     params.put("date", outputDateStr);

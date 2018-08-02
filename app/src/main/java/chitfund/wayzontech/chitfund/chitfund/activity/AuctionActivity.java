@@ -11,15 +11,16 @@ import android.widget.TextView;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
-import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
+import chitfund.wayzontech.chitfund.chitfund.session.SubdomainSession;
 
 public class AuctionActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView txtAmount,txtGroupId;
     private Button buttonAuction;
     private String strAmount,strGroupId;
-    private MemberSession session;
+    public static final String WEBVIEW_URL = "realtimeauction/webviewTimer";
     private WebView webView;
+    private SubdomainSession session;
     //private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
@@ -37,7 +38,7 @@ public class AuctionActivity extends AppCompatActivity implements View.OnClickLi
         {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        session = new MemberSession(this);
+        session = new SubdomainSession(this);
 
         Intent intent = this.getIntent();
         strAmount = intent.getExtras().getString("KEY_AMOUNT");
@@ -58,7 +59,7 @@ public class AuctionActivity extends AppCompatActivity implements View.OnClickLi
         //webView = view.findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setBuiltInZoomControls(true);
-        webView.loadUrl(URLs.WEBVIEW_URL+"?groupid="+strGroupId +"&user_id="+session.getUserID());
+        webView.loadUrl("http://" + session.getSubDomain() + URLs.BASE_URL + WEBVIEW_URL + "?groupid=" + strGroupId + "&user_id=" + session.getUserID());
         webView.setWebViewClient(new MyWebViewClient());
     }
 

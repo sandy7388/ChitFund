@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -33,7 +34,7 @@ import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.adapter.LastAuctionAdapter;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.model.LastAuction;
-import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
+import chitfund.wayzontech.chitfund.chitfund.session.SubdomainSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 
@@ -48,9 +49,10 @@ public class LastAuctionFragment extends Fragment
     private Button getLastAuction;
     private TextView dateLastAuction;
     private Calendar calendar;
-    private MemberSession session;
+    public static final String LAST_AUCTION = "realtimeauction/getfinalauctions";
     private String strDate,date,amount,lockAmount,groupName,receivedBy,closedOn;
     private int date_Year,date_Month,date_Day;
+    private SubdomainSession session;
     public LastAuctionFragment() {
         // Required empty public constructor
     }
@@ -65,6 +67,7 @@ public class LastAuctionFragment extends Fragment
         getActivity().setTitle("Last Auction Details");
         return view;
     }
+
     @SuppressLint("SimpleDateFormat")
     private void initRecyclerView(View view)
     {
@@ -84,7 +87,7 @@ public class LastAuctionFragment extends Fragment
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         dateLastAuction.setText( sdf.format(calendar.getTime()));
         dateLastAuction.setOnClickListener(this);
-        session = new MemberSession(getActivity());
+        session = new SubdomainSession(getActivity());
     }
 
     void initRecyclerview() {
@@ -130,7 +133,7 @@ public class LastAuctionFragment extends Fragment
         progressDialog.show();
         progressDialog.setCancelable(false);
         strDate = dateLastAuction.getText().toString();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.LAST_AUCTION,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://" + session.getSubDomain() + URLs.BASE_URL + LAST_AUCTION,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -169,10 +172,12 @@ public class LastAuctionFragment extends Fragment
 
                                 lastAuctionAdapter.notifyDataSetChanged();
 
+                                Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+
                             }
                             else
                                 progressDialog.dismiss();
-                                //Toast.makeText(getActivity(),jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
 
 
 

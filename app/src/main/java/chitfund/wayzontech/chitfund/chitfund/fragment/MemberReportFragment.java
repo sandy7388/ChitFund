@@ -30,7 +30,7 @@ import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.adapter.MemberReportAdapter;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.model.MemberReport;
-import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
+import chitfund.wayzontech.chitfund.chitfund.session.SubdomainSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 
@@ -46,9 +46,9 @@ public class MemberReportFragment extends Fragment implements AdapterView.OnItem
     private ArrayList<String> grpName;
     private MemberReportAdapter memberReportAdapter;
     private String memberId, memberName, memberMobile, groupName, groupId;
-    private MemberSession memberSession;
+    private static final String GROUP_REPORT = "groupinfo/userwisegroupList";
     private Button buttonDeleteGroup;
-
+    private SubdomainSession session;
     public MemberReportFragment() {
         // Required empty public constructor
     }
@@ -78,7 +78,7 @@ public class MemberReportFragment extends Fragment implements AdapterView.OnItem
     void initController() {
         grpName = new ArrayList<>();
         progressDialog = new ProgressDialog(getContext());
-        memberSession = new MemberSession(getContext());
+        session = new SubdomainSession(getContext());
         spinner.setOnItemSelectedListener(this);
         getMemberReport();
     }
@@ -95,7 +95,7 @@ public class MemberReportFragment extends Fragment implements AdapterView.OnItem
 
 
     void getMemberReport() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.GROUP_REPORT,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://" + session.getSubDomain() + URLs.BASE_URL + GROUP_REPORT,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -150,7 +150,7 @@ public class MemberReportFragment extends Fragment implements AdapterView.OnItem
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<>();
-                map.put("userid", memberSession.getUserID());
+                map.put("userid", session.getUserID());
                 return map;
             }
         };

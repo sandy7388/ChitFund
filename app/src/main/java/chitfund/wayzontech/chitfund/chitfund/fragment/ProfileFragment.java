@@ -41,6 +41,7 @@ import chitfund.wayzontech.chitfund.chitfund.activity.EditProfileActivity;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.other.CircleTransform;
 import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
+import chitfund.wayzontech.chitfund.chitfund.session.SubdomainSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 import static android.app.Activity.RESULT_OK;
@@ -52,12 +53,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     editTextAddress,editTextBirthday,editTextMobile;
     private ImageView imageViewEdit,imageViewProfile,imageViewChange;
     private Button buttonDelete;
-    private MemberSession session;
+    private static final String URL = ".onlinechitfund.com/index.php/webservices";
     private DateFormat date,time;
     private Date d;
     private static final String urlProfileImg = "https://s-media-cache-ak0.pinimg.com/736x/2c/bb/04/2cbb04e7ef9266e1e57a9b0e75bc555f.jpg";
     private String strName,strMobile,strEmail,strAddress,strBirthday;
     private TextView textViewLogout;
+    private static final String PROFILE_URL = "groupinfo/getprofile";
+    private SubdomainSession session;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -77,7 +80,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     void initController(View view)
     {
-        session = new MemberSession(getContext());
+        session = new SubdomainSession(getContext());
         imageViewEdit = view.findViewById(R.id.imageEdit);
         imageViewChange = view.findViewById(R.id.imageChange);
         imageViewProfile = view.findViewById(R.id.profileImage);
@@ -98,7 +101,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void getProfile()
     {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.PROFILE_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://" + session.getSubDomain() + URLs.BASE_URL + PROFILE_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response)
@@ -294,4 +297,5 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageViewProfile);
     }
+
 }

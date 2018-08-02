@@ -3,6 +3,7 @@ package chitfund.wayzontech.chitfund.chitfund.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,9 +13,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -25,20 +24,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.fragment.GroupListFragment;
@@ -47,9 +35,9 @@ import chitfund.wayzontech.chitfund.chitfund.fragment.JoinedGroupFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.LastAuctionFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.ProfileFragment;
 import chitfund.wayzontech.chitfund.chitfund.fragment.ReportFragment;
-import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
-import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
+import chitfund.wayzontech.chitfund.chitfund.session.SubdomainSession;
+import chitfund.wayzontech.chitfund.chitfund.sqliteHelper.DatabaseHelper;
 
 public class MainActivity extends RuntimePermissionActivity
         implements View.OnClickListener
@@ -60,29 +48,19 @@ public class MainActivity extends RuntimePermissionActivity
     private MemberSession session;
     private NavigationView navigationView;
     private DrawerLayout drawer;
-    private ActionBarDrawerToggle toggle;
     private Toolbar mToolbar;
-    private String loginStatus = "0";
-    private FloatingActionButton fab;
-    private View navHeader;
-    private TextView textName,textEmail;
-    private ImageView profile;
-    private String strName,strEmail;
     public static int navItemIndex = 0;
-    private static final String urlProfileImg = "https://s-media-cache-ak0.pinimg.com/736x/2c/bb/04/2cbb04e7ef9266e1e57a9b0e75bc555f.jpg";
     private static final String TAG_HOME = "home";
     private static final String TAG_PROFILE = "profile";
-    //private static final String TAG_AUCTION = "auction";
     private static final String TAG_LAST_AUCTION = "last_auction";
-    //private static final String TAG_NOTIFICATIONS = "notifications";
     private static final String TAG_GRPLIST = "group_list";
     private static final String TAG_JOINEDGRP = "joined_grplist";
     private static final String TAG_REPORTS = "reports";
-    private static final String TAG_MEMBER_REPORTS = "member_reports";
-
+    CustomDialogClass customDialogClass;
     public static String CURRENT_TAG = TAG_HOME;
-
+    private Button yes, no;
     private Handler mHandler;
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +74,8 @@ public class MainActivity extends RuntimePermissionActivity
             CURRENT_TAG = TAG_HOME;
             loadHomeFragment();
         }
-
+        databaseHelper = new DatabaseHelper(this);
+        customDialogClass = new CustomDialogClass(MainActivity.this);
         isNetworkConnected();
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -197,12 +176,7 @@ public class MainActivity extends RuntimePermissionActivity
         mHandler = new Handler();
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-        fab = findViewById(R.id.fab);
-        navHeader = navigationView.getHeaderView(0);
-        textName = navHeader.findViewById(R.id.userName);
-        textEmail = navHeader.findViewById(R.id.userEmail);
         //profile = navHeader.findViewById(R.id.imageView);
-        fab.setOnClickListener(this);
         if(!MemberSession.getInstance(this).isLoggedIn())
         {
             startActivity(new Intent(this, LoginActivity.class));
@@ -274,10 +248,7 @@ public class MainActivity extends RuntimePermissionActivity
         }
     }
 
-    private void selectNavMenu()
-    {
-        navigationView.getMenu().getItem(navItemIndex).setChecked(true);
-    }
+
     private void setUpNavigationView()
     {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -359,14 +330,6 @@ public class MainActivity extends RuntimePermissionActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
 
-//        if (navItemIndex == 4)
-//        {
-//            navigationView.getMenu().getItem(6).setActionView(R.layout.menu_dot_1);
-//        }
-//        if (navItemIndex == 1)
-//        {
-//            getMenuInflater().inflate(R.menu.edit_profile,menu);
-//        }
         return true;
     }
 
@@ -375,11 +338,12 @@ public class MainActivity extends RuntimePermissionActivity
         int id = item.getItemId();
         switch (id) {
             case R.id.action_logout:
-                //androidLogout();
-//                MemberSession.getInstance(MainActivity.this).logout();
-//                finish();
-
-                alertForLogout();
+                //alertForLogout();
+                customDialogClass.show();
+                break;
+            case R.id.action_other_subdomain:
+                SubdomainSession.getInstance(this).logout();
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -387,12 +351,7 @@ public class MainActivity extends RuntimePermissionActivity
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
-            case R.id.fab:
-                Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-        }
+
     }
 
     public void setFragment(Fragment targetFragment)
@@ -472,59 +431,6 @@ public class MainActivity extends RuntimePermissionActivity
         return (networkInfo != null && networkInfo.isConnected());
     }
 
-    private void androidLogout()
-    {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.LOGOUT_URL,
-                new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try
-                {
-                    JSONObject jsonObject = new JSONObject(response);
-
-                    if (jsonObject.getString("success").equals("1"))
-                    {
-                        Toast.makeText(MainActivity.this,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
-                        if (checkNetworkConnection())
-                        {
-                            MemberSession.getInstance(MainActivity.this).logout();
-                            finish();
-                        }
-                        else
-                            Toast.makeText(MainActivity.this,"Please check your network connection",Toast.LENGTH_SHORT).show();
-                    }
-
-                    else
-                        Toast.makeText(MainActivity.this,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
-
-
-                }
-                catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-
-            }
-        })
-        {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("userid",session.getUserID());
-                //params.put("loginstatus",loginStatus);
-                return params;
-            }
-        };
-
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-    }
-
     public boolean isNetworkConnected() {
         ConnectivityManager cm =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -543,6 +449,43 @@ public class MainActivity extends RuntimePermissionActivity
         super.onResume();
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(mRegistrationBroadcastReceiver, filter);
+    }
+
+    private class CustomDialogClass extends Dialog implements View.OnClickListener {
+
+        public CustomDialogClass(Context context) {
+            super(context);
+        }
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            setContentView(R.layout.custom_dialog);
+            yes = findViewById(R.id.btn_yes);
+            no = findViewById(R.id.btn_no);
+            yes.setOnClickListener(this);
+            no.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.btn_yes:
+                    MemberSession.getInstance(MainActivity.this).logout();
+                    SubdomainSession.getInstance(MainActivity.this).clearSession();
+                    databaseHelper.deleteAll();
+                    finish();
+                    break;
+                case R.id.btn_no:
+                    dismiss();
+                    break;
+                default:
+                    break;
+            }
+            dismiss();
+        }
     }
 
 

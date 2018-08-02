@@ -12,7 +12,7 @@
 
         <LinearLayout
             android:background="@drawable/button_border"
-            android:weightSum="10"
+            android:weightSum="9"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -106,10 +106,12 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent" />
             <TextView
+                android:visibility="gone"
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/colorPrimary"/>
             <TextView
+                android:visibility="gone"
                 android:id="@+id/bankName"
                 android:textSize="18dp"
                 android:padding="03sp"

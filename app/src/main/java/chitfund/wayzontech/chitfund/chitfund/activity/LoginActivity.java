@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,22 +30,26 @@ import java.util.Map;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
-import chitfund.wayzontech.chitfund.chitfund.model.AgentLogin;
-import chitfund.wayzontech.chitfund.chitfund.model.MemberLogin;
+import chitfund.wayzontech.chitfund.chitfund.model.LoginUser;
+import chitfund.wayzontech.chitfund.chitfund.model.UserProfile;
 import chitfund.wayzontech.chitfund.chitfund.receiverNservices.ConnectivityReceiver;
 import chitfund.wayzontech.chitfund.chitfund.session.AgentSession;
 import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
+import chitfund.wayzontech.chitfund.chitfund.session.SubdomainSession;
+import chitfund.wayzontech.chitfund.chitfund.sqliteHelper.DatabaseHelper;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
     private Button button_register,button_login;
     private EditText editText_username,editText_password;
-    private String userid, strUsername, strPassword, member_id, strId, strName, strSubDomain, strMemberName;
+    private String userid, strUsername, strPassword, member_id, strId, strName,
+            strSubDomain, strMemberName, strRoleId, username;
     private ProgressDialog progressDialog;
     private MemberSession memberSession;
     private AgentSession agentSession;
     private BroadcastReceiver networkReceiver;
+    private DatabaseHelper databaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +60,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         initLogin();
         //checkLoginFromServerSide();
-
+        databaseHelper = new DatabaseHelper(this);
         //checkConnection();
         isNetworkConnected();
 
@@ -77,6 +82,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         };
 
+        if (SubdomainSession.getInstance(LoginActivity.this).isLoggedIn()) {
+            finish();
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
+
+        if (MemberSession.getInstance(LoginActivity.this).isLoggedIn()) {
+            finish();
+            startActivity(new Intent(LoginActivity.this, SubdomainActivity.class));
+        }
+
 
     }
 
@@ -93,18 +108,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         button_register.setOnClickListener(this);
         button_login.setOnClickListener(this);
 
-        // Check either login or not
-        if(MemberSession.getInstance(this).isLoggedIn())
-        {
-            finish();
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            return;
-        }
-        if (AgentSession.getInstance(this).isLoggedIn()) {
-            finish();
-            startActivity(new Intent(LoginActivity.this, AgentActivity.class));
-            return;
-        }
     }
 
     @Override
@@ -143,43 +146,72 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
+
                             if (jsonObject.getString("success").equals("1"))
                             {
-                                if (jsonObject.getString("role_id").equals("3"))
-                                {
-                                    strId = jsonObject.getString("user_id");
-                                    strName = jsonObject.getString("uname");
-                                    strSubDomain = jsonObject.getString("subdomain");
-                                    strMemberName = jsonObject.getString("name");
-                                    MemberLogin memberLogin = new MemberLogin();
-                                    memberLogin.setStrName(strMemberName);
-                                    memberLogin.setId(strId);
-                                    memberLogin.setUsername(strName);
-                                    memberLogin.setPassword(strPassword);
-                                    memberLogin.setSubdomain(strSubDomain);
+//                                if (jsonObject.getString("role_id").equals("3"))
+//                                {
+//                                    strId = jsonObject.getString("user_id");
+//                                    strName = jsonObject.getString("uname");
+//                                    strSubDomain = jsonObject.getString("subdomain");
+//                                    strMemberName = jsonObject.getString("name");
+//                                    MemberLogin memberLogin = new MemberLogin();
+//                                    memberLogin.setStrName(strMemberName);
+//                                    memberLogin.setId(strId);
+//                                    memberLogin.setUsername(strName);
+//                                    memberLogin.setPassword(strPassword);
+//                                    memberLogin.setSubdomain(strSubDomain);
+//
+//                                    memberSession.userLogin(memberLogin);
+//                                    URLs urLs = new URLs();
+//                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                                    finish();
+//                                }
+//
+//                                if (jsonObject.getString("role_id").equals("4"))
+//                                {
+//                                    strId = jsonObject.getString("user_id");
+//                                    strName = jsonObject.getString("uname");
+//                                    strSubDomain = jsonObject.getString("subdomain");
+//                                    strMemberName = jsonObject.getString("name");
+//                                    AgentLogin agentLogin = new AgentLogin();
+//                                    agentLogin.setStrName(strMemberName);
+//                                    agentLogin.setId(strId);
+//                                    agentLogin.setUsername(strName);
+//                                    agentLogin.setPassword(strPassword);
+//                                    agentLogin.setSubdomain(strSubDomain);
+//                                    agentSession.userLogin(agentLogin);
+//                                    startActivity(new Intent(LoginActivity.this, AgentActivity.class));
+//                                    finish();
+//                                }
 
-                                    memberSession.userLogin(memberLogin);
-                                    URLs urLs = new URLs();
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                    finish();
+                                JSONArray jsonArray = jsonObject.getJSONArray("Subdomain");
+                                for (int i = 0; i < jsonArray.length(); i++)
+                                {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+                                    strMemberName = object.getString("name");
+                                    strId = object.getString("user_id");
+                                    strRoleId = object.getString("role_id");
+                                    strSubDomain = object.getString("SundomainName");
+                                    username = object.getString("username");
+
+                                    UserProfile userProfile = new UserProfile();
+                                    userProfile.setSundomainName(strSubDomain);
+                                    userProfile.setRole_id(strRoleId);
+                                    userProfile.setUser_id(strId);
+                                    userProfile.setUsername(username);
+                                    userProfile.setName(strMemberName);
+                                    databaseHelper.saveInformation(userProfile);
+
                                 }
 
-                                if (jsonObject.getString("role_id").equals("4"))
-                                {
-                                    strId = jsonObject.getString("user_id");
-                                    strName = jsonObject.getString("uname");
-                                    strSubDomain = jsonObject.getString("subdomain");
-                                    strMemberName = jsonObject.getString("name");
-                                    AgentLogin agentLogin = new AgentLogin();
-                                    agentLogin.setStrName(strMemberName);
-                                    agentLogin.setId(strId);
-                                    agentLogin.setUsername(strName);
-                                    agentLogin.setPassword(strPassword);
-                                    agentLogin.setSubdomain(strSubDomain);
-                                    agentSession.userLogin(agentLogin);
-                                    startActivity(new Intent(LoginActivity.this, AgentActivity.class));
-                                    finish();
-                                }
+                                LoginUser loginUser = new LoginUser();
+                                loginUser.setUsername(strUsername);
+                                loginUser.setPassword(strPassword);
+                                memberSession.userLogin(loginUser);
+
+                                startActivity(new Intent(LoginActivity.this, SubdomainActivity.class));
+                                finish();
 
                             }
 
@@ -336,5 +368,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //        }
 //        return super.onOptionsItemSelected(item);
 //    }
+
 
 }

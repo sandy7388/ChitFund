@@ -42,13 +42,14 @@ import java.util.Map;
 import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.AgentURL;
 import chitfund.wayzontech.chitfund.chitfund.session.AgentSession;
+import chitfund.wayzontech.chitfund.chitfund.session.SubdomainSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 public class AgentActivity extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener, View.OnClickListener,
         RadioGroup.OnCheckedChangeListener {
     CustomDialogClass customDialogClass;
-    private AgentSession agentSession;
+    private static final String AGENT_REGULAR_COLLECTION_URL = "Registerweb/regular_collection";
     private Date date = new Date();
     private Spinner spinnerGroupName, spinnerMemberName, spinnerBankName;
     private String strGroupNameJSON, strGroupName, strGroupIdJSON,
@@ -72,7 +73,12 @@ public class AgentActivity extends AppCompatActivity
     private int date_Year, date_Month, date_Day;
     private Calendar calendar;
     private boolean isFirst, isSecond, isThird;
-
+    private static final String AGENT_ADVANCE_COLLECTION_URL = "Registerweb/advance_collection";
+    private static final String AGENT_GROUP_URL = "Registerweb/group_name_info";
+    private static final String AGENT_BANK_DETAILS_URL = "Registerweb/get_bank_details";
+    private static final String AGENT_MEMBER_URL = "Registerweb/group_member_info";
+    private static final String AGENT_DAILY_COLLECTION_URL = "Registerweb/daily_collection";
+    private SubdomainSession session;
 
     private EditText editTextInstallmentNo, editTextMemberCommission, editTextEntryNo,
             editTextRemailingCollection, editTextTotalRemailingCollection,
@@ -117,7 +123,7 @@ public class AgentActivity extends AppCompatActivity
         editTextAmount = findViewById(R.id.editTextAmountAgent);
         linearLayout = findViewById(R.id.linearLayoutAgent);
         linearLayoutBankName = findViewById(R.id.linearLayoutBankNameAgent);
-        agentSession = new AgentSession(this);
+        session = new SubdomainSession(this);
         spinnerGroupName.setOnItemSelectedListener(this);
         spinnerMemberName.setOnItemSelectedListener(this);
         spinnerBankName.setOnItemSelectedListener(this);
@@ -209,7 +215,7 @@ public class AgentActivity extends AppCompatActivity
     void getGroupName() {
 
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_GROUP_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://" + session.getSubDomain() + AgentURL.AGENT_BASE_URL + AGENT_GROUP_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -251,7 +257,7 @@ public class AgentActivity extends AppCompatActivity
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> param = new HashMap<>();
-                param.put("agent_id", agentSession.getUserID());
+                param.put("agent_id", session.getUserID());
                 param.put("role_id", strRoleId);
                 return param;
             }
@@ -265,7 +271,7 @@ public class AgentActivity extends AppCompatActivity
     void getBankName() {
 
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, AgentURL.AGENT_BANK_DETAILS_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://" + session.getSubDomain() + AgentURL.AGENT_BASE_URL + AGENT_BANK_DETAILS_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -408,7 +414,7 @@ public class AgentActivity extends AppCompatActivity
         progressDialog.show();
         progressDialog.setCancelable(true);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_MEMBER_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://" + session.getSubDomain() + AgentURL.AGENT_BASE_URL + AGENT_MEMBER_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -448,7 +454,7 @@ public class AgentActivity extends AppCompatActivity
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<>();
-                map.put("agent_id", agentSession.getUserID());
+                map.put("agent_id", session.getUserID());
                 map.put("role_id", strRoleId);
                 map.put("group_id", strGroupId);
                 return map;
@@ -508,7 +514,7 @@ public class AgentActivity extends AppCompatActivity
         progressDialog.show();
         progressDialog.setCancelable(true);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_ADVANCE_COLLECTION_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://" + session.getSubDomain() + AgentURL.AGENT_BASE_URL + AGENT_ADVANCE_COLLECTION_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -560,7 +566,7 @@ public class AgentActivity extends AppCompatActivity
             protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<>();
                 if (radioButtonCash.isChecked()) {
-                    map.put("agent_id", agentSession.getUserID());
+                    map.put("agent_id", session.getUserID());
                     map.put("role_id", strRoleId);
                     map.put("group_id", strGroupId);
                     map.put("amount", strAmount);
@@ -571,7 +577,7 @@ public class AgentActivity extends AppCompatActivity
                     //map.put("cheque_id", strChequeNumber);
                     map.put("member_id", strMemberId);
                 } else {
-                    map.put("agent_id", agentSession.getUserID());
+                    map.put("agent_id", session.getUserID());
                     map.put("role_id", strRoleId);
                     map.put("group_id", strGroupId);
                     map.put("amount", strAmount);
@@ -614,7 +620,7 @@ public class AgentActivity extends AppCompatActivity
         progressDialog.show();
         progressDialog.setCancelable(true);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_REGULAR_COLLECTION_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://" + session.getSubDomain() + AgentURL.AGENT_BASE_URL + AGENT_REGULAR_COLLECTION_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -665,7 +671,7 @@ public class AgentActivity extends AppCompatActivity
             protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<>();
                 if (radioButtonCash.isChecked()) {
-                    map.put("agent_id", agentSession.getUserID());
+                    map.put("agent_id", session.getUserID());
                     map.put("role_id", strRoleId);
                     map.put("group_id", strGroupId);
                     map.put("amount", strAmount);
@@ -676,7 +682,7 @@ public class AgentActivity extends AppCompatActivity
                     //map.put("cheque_id", strChequeNumber);
                     map.put("member_id", strMemberId);
                 } else {
-                    map.put("agent_id", agentSession.getUserID());
+                    map.put("agent_id", session.getUserID());
                     map.put("role_id", strRoleId);
                     map.put("group_id", strGroupId);
                     map.put("amount", strAmount);
@@ -713,7 +719,7 @@ public class AgentActivity extends AppCompatActivity
         progressDialog.setMessage("Please wait.....!");
         progressDialog.show();
         progressDialog.setCancelable(true);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, AgentURL.AGENT_DAILY_COLLECTION_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://" + session.getSubDomain() + AgentURL.AGENT_BASE_URL + AGENT_DAILY_COLLECTION_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -767,7 +773,7 @@ public class AgentActivity extends AppCompatActivity
             protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<>();
 
-                map.put("agent_id", agentSession.getUserID());
+                map.put("agent_id", session.getUserID());
                 map.put("role_id", strRoleId);
                 map.put("group_id", strGroupId);
                 map.put("amount", strAmount);
@@ -892,7 +898,7 @@ public class AgentActivity extends AppCompatActivity
         alertDialog.show();
     }
 
-    public class CustomDialogClass extends Dialog implements View.OnClickListener {
+    private class CustomDialogClass extends Dialog implements View.OnClickListener {
 
         public CustomDialogClass(Context context) {
             super(context);

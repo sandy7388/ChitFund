@@ -32,7 +32,7 @@ import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.adapter.JoinedGroupAdapter;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
 import chitfund.wayzontech.chitfund.chitfund.model.JoinedGroup;
-import chitfund.wayzontech.chitfund.chitfund.session.MemberSession;
+import chitfund.wayzontech.chitfund.chitfund.session.SubdomainSession;
 import chitfund.wayzontech.chitfund.chitfund.volley.VolleySingleton;
 
 
@@ -40,7 +40,7 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
 
     private RecyclerView recyclerView;
     private String strRemainingDays,inputDateString;
-    private MemberSession memberSession;
+    public static final String JOINED_GROUP = "groupinfo/userwisegroupList";
     private SwipeRefreshLayout swipeRefreshLayout;
     private ArrayList<JoinedGroup> joinedGroupArrayList;
     private RecyclerView.LayoutManager layoutManager;
@@ -48,6 +48,7 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
     private String grpId,grpName,auctionDate,auctionTime,grpAmount;
     private DateFormat date,time;
     private Date d;
+    private SubdomainSession session;
     public JoinedGroupFragment() {
         // Required empty public constructor
     }
@@ -69,7 +70,7 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
     {
         swipeRefreshLayout = view.findViewById(R.id.swipeToRefreshJoinedGroup);
         recyclerView = view.findViewById(R.id.recyclerViewJoinedGroup);
-        memberSession = new MemberSession(getActivity());
+        session = new SubdomainSession(getActivity());
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -106,7 +107,7 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
     {
         joinedGroupArrayList=new ArrayList<JoinedGroup>();
         //swipeRefreshLayout.setRefreshing(true);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.JOINED_GROUP,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://" + session.getSubDomain() + URLs.BASE_URL + JOINED_GROUP,
                 new Response.Listener<String>() {
                     @SuppressLint("SimpleDateFormat")
                     @Override
@@ -177,7 +178,7 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("userid", memberSession.getUserID());
+                params.put("userid", session.getUserID());
                 return params;
             }
         };
