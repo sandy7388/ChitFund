@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
@@ -45,7 +46,7 @@ public class MainActivity extends RuntimePermissionActivity
     private static final int REQUEST_PERMISSIONS = 20;
     private static final String TAG = MainActivity.class.getSimpleName();
     private BroadcastReceiver mRegistrationBroadcastReceiver;
-    private MemberSession session;
+    private SubdomainSession session;
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private Toolbar mToolbar;
@@ -61,6 +62,8 @@ public class MainActivity extends RuntimePermissionActivity
     private Button yes, no;
     private Handler mHandler;
     private DatabaseHelper databaseHelper;
+    private TextView textViewDomainName;
+    //private SubdomainSession session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,17 +175,20 @@ public class MainActivity extends RuntimePermissionActivity
     {
         mToolbar = findViewById(R.id.mainActivityToolbar1);
         setSupportActionBar(mToolbar);
-        session=new MemberSession(this);
+        session = new SubdomainSession(this);
         mHandler = new Handler();
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-        //profile = navHeader.findViewById(R.id.imageView);
+        View header = navigationView.getHeaderView(0);
+
+        textViewDomainName = header.findViewById(R.id.textViewDomainName);
         if(!MemberSession.getInstance(this).isLoggedIn())
         {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
 
+        textViewDomainName.setText(session.getSubDomain() + ".onlinechitfund.com");
         setUpNavigationView();
     }
 

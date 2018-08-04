@@ -66,9 +66,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E dd/MM/yyyy");
         date.setText(simpleDateFormat.format(calendar.getTime()));
-        getActivity().setTitle("Home");
         session = new SubdomainSession(getContext());
         name.setText(session.getName());
+        getActivity().setTitle(session.getSubDomain() + ".onlinechitfund.com");
         return view;
     }
 

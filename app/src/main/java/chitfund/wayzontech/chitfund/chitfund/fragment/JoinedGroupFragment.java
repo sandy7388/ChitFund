@@ -45,9 +45,10 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
     private ArrayList<JoinedGroup> joinedGroupArrayList;
     private RecyclerView.LayoutManager layoutManager;
     private JoinedGroupAdapter joinedGroupAdapter;
-    private String grpId,grpName,auctionDate,auctionTime,grpAmount;
+    private String grpId, grpName, auctionDate, auctionType, grpAmount, strAuctionDate, strDay;
     private DateFormat date,time;
-    private Date d;
+    private Date d, date1;
+    private JoinedGroup joinedGroup;
     private SubdomainSession session;
     public JoinedGroupFragment() {
         // Required empty public constructor
@@ -120,35 +121,122 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
                                 JSONArray jsonArray = jsonObject.getJSONArray("groupinfo");
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
-                                    grpId = object.getString("group_id");
-                                    grpName = object.getString("group_name");
-                                    auctionDate = object.getString("auction_date");
-                                    grpAmount = object.getString("amount");
-                                    //auctionTime = object.getString("auction_time");
+                                    if (object.getString("auction_type").equals("Monthly")) {
+                                        auctionType = object.getString("auction_type");
+                                        grpId = object.getString("group_id");
+                                        grpName = object.getString("group_name");
+                                        auctionDate = object.getString("auction_date");
+                                        grpAmount = object.getString("amount");
+                                        //auctionTime = object.getString("auction_time");
 
-                                    JoinedGroup joinedGroup = new JoinedGroup();
 
-                                    joinedGroup.setGroup_id(grpId);
-                                    joinedGroup.setGroup_name(grpName);
+                                        try {
+                                            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
+                                            d = dateFormat.parse(auctionDate);
+                                            date = new SimpleDateFormat("dd-MM-yyyy");
+                                            time = new SimpleDateFormat("hh:mm:ss a");
+//                                            System.out.println("Date: " + date.format(d));
+//                                            System.out.println("Time: " + time.format(d));
+                                            Calendar myCal = Calendar.getInstance();
+                                            myCal.setTime(d);
+                                            myCal.add(Calendar.MONTH, +1);
+                                            d = myCal.getTime();
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
 
-                                    joinedGroup.setAmount(grpAmount);
-                                    joinedGroup.setTime(auctionDate);
+                                        joinedGroup = new JoinedGroup();
 
-                                    try {
-                                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                                        d = dateFormat.parse(auctionDate);
-                                        date = new SimpleDateFormat("dd-MMM-yyyy");
-                                        time = new SimpleDateFormat("hh:mm:ss");
-                                        System.out.println("Date: " + date.format(d));
-                                        System.out.println("Time: " + time.format(d));
-                                        Calendar myCal = Calendar.getInstance();
-                                        myCal.setTime(d);
-                                        myCal.add(Calendar.MONTH, +1);
-                                        d = myCal.getTime();
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
+                                        joinedGroup.setGroup_id(grpId);
+                                        joinedGroup.setGroup_name(grpName);
+                                        joinedGroup.setType(auctionType);
+                                        joinedGroup.setAmount(grpAmount);
+                                        joinedGroup.setTime(auctionDate);
+                                        joinedGroup.setNext_date(date.format(d));
+
                                     }
-                                    joinedGroup.setNext_date(date.format(d));
+                                    if (object.getString("auction_type").equals("Weekly")) {
+                                        auctionType = object.getString("auction_type");
+                                        grpId = object.getString("group_id");
+                                        grpName = object.getString("group_name");
+                                        auctionDate = object.getString("auction_date");
+                                        grpAmount = object.getString("amount");
+                                        //auctionTime = object.getString("auction_time");
+                                        try {
+                                            Date date1 = new Date();
+                                            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                                            strAuctionDate = formatter.format(date1).concat(" " + auctionDate);
+                                            System.out.println("Date Format with MM/dd/yyyy : " + strAuctionDate);
+
+
+                                            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd EEEE hh:mm:ss a");
+
+                                            DateFormat dateFormat1 = new SimpleDateFormat("EEEE hh:mm:ss a");
+                                            dateFormat1.parse(strAuctionDate);
+                                            d = dateFormat.parse(strAuctionDate);
+                                            date = new SimpleDateFormat("dd-MM-yyyy");
+                                            time = new SimpleDateFormat("hh:mm:ss");
+                                            System.out.println("strDay: " + date.format(dateFormat1.parse(strAuctionDate)));
+                                            System.out.println("Time: " + time.format(d));
+
+                                            Calendar myCal = Calendar.getInstance();
+                                            myCal.setTime(d);
+                                            myCal.add(Calendar.DAY_OF_WEEK, +7);
+                                            d = myCal.getTime();
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        joinedGroup = new JoinedGroup();
+
+                                        joinedGroup.setGroup_id(grpId);
+                                        joinedGroup.setGroup_name(grpName);
+                                        joinedGroup.setType(auctionType);
+                                        joinedGroup.setAmount(grpAmount);
+                                        joinedGroup.setTime(strAuctionDate);
+                                        joinedGroup.setNext_date(auctionDate);
+                                    }
+
+                                    if (object.getString("auction_type").equals("Daily")) {
+                                        auctionType = object.getString("auction_type");
+                                        grpId = object.getString("group_id");
+                                        grpName = object.getString("group_name");
+                                        auctionDate = object.getString("auction_date");
+                                        grpAmount = object.getString("amount");
+                                        //auctionTime = object.getString("auction_time");
+
+                                        try {
+
+                                            Date date1 = new Date();
+                                            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                                            strAuctionDate = formatter.format(date1).concat(" " + auctionDate);
+                                            System.out.println("Date Format with MM/dd/yyyy : " + strAuctionDate);
+
+                                            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
+                                            d = dateFormat.parse(strAuctionDate);
+                                            date = new SimpleDateFormat("dd-MM-yyyy");
+                                            time = new SimpleDateFormat("hh:mm:ss");
+                                            System.out.println("Date: " + date.format(d));
+                                            System.out.println("Time: " + time.format(d));
+                                            Calendar myCal = Calendar.getInstance();
+                                            myCal.setTime(d);
+                                            myCal.add(Calendar.HOUR_OF_DAY, +24);
+                                            d = myCal.getTime();
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        joinedGroup = new JoinedGroup();
+
+                                        joinedGroup.setGroup_id(grpId);
+                                        joinedGroup.setGroup_name(grpName);
+                                        joinedGroup.setType(auctionType);
+                                        joinedGroup.setAmount(grpAmount);
+                                        joinedGroup.setTime(strAuctionDate);
+                                        joinedGroup.setNext_date(date.format(d));
+
+                                    }
+
                                     joinedGroupArrayList.add(joinedGroup);
                                     swipeRefreshLayout.setRefreshing(false);
                                     joinedGroupAdapter.notifyDataSetChanged();
