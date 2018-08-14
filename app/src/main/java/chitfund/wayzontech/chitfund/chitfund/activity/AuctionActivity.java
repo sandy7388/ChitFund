@@ -2,12 +2,17 @@ package chitfund.wayzontech.chitfund.chitfund.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.concurrent.TimeUnit;
 
 import chitfund.wayzontech.chitfund.chitfund.R;
 import chitfund.wayzontech.chitfund.chitfund.httpHelper.URLs;
@@ -94,5 +99,55 @@ public class AuctionActivity extends AppCompatActivity implements View.OnClickLi
 //            handler.postDelayed(timedTask, 15000);
 //        }
 //    };
+
+//    private void timer()
+//    {
+//        new CountDownTimer(1800000, 1000) { // adjust the milli seconds here
+//
+//            public void onTick(long millisUntilFinished) {
+//                textView.setEnabled(true);
+//                //_tv.setText(""+String.format("%d min, %d sec",
+//                long minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
+//                millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes);
+//
+//                long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
+//                //textview.setText(minutes + "m" + ":" + seconds + "s"); //You can compute the millisUntilFinished on hours/minutes/seconds
+//            }
+//
+//            public void onFinish() {
+//                //_tv.setText("done!");
+//                textview.setText("Auction Completed");
+//            }
+//        }.start();
+//    }
+
+    long timer = 1800000;
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        final MenuItem counter = menu.findItem(R.id.counter);
+        new CountDownTimer(timer, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                long millis = millisUntilFinished;
+                String hms = (TimeUnit.MILLISECONDS.toHours(millis)) + ":" + (TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis))) + ":" + (TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+
+                counter.setTitle(hms);
+                timer = millis;
+
+            }
+
+            public void onFinish() {
+                counter.setTitle("done!");
+            }
+        }.start();
+
+        return true;
+
+    }
+
+
 
 }

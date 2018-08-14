@@ -38,12 +38,14 @@ public class JoinedGroupAdapter extends RecyclerView.Adapter<JoinedGroupAdapter.
     private Calendar end_calendar = Calendar.getInstance();
     private Calendar end_calendar1 = Calendar.getInstance();
     private Calendar end_calendar2 = Calendar.getInstance();
-    private Date d, d1, d2;
+    private Date d, d1, d2, currentDate;
     private DateFormat date1, time1, date2, time2, date3, time3;
     private Context context;
+    private String currentStrDate;
     private ArrayList<JoinedGroup> joinedGroupArrayList;
     private String strRemainingDays, inputDateString;
     private TextView textView;
+    private long days, hours, minutes, seconds;
 
     //private int strRemainingDays;
     public JoinedGroupAdapter(Context context, ArrayList<JoinedGroup> joinedGroupArrayList) {
@@ -56,18 +58,16 @@ public class JoinedGroupAdapter extends RecyclerView.Adapter<JoinedGroupAdapter.
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.adapter_new_joined_group, parent, false);
 
-//        inputDateString = "29/03/2018";
-//        Calendar calCurr = Calendar.getInstance();
-//        Calendar day = Calendar.getInstance();
-//        try {
-//            day.setTime(new SimpleDateFormat("dd/MM/yyyy").parse(inputDateString));
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        if(day.after(calCurr)){
-//            strRemainingDays = String.valueOf((day.get(Calendar.DAY_OF_MONTH) -(calCurr.get(Calendar.DAY_OF_MONTH))));
-//            System.out.println("Days Left: " + strRemainingDays );
-//        }
+        currentDate = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
+        currentStrDate = simpleDateFormat.format(currentDate);
+        try {
+            currentDate = simpleDateFormat.parse(currentStrDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        //textView.setEnabled(false);
         return new JoinedGroupHolder(view);
     }
 
@@ -76,51 +76,96 @@ public class JoinedGroupAdapter extends RecyclerView.Adapter<JoinedGroupAdapter.
         JoinedGroup joinedGroup = joinedGroupArrayList.get(position);
         holder.textViewId.setText(joinedGroup.getGroup_id());
         holder.textViewName.setText(joinedGroup.getGroup_name());
-        holder.textViewNextDate.setText(joinedGroup.getNext_date());
+
+        Date date = null;
+        boolean checkformat;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE hh:mm:ss a");
+            dateFormat.setLenient(false);
+            date = dateFormat.parse(joinedGroup.getNext_date());
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        if (joinedGroup.getType().equals("Weekly")) {
+
+        }
+        if (date == null) {
+            checkformat = false;
+
+            if (joinedGroup.getType().equals("Weekly")) {
+
+                Date der = new Date();
+                SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd EEEE hh:mm:ss a");
+                date2 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
+                String wqer = joinedGroup.getNext_date();
+                try {
+                    der = simpleDateFormat1.parse(wqer);
+
+                    String sdd = date2.format(der);
+                    holder.textViewNextDate.setText(sdd);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+            } else {
+                holder.textViewNextDate.setText(joinedGroup.getNext_date());
+            }
+        } else {
+            checkformat = true;
+
+            holder.textViewNextDate.setText(joinedGroup.getNext_date());
+            //holder.textViewNextDate.setText("Something");
+            holder.textViewRemainingDays.setText("Auction will start soon");
+
+        }
+
+        System.out.println(checkformat);
+
+        //holder.textViewNextDate.setText(joinedGroup.getNext_date());
         holder.textViewAmount.setText(joinedGroup.getAmount());
         holder.groupAuctionType.setText(joinedGroup.getType());
         //blink(position);
+        textView.setEnabled(false);
         try {
 
             if (joinedGroup.getType().equals("Monthly")) {
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
-                d = dateFormat.parse(joinedGroup.getTime());
+                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
+                d = dateFormat.parse(joinedGroup.getNext_date());
                 date1 = new SimpleDateFormat("dd-MM-yyyy");
                 time1 = new SimpleDateFormat("hh:mm:ss a");
+
                 end_calendar = Calendar.getInstance();
                 end_calendar.setTime(d);
-                end_calendar.add(Calendar.MONTH, +1);
                 d = end_calendar.getTime();
                 countdown(holder.textViewRemainingDays, position);
-                //blink(position);
+
             }
 
             if (joinedGroup.getType().equals("Daily")) {
-                DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
-                d2 = dateFormat2.parse(joinedGroup.getTime());
+                DateFormat dateFormat2 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
+                d2 = dateFormat2.parse(joinedGroup.getNext_date());
                 date2 = new SimpleDateFormat("dd-MM-yyyy");
                 time2 = new SimpleDateFormat("hh:mm:ss a");
                 end_calendar1 = Calendar.getInstance();
                 end_calendar1.setTime(d2);
-                end_calendar1.add(Calendar.HOUR_OF_DAY, +24);
                 d2 = end_calendar1.getTime();
                 countdown1(holder.textViewRemainingDays, position);
-                //blink(position);
             }
 
             if (joinedGroup.getType().equals("Weekly")) {
+
                 DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd EEEE hh:mm:ss a");
-                d1 = dateFormat1.parse(joinedGroup.getTime());
-                date3 = new SimpleDateFormat("dd-MM-yyyy");
+
+                d1 = dateFormat1.parse(joinedGroup.getNext_date());
+                date3 = new SimpleDateFormat("EEEE hh:mm:ss a");
                 time3 = new SimpleDateFormat("hh:mm:ss a");
                 end_calendar2 = Calendar.getInstance();
                 end_calendar2.setTime(d1);
-                end_calendar2.add(Calendar.DAY_OF_WEEK, +7);
                 d1 = end_calendar2.getTime();
                 countdown2(holder.textViewRemainingDays, position);
-                //blink(position);
-            }
 
+            }
 
 
         } catch (ParseException e) {
@@ -154,16 +199,17 @@ public class JoinedGroupAdapter extends RecyclerView.Adapter<JoinedGroupAdapter.
         CountDownTimer cdt = new CountDownTimer(total_millis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                long days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished);
+                //textView.setEnabled(true);
+                days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished);
                 millisUntilFinished -= TimeUnit.DAYS.toMillis(days);
 
-                long hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished);
+                hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished);
                 millisUntilFinished -= TimeUnit.HOURS.toMillis(hours);
 
-                long minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
+                minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
                 millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes);
 
-                long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
+                seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
 
                 textview.setText(days + "d" + ":" + hours + "h" + ":" + minutes + "m" + ":" + seconds + "s"); //You can compute the millisUntilFinished on hours/minutes/seconds
 
@@ -171,9 +217,29 @@ public class JoinedGroupAdapter extends RecyclerView.Adapter<JoinedGroupAdapter.
 
             @Override
             public void onFinish() {
-                //textView.setClickable(false);
+                textView.setEnabled(true);
                 textview.setText("Auction Started");
-                //startAuction(position);
+                startAuction(position);
+                new CountDownTimer(1800000, 1000) { // adjust the milli seconds here
+
+                    public void onTick(long millisUntilFinished) {
+                        textView.setEnabled(true);
+                        //_tv.setText(""+String.format("%d min, %d sec",
+                        long minutesSecond = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
+                        millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes);
+
+                        long secondsSecond = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
+                        textview.setText(minutesSecond + "m" + ":" + secondsSecond + "s"); //You can compute the millisUntilFinished on hours/minutes/seconds
+                    }
+
+                    public void onFinish() {
+                        //_tv.setText("done!");
+                        textView.setEnabled(false);
+                        //textview.setText("Auction Completed");
+                        textview.setText(days + "d" + ":" + hours + "h" + ":" + minutes + "m" + ":" + seconds + "s");
+
+                    }
+                }.start();
 
             }
         };
@@ -207,9 +273,29 @@ public class JoinedGroupAdapter extends RecyclerView.Adapter<JoinedGroupAdapter.
 
             @Override
             public void onFinish() {
-                //textview.setEnabled(true);
-                //textview.setText("Auction Started");
-                //startAuction(position);
+                textView.setEnabled(true);
+                textview.setText("Auction Started");
+                startAuction(position);
+                new CountDownTimer(1800000, 1000) { // adjust the milli seconds here
+
+                    public void onTick(long millisUntilFinished) {
+                        textView.setEnabled(true);
+                        //_tv.setText(""+String.format("%d min, %d sec",
+                        long minutesSecond = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
+                        millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes);
+
+                        long secondsSecond = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
+                        textview.setText(minutesSecond + "m" + ":" + secondsSecond + "s"); //You can compute the millisUntilFinished on hours/minutes/seconds
+                    }
+
+                    public void onFinish() {
+                        //_tv.setText("done!");
+                        textView.setEnabled(false);
+                        //textview.setText("Auction Completed");
+                        textview.setText(days + "d" + ":" + hours + "h" + ":" + minutes + "m" + ":" + seconds + "s");
+
+                    }
+                }.start();
 
             }
         };
@@ -243,9 +329,29 @@ public class JoinedGroupAdapter extends RecyclerView.Adapter<JoinedGroupAdapter.
 
             @Override
             public void onFinish() {
-                //textview.setEnabled(true);
-                //textview.setText("Auction Started");
-                //startAuction(position);
+                textView.setEnabled(true);
+                textview.setText("Auction Started");
+                startAuction(position);
+                new CountDownTimer(1800000, 1000) { // adjust the milli seconds here
+
+                    public void onTick(long millisUntilFinished) {
+                        textView.setEnabled(true);
+                        //_tv.setText(""+String.format("%d min, %d sec",
+                        long minutesSecond = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
+                        millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes);
+
+                        long secondsSecond = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
+                        textview.setText(minutesSecond + "m" + ":" + secondsSecond + "s"); //You can compute the millisUntilFinished on hours/minutes/seconds
+                    }
+
+                    public void onFinish() {
+                        //_tv.setText("done!");
+                        textView.setEnabled(false);
+                        //textview.setText("Auction Completed");
+                        textview.setText(days + "d" + ":" + hours + "h" + ":" + minutes + "m" + ":" + seconds + "s");
+
+                    }
+                }.start();
 
             }
         };
@@ -337,7 +443,7 @@ public class JoinedGroupAdapter extends RecyclerView.Adapter<JoinedGroupAdapter.
             textViewRemainingDays = itemView.findViewById(R.id.remainingDays);
             textView = itemView.findViewById(R.id.start_auction);
             groupAuctionType = itemView.findViewById(R.id.groupAuctionType);
-            textView.setClickable(false);
+            //textView.setClickable(false);
         }
     }
 }

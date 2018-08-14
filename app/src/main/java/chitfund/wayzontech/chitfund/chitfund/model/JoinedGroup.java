@@ -6,18 +6,22 @@ package chitfund.wayzontech.chitfund.chitfund.model;
 
 public class JoinedGroup
 {
-    private String group_id, group_name, amount, next_date, time, type;
+    private String group_id, group_name, amount, next_date, time, type, groupMember, groupDuration;
 
-    public JoinedGroup() {
+    public String getGroupMember() {
+        return groupMember;
     }
 
-    public JoinedGroup(String group_id, String group_name,
-                       String amount, String next_date, String time) {
-        this.group_id = group_id;
-        this.group_name = group_name;
-        this.next_date = next_date;
-        this.amount = amount;
-        this.time = time;
+    public void setGroupMember(String groupMember) {
+        this.groupMember = groupMember;
+    }
+
+    public String getGroupDuration() {
+        return groupDuration;
+    }
+
+    public void setGroupDuration(String groupDuration) {
+        this.groupDuration = groupDuration;
     }
 
     public String getType() {

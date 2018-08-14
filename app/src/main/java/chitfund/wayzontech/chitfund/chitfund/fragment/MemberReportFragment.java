@@ -71,7 +71,7 @@ public class MemberReportFragment extends Fragment implements AdapterView.OnItem
         recyclerView = view.findViewById(R.id.recyclerViewMemberReport);
         initController();
         recyclerView();
-
+        getMemberReport();
         return view;
     }
 
@@ -80,7 +80,6 @@ public class MemberReportFragment extends Fragment implements AdapterView.OnItem
         progressDialog = new ProgressDialog(getContext());
         session = new SubdomainSession(getContext());
         spinner.setOnItemSelectedListener(this);
-        getMemberReport();
     }
 
     void recyclerView() {
@@ -169,12 +168,16 @@ public class MemberReportFragment extends Fragment implements AdapterView.OnItem
                     if (groupJsonArray.getJSONObject(i).getString("group_name").equals(groupName)) {
                         memberReportArrayList = new ArrayList<>();
                         groupId = groupJsonArray.getJSONObject(i).getString("group_id");
-                        memberJsonArray = groupJsonArray.getJSONObject(i).getJSONArray("member_info");
 
-                        for (int j = 0; j < memberJsonArray.length(); j++) {
-                            object = memberJsonArray.getJSONObject(j);
+                        JSONArray jsonArray = groupJsonArray.getJSONObject(i).getJSONArray("member_info");
 
-                            memberId = object.getString("member_id");
+                        //memberJsonArray = groupJsonArray.getJSONObject(i).getJSONArray("member_info");
+
+                        for (int j = 0; j < jsonArray.length(); j++) {
+
+                            JSONObject object = jsonArray.getJSONObject(j);
+
+                            memberId = object.getString("user_id");
                             memberName = object.getString("member_name");
                             memberMobile = object.getString("member_mobile");
 

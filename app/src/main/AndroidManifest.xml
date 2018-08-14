@@ -70,9 +70,10 @@
         <receiver
             android:name=".receiverNservices.ConnectivityReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
 
         <activity android:name=".activity.SubdomainActivity" />
+        <activity android:name=".activity.Main2Activity"></activity>
     </application>
 
 </manifest>

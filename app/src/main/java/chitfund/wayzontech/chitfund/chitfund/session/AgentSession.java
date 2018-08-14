@@ -5,14 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import chitfund.wayzontech.chitfund.chitfund.activity.LoginActivity;
 import chitfund.wayzontech.chitfund.chitfund.model.AgentLogin;
-import chitfund.wayzontech.chitfund.chitfund.model.MemberLogin;
 
 
 /**
@@ -89,11 +83,7 @@ public class AgentSession
     public boolean isLoggedIn()
     {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        if(sharedPreferences.getString(KEY_USERNAME, null) != null)
-        {
-            return true;
-        }
-        return false;
+        return sharedPreferences.getString(KEY_USERNAME, null) != null;
     }
 
     // Get Username
@@ -142,45 +132,45 @@ public class AgentSession
         mCtx.startActivity(new Intent(mCtx, LoginActivity.class));
     }
 
-    public void setIndexSerialItem(ArrayList<String> items)
-    {
-        try
-        {
-            SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-            SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
-            Gson gson = new Gson();
-            String json = gson.toJson(items);
-            prefsEditor.putString("SerializableObject", json);
-            prefsEditor.apply();
-            prefsEditor.commit();
-
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    public ArrayList<String> getIndexSerialItem()
-    {
-        try
-        {
-            SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-            Gson gson = new Gson();
-            String json = sharedPreferences.getString("SerializableObject", "");
-            String[] yourSerializableObject = gson.fromJson(json, String[].class);
-            ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(yourSerializableObject));
-
-            System.out.println(arrayList);
-
-            return arrayList;
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            return null;
-        }
-    }
+//    public void setIndexSerialItem(ArrayList<String> items)
+//    {
+//        try
+//        {
+//            SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+//            SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+//            Gson gson = new Gson();
+//            String json = gson.toJson(items);
+//            prefsEditor.putString("SerializableObject", json);
+//            prefsEditor.apply();
+//            prefsEditor.commit();
+//
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public ArrayList<String> getIndexSerialItem()
+//    {
+//        try
+//        {
+//            SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+//            Gson gson = new Gson();
+//            String json = sharedPreferences.getString("SerializableObject", "");
+//            String[] yourSerializableObject = gson.fromJson(json, String[].class);
+//            ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(yourSerializableObject));
+//
+//            System.out.println(arrayList);
+//
+//            return arrayList;
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
     /*public void locationSession(String location)
     {

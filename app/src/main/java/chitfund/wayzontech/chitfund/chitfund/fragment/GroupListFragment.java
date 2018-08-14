@@ -185,6 +185,7 @@ public class GroupListFragment extends Fragment implements AdapterView.OnItemSel
                     if (groupInfo.getJSONObject(i).getString("group_name").equals(groupName))
                     {
                         memberNameArrayList=new ArrayList<MemberName>();
+
                         groupId = groupInfo.getJSONObject(i).getString("group_id");
                         textViewAmount.setText(groupInfo.getJSONObject(i).getString("amount"));
                         System.out.println("group_id" +groupId);

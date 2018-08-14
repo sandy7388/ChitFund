@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -185,14 +186,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                                    finish();
 //                                }
 
-                                JSONArray jsonArray = jsonObject.getJSONArray("Subdomain");
+                                JSONArray jsonArray = jsonObject.getJSONArray("subdomain");
                                 for (int i = 0; i < jsonArray.length(); i++)
                                 {
                                     JSONObject object = jsonArray.getJSONObject(i);
                                     strMemberName = object.getString("name");
                                     strId = object.getString("user_id");
                                     strRoleId = object.getString("role_id");
-                                    strSubDomain = object.getString("SundomainName");
+                                    strSubDomain = object.getString("SubdomainName");
                                     username = object.getString("username");
 
                                     UserProfile userProfile = new UserProfile();
@@ -248,6 +249,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             {
                 progressDialog.dismiss();
                 error.printStackTrace();
+                Toast.makeText(LoginActivity.this, "Connection timeout", Toast.LENGTH_SHORT).show();
             }
         })
         {
@@ -259,6 +261,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 return params;
             }
         };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
