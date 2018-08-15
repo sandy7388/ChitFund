@@ -145,7 +145,6 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
                                         groupMember = object.getString("total_member");
                                         //auctionTime = object.getString("auction_time");
 
-
                                         try {
                                             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
                                             d = dateFormat.parse(auctionDate);
@@ -400,17 +399,6 @@ public class JoinedGroupFragment extends Fragment implements SwipeRefreshLayout.
                                     joinedGroupArrayList.add(joinedGroup);
                                     swipeRefreshLayout.setRefreshing(false);
                                     joinedGroupAdapter.notifyDataSetChanged();
-
-//                                    if (groupMember.equals(groupDuration))
-//                                    {
-//
-//                                    }
-//
-//                                    else {
-//                                        Toast.makeText(getContext(), "One of your group have less member than desired", Toast.LENGTH_SHORT).show();
-//                                    }
-
-
 
                                 }
                             } else
